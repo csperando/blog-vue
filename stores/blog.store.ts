@@ -1,34 +1,28 @@
-import { createStore } from "vuex";
-import axios from "axios";
+import { defineStore } from "pinia";
 
-export const blogStore = createStore({
-    state() {
+// TODO configuration
+const restHost = "http://192.168.1.230:8080";
+
+export const useBlogStore = defineStore("blogStore", {
+    state: () => {
         return {
-            count: 0,
-            restHostname: "http://192.168.1.230:8080",
-        };
+            restHost: "http://192.168.1.230:8080",
+            blogs: []
+        }
     },
-    
-    mutations: {
-        increment(state) {
-            state.count++;
-        },
-    },
+    getters: {
 
+    },
     actions: {
-        async getBlogPosts() {
-            try {
-                const endpoint = this.state.restHostname + "/blog";
-                const res = await axios.get(endpoint)
-                    .then((res) => {
-                        console.log(res);
-                        return res.data;
-                    }).catch((err) => {
-                        console.log(err);
-                    })
-            } catch(err: any) {
-                throw(err);
-            }
+        async getPosts () {
+            const res = await fetch(restHost)
+                .then((res) => {
+                    return res.json();
+                }).catch((err) => {
+                    // console.log(err);
+                });
+            
+            console.log(res);
         }
     }
 });
