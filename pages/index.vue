@@ -17,4 +17,3 @@
         <blog-list />
     </div>
 </template>
-
