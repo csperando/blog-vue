@@ -5,11 +5,14 @@
     import { useBlogStore } from "~/stores/blog.store";
 
     export default defineComponent({
-        setup() {
+        async setup() {
             const blogStore = useBlogStore();
+            await blogStore.getPosts();
+            const blogs = blogStore.blogs;
 
             return {
                 blogStore,
+                blogs
             }
         },
         components: {

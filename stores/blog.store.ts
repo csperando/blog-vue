@@ -15,14 +15,23 @@ export const useBlogStore = defineStore("blogStore", {
     },
     actions: {
         async getPosts () {
-            const res = await fetch(restHost)
+            const res = await fetch(restHost + "/blog")
                 .then((res) => {
                     return res.json();
+
+                }).then((res) => {
+                    if(res.status == 200) {
+                        return res.data;
+                    } else {
+                        return [];
+                    }
+
                 }).catch((err) => {
                     // console.log(err);
+
                 });
             
-            console.log(res);
+            this.blogs = res;
         }
     }
 });

@@ -1,17 +1,13 @@
 <script lang="ts">
     import { defineComponent } from "vue";
+    import { useBlogStore } from "#imports";
+
+    import { type iBlogPost } from "../models/Blog";
 
     export default defineComponent({
         async setup() {
-            const endpoint = "http://192.168.1.230:8080/blog";
-            const blogs: Promise<any | void> = await fetch(endpoint)
-                .then((res) => {
-                    return res.json();
-                }).catch((err) => {
-                    console.log(err);
-                });
-
-            const posts = (blogs) ? (blogs as any)?.data : [];
+            const blogStore = useBlogStore();
+            const posts: iBlogPost[] = blogStore.blogs;
 
             return {
                 posts
