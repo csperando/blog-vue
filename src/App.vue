@@ -1,21 +1,23 @@
-<script setup lang="ts">
-    import { RouterView } from "vue-router";
-    import { useBlogStore } from "./stores/blog";
-    import NavBar from "./components/navbar.vue";
-
-    const blog = useBlogStore();
-    blog.log();
-    
+<script setup>
+    // import { useRoute, useRouter } from 'vue-router';
+    import navbar from './components/navbar.vue';
 </script>
 
 <template>
-    <header>
-        <div class="wrapper">
-            <NavBar/>
-        </div>
-    </header>
+    <main>
+        <navbar />
 
-    <RouterView />
+        <br/>
+        <br/>
+        
+        <Suspense>
+            <RouterView />
+
+            <template #fallback>
+                Loading...
+            </template>
+        </Suspense>
+    </main>
 </template>
 
 <style scoped>
