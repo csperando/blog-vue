@@ -10,4 +10,4 @@ dist
 .vscode
 .env
 
-dist/
+# dist/
