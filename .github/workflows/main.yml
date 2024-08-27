@@ -11,6 +11,8 @@ jobs:
 
       - run: echo "${{  github.repository }} cloned"
 
+      - run: npm install
+      
       - run: npm run build
 
       - run: git add dist -f
