@@ -29,9 +29,9 @@ jobs:
       - name: Clean up branch conflicts
         run: |
           git checkout -B gh-pages
-          git fetch origin/gh-pages
-          git rebase origin/gh-pages
+          git fetch origin gh-pages
+          git rebase origin gh-pages
       
       - name: Push to subtree
         run: |
-          git subtree push --prefix=dist origin gh-pages
+          git subtree push --prefix dist origin gh-pages
