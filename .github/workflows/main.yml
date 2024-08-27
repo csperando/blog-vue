@@ -11,10 +11,16 @@ jobs:
         with:
           token: ${{ secrets.token }}
 
-      # TODO - find a better way to do this (i.e. without deleting everything)
-      - name: Clean up branch conflicts
+      - name: Update config
+        run: |
+          git config --global user.email "csperando@gmail.com"
+          git config --global user.name "Coleman Sperando"
+
+      - name: Clean up subtree conflicts
         run: |
           git read-tree --prefix=dist/ -u origin/gh-pages
+          git add dist -f
+          git commit -m "actions automated commit read-tree"
 
       - name: Build dist/ directory
         run: |
@@ -23,12 +29,10 @@ jobs:
           npm run build
           ls
 
-      - name: Update config and commit changes
+      - name: Force commit updated dist
         run: |
-          git config --global user.email "csperando@gmail.com"
-          git config --global user.name "Coleman Sperando"
           git add dist -f
-          git commit -m "actions automated commit latest dist/"
+          git commit -m "actions automated commit build dist/"
 
       - name: Push to subtree
         run: |
