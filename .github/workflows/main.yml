@@ -11,6 +11,13 @@ jobs:
         with:
           token: ${{ secrets.token }}
 
+      # TODO - find a better way to do this (i.e. without deleting everything)
+      - name: Clean up branch conflicts
+        run: |
+          git checkout -B gh-pages
+          git checkout main
+          git branch -D gh-pages
+
       - name: Build dist/ directory
         run: |
           echo "${{  github.repository }} cloned"
@@ -25,14 +32,6 @@ jobs:
           git add dist -f
           git commit -m "actions automated commit latest dist/"
 
-      # TODO - find a better way to do this (i.e. without deleting everything)
-      - name: Clean up branch conflicts
-        run: |
-          git checkout -B gh-pages
-          git fetch origin gh-pages
-          git reset --hard origin/gh-pages
-          git checkout main
-      
       - name: Push to subtree
         run: |
           git subtree push --prefix dist origin gh-pages
