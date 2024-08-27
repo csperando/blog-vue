@@ -17,9 +17,13 @@ jobs:
           git config --global user.name "Coleman Sperando"
           git status
           git branch -l
+          git remote -v
 
       - name: Clean up subtree conflicts
         run: |
+          git checkout -B gh-pages
+          git pull origin gh-pages
+          git checkout main
           git read-tree --prefix=dist/ -u origin/gh-pages
           git status
           git add dist -f
