@@ -25,12 +25,11 @@ jobs:
           git checkout -B gh-pages
           git fetch origin gh-pages
           git reset --hard origin/gh-pages
-
           git checkout main
-          git read-tree --prefix=dist/ -u origin/gh-pages
-          git status
-          git add dist -f
-          git commit -m "actions automated commit read-tree"
+        # git read-tree --prefix=dist/ -u origin/gh-pages
+        # git status
+        # git add dist -f
+        # git commit -m "actions automated commit read-tree"
 
       - name: Build dist/ directory
         run: |
