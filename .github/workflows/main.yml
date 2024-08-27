@@ -15,6 +15,7 @@ jobs:
         run: |
           git config --global user.email "csperando@gmail.com"
           git config --global user.name "Coleman Sperando"
+          git config --global pull.rebase true
           git status
           git branch -l
           git remote -v
