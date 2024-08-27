@@ -27,6 +27,6 @@ jobs:
 
       # TODO - find a better way to do this (i.e. without deleting everything)
       - name: Push to subtree
-        run:
+        run: |
           git branch -D gh-pages
           git subtree push --prefix dist origin gh-pages
