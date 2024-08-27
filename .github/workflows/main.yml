@@ -8,15 +8,23 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.token }}
 
-      - run: |
+      - name: Build dist/ directory
+        run: |
           echo "${{  github.repository }} cloned"
           npm install
           npm run build
+          ls
 
-      - run: |
+      - name: Update config and commit changes
+        run: |
           git config --global user.email "csperando@gmail.com"
           git config --global user.name "Coleman Sperando"
           git add dist -f
           git commit -m "actions automated commit latest dist/"
+
+      - name: Push to subtree
+        run:
           git subtree push --prefix dist origin gh-pages
