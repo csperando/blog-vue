@@ -1,5 +1,5 @@
-name: Vite Deploy to Subtree
-run-name: Vite Deploy to Subtree
+name: CI
+run-name: Build Vite Application
 on: [push]
 
 jobs:
