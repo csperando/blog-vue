@@ -14,7 +14,7 @@ jobs:
       # TODO - find a better way to do this (i.e. without deleting everything)
       - name: Clean up branch conflicts
         run: |
-          git push -d origin gh-pages
+          git read-tree --prefix=dist/ -u gh-pages
 
       - name: Build dist/ directory
         run: |
