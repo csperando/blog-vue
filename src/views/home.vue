@@ -4,6 +4,6 @@
 
         <br/>
 
-        <p>Test 2</p>
+        <p>Test 3</p>
     </div>
 </template>
