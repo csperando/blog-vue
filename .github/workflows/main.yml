@@ -26,9 +26,12 @@ jobs:
           git commit -m "actions automated commit latest dist/"
 
       # TODO - find a better way to do this (i.e. without deleting everything)
-      - name: Push to subtree
+      - name: Clean up branch conflicts
         run: |
           git checkout -B gh-pages
           git checkout main
           git branch -D gh-pages
+      
+      - name: Push to subtree
+        run: |
           git subtree push --prefix dist origin gh-pages
