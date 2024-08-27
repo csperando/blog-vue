@@ -10,13 +10,13 @@ jobs:
         uses: actions/checkout@v4
 
       - run: |
-        echo "${{  github.repository }} cloned"
-        npm install
-        npm run build
+          echo "${{  github.repository }} cloned"
+          npm install
+          npm run build
 
       - run: |
-        git config --global user.email "csperando@gmail.com"
-        git config --global user.name "Coleman Sperando"
-        git add dist -f
-        git commit -m "actions automated commit latest dist/"
-        git subtree push --prefix dist origin gh-pages
+          git config --global user.email "csperando@gmail.com"
+          git config --global user.name "Coleman Sperando"
+          git add dist -f
+          git commit -m "actions automated commit latest dist/"
+          git subtree push --prefix dist origin gh-pages
