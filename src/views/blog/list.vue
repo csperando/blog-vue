@@ -44,7 +44,5 @@
                 </div>
             </li>
         </ul>
-
-        <!-- <RouterView /> -->
     </div>
 </template>
