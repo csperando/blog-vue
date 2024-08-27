@@ -30,7 +30,7 @@ jobs:
         run: |
           git checkout -B gh-pages
           git fetch origin gh-pages
-          git rebase origin gh-pages
+          git reset --hard origin gh-pages
       
       - name: Push to subtree
         run: |
