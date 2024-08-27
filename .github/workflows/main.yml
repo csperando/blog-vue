@@ -1,0 +1,20 @@
+name: Vite Deploy to Subtree
+run-name: Vite Deploy to Subtree
+on: [push]
+
+jobs:
+  Build-and-Push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - run: echo "${{  github.repository }} cloned
+
+      - run: npm run build
+
+      - run: git add dist -f
+
+      - run: git commit -m "actions automated commit latest dist/"
+
+      - run: git subtree push --prefix dist origin gh-pages
