@@ -45,4 +45,5 @@ jobs:
 
       - name: Push to subtree
         run: |
+          git push --help
           git subtree push --prefix dist origin gh-pages
