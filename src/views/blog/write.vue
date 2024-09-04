@@ -6,27 +6,38 @@
     const markdown = ref("");
 
     const newPostData = computed(() => {
-        return { title: title.value, author: author.value, markdown: markdown.value };
+        return { title: title.value, author: author.value, markdown: markdown.value, html: "<p>test</p>" };
     });
 
     const submit = async () => {
-        // TODO
-        return;
 
+        // Generate a .md markup file from the ser input
+        // Store markup and other meta data in form data object
+        const blob = new Blob([JSON.stringify(newPostData.value.markdown, null, 2)], { type: "text/plain;charset=utf-8" });
+        const markdownFile = new File([blob], 'test.md', { type: "text/plain" });
+        const data = new FormData();
+        data.append("author", newPostData.value.author);
+        data.append("html", newPostData.value.html);
+        data.append("title", newPostData.value.title);
+        data.append("markdown", markdownFile);
+
+        // Generate http request data
+        // POST form data to create a new post
+        // TODO - Handle any errors
         const endpoint = "https://csperando-blog-rest-frdyhdcjh9ddfhb2.eastus-01.azurewebsites.net/blog/new";
+        // const endpoint = "http://localhost:3000/blog/new";
         const options = {
             method: "POST",
-            headers: {
-                "content-type": "application/json"
-            },
-            body: JSON.stringify(newPostData.value)
+            // headers: { "content-type": "multipart/form-data" }, // DO NOT INCLUDE
+            body: data
         };
-
-        // console.log(options);
 
         const res = await fetch(endpoint, options)
             .then((res) => {
                 return res.json();
+            }).then((res) => {
+                console.log(res);
+                return res;
             }).catch((err) => {
                 console.error(err);
             });
