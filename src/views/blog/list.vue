@@ -1,5 +1,8 @@
 <script setup>
-    const blogRes = await fetch("https://csperando-blog-rest-frdyhdcjh9ddfhb2.eastus-01.azurewebsites.net/blog")
+    const endpoint = "https://csperando-blog-rest-frdyhdcjh9ddfhb2.eastus-01.azurewebsites.net/blog";
+    // const endpoint = "http://localhost:3000/blog";
+
+    const blogRes = await fetch(endpoint)
         .then((res) => {
             return res.json();
         })
@@ -12,8 +15,6 @@
         }).catch((err) => {
             console.error(err);
         });
-
-    // console.log(blogRes);
 </script>
 
 <template>

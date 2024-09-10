@@ -1,5 +1,8 @@
 <script setup>
     import { ref, computed } from "vue";
+    import { useRouter } from 'vue-router';
+
+    const route = useRouter();
 
     const title = ref("");
     const author = ref("");
@@ -13,7 +16,7 @@
 
         // Generate a .md markup file from the ser input
         // Store markup and other meta data in form data object
-        const blob = new Blob([JSON.stringify(newPostData.value.markdown, null, 2)], { type: "text/plain;charset=utf-8" });
+        const blob = new Blob([newPostData.value.markdown], { type: "text/plain;charset=utf-8" });
         const markdownFile = new File([blob], 'test.md', { type: "text/plain" });
         const data = new FormData();
         data.append("author", newPostData.value.author);
@@ -29,20 +32,24 @@
         const options = {
             method: "POST",
             // headers: { "content-type": "multipart/form-data" }, // DO NOT INCLUDE
+            headers: { "x-auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJjc3BlcmFuZG80IiwiaWF0IjoxNzI1OTg5Mzk2LCJleHAiOjE3MjYwNzU3OTZ9.3VJm0QorkEgG1SP4n5k_Dx1JDIu1wY1x7WzYnDQONjQ" },
             body: data
         };
 
+        // submit request for new blog post
         const res = await fetch(endpoint, options)
             .then((res) => {
                 return res.json();
             }).then((res) => {
-                console.log(res);
                 return res;
             }).catch((err) => {
                 console.error(err);
             });
-
-        // console.log(res);
+            
+        // redirect to new blog psot page if successfull
+        if(res.status == 200) {
+            route.push({ name: "BlogPost", params: res.data });
+        }
     }
 
 </script>
