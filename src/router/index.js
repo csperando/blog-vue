@@ -8,10 +8,11 @@ import { profileRoute } from "./profileRoute.js";
 const routes = [
     homeRoute,
     aboutRoute,
+    profileRoute,
+
     blogListRoute,
     blogPostRoute,
-    profileRoute,
-    blogWriteRoute
+    blogWriteRoute,
 ];
 
 export const router = createRouter({
