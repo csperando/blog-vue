@@ -1,24 +1,58 @@
+<script setup>
+    import { ref } from 'vue';
+    import { initUserStore } from '../stores/user.store';
+    import { useRouter } from 'vue-router';
+
+    const userStore = initUserStore();
+    const username = ref("");
+    const password = ref("");
+
+    const route = useRouter();
+
+    const login = async (e) => {
+        e.preventDefault();
+
+        const success = await userStore.login(username.value, password.value);
+        if(success) {
+            route.push({ name: "Home" });
+        }
+    }
+
+</script>
 
 <template>
 
-    <div>
-        <p>Login</p>
+    <section>
+        <p><!-- Login --></p>
 
         <br/>
 
-        <form>
-            <label for="username">Username:</label>
-            <input type="text" name="username" id="u-input"/>
+        <form @submit.prevent="">
+            <div>
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="u-input" v-model="username"/>
+            </div>
             
-            <br/>
-            
-            <label for="password">Password:</label>
-            <input type="password" name="password" id="pw-input"/>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="pw-input" v-model="password"/>
+            </div>
 
-            <br/>
-
-            <input type="button" name="submit" value="submit"/>
+            <div>
+                <input type="button" name="submit" value="submit" @click="login"/>
+            </div>
         </form>
-    </div>
+    </section>
 
 </template>
+
+<style scoped>
+    div {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 30px;
+    }
+</style>

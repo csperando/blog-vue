@@ -1,16 +1,22 @@
 <script setup>
+    // event methods
+    import { onMounted } from 'vue';
+
     // state management
     import { initUserStore } from './stores/user.store';
-    import { initBlogStore } from './stores/blog.store';
+    const userStore = initUserStore();
     
-    // import { useRoute, useRouter } from 'vue-router';
-
     // top level template components
     import navbar from './components/navbar.vue';
 
 
-    const userStore = initUserStore();
-    const blogStore = initBlogStore();
+    onMounted(async () => {
+        // check if user stored auth token is still valid and auto-login
+        const success = await userStore.validateToken();
+        if(success) {
+            route.push({ name: "Home" });
+        }
+    })
 
 </script>
 

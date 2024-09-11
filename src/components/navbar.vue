@@ -1,5 +1,13 @@
 <script setup>
-    const loggedIn = false;
+    import { storeToRefs } from 'pinia';
+    import { initUserStore } from '../stores/user.store';
+
+    const userStore = initUserStore();
+    const { loggedIn } = storeToRefs(userStore);
+
+    const logout = () => {
+        userStore.logout();
+    }
 </script>
 
 <template>
@@ -17,6 +25,10 @@
         </div>
 
         <div v-if="loggedIn" class="float-right">
+            <router-link @click="logout" :to="{ name: 'Login' }">Logout</router-link>
+        </div>
+
+        <div v-if="loggedIn" class="float-right">
             <router-link :to="{ name: 'Profile' }">Profile</router-link>
         </div>
 
@@ -25,7 +37,7 @@
         </div>
         
         <div v-if="!loggedIn" class="float-right">
-            <router-link :to="{ path: '/' }">Login</router-link>
+            <router-link :to="{ name: 'Login' }">Login</router-link>
         </div>
     </nav>
 </template>

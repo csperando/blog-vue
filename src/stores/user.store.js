@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import { validateToken, login } from "../services/user.service";
 
 export const initUserStore = defineStore("userStore", {
     // state
@@ -21,26 +22,44 @@ export const initUserStore = defineStore("userStore", {
             try {
                 return {};
 
-                // const endpoint = "https://csperando-blog-rest-frdyhdcjh9ddfhb2.eastus-01.azurewebsites.net/blog";
-                // const endpoint = "http://localhost:3000/blog";
-
-                // return await fetch(endpoint)
-                //     .then((res) => {
-                //         return res.json();
-                //     })
-                //     .then((res) => {
-                //         if(res.status != 200) {
-                //             throw new Error("Failed to get blog data");
-                //         }
-
-                //         return res.data;
-                //     }).catch((err) => {
-                //         console.error(err);
-                //     });
-
             } catch(err) {
                 console.error(err);
             }
+        },
+
+        async validateToken() {
+            const token = localStorage.getItem("token");
+            const res = await validateToken(token);
+            
+            if(res.status == 200) {
+                this.loggedIn = true;
+                this.userData = res.data;
+                return true;
+            }
+            
+            return true;
+        },
+
+        async login(username, password) {
+            try {
+                const res = await login(username, password);
+                
+                if(res.status == 200) {
+                    this.loggedIn = true;
+                    this.userData = res.data;
+                    localStorage.setItem("token", res.data.token);
+                    return true;
+                }
+
+            } catch(err) {
+                return err;
+            }
+        },
+
+        logout() {
+            this.loggedIn = false;
+            this.userData = null;
+            localStorage.setItem("token", "");
         }
     }
 });
