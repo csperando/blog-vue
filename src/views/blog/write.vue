@@ -1,4 +1,5 @@
 <script setup>
+    import { base_path } from "../../config";
     import { ref, computed } from "vue";
     import { useRouter } from 'vue-router';
 
@@ -27,12 +28,11 @@
         // Generate http request data
         // POST form data to create a new post
         // TODO - Handle any errors
-        const endpoint = "https://csperando-blog-rest-frdyhdcjh9ddfhb2.eastus-01.azurewebsites.net/blog/new";
-        // const endpoint = "http://localhost:3000/blog/new";
+        const endpoint = base_path + "/blog/new";
         const options = {
             method: "POST",
             // headers: { "content-type": "multipart/form-data" }, // DO NOT INCLUDE
-            headers: { "x-auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJjc3BlcmFuZG80IiwiaWF0IjoxNzI1OTg5Mzk2LCJleHAiOjE3MjYwNzU3OTZ9.3VJm0QorkEgG1SP4n5k_Dx1JDIu1wY1x7WzYnDQONjQ" },
+            headers: { "x-auth-token": localStorage.getItem("token") },
             body: data
         };
 
