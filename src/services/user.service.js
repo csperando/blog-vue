@@ -1,10 +1,8 @@
-
-// let base_path = "https://csperando-blog-rest-frdyhdcjh9ddfhb2.eastus-01.azurewebsites.net/";
-let base_path = "http://localhost:3000/";
+import { base_path } from "../config";
 
 export const validateToken = async (token) => {
     try {
-        const endpoint = base_path + "auth/token";
+        const endpoint = base_path + "/auth/token";
         const options = { method: "POST", headers: { "Content-Type": "application/json", "x-auth-token": token } };
 
         const res = await fetch(endpoint, options)
@@ -25,7 +23,7 @@ export const validateToken = async (token) => {
 
 export const login = async (username, password) => {
     try {
-        const endpoint = base_path + "auth/login";
+        const endpoint = base_path + "/auth/login";
         const req = { username: username, password: password };
         const options = { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(req) };
 

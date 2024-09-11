@@ -1,6 +1,6 @@
 <script setup>
-    const endpoint = "https://csperando-blog-rest-frdyhdcjh9ddfhb2.eastus-01.azurewebsites.net/blog";
-    // const endpoint = "http://localhost:3000/blog";
+    import { base_path } from '../../config';
+    const endpoint = base_path + "/blog";
 
     const blogRes = await fetch(endpoint)
         .then((res) => {

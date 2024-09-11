@@ -1,5 +1,6 @@
 
 import { defineStore } from "pinia";
+import { base_path } from "../config";
 
 export const initBlogStore = defineStore("blogStore", {
     // state
@@ -20,8 +21,7 @@ export const initBlogStore = defineStore("blogStore", {
     actions: {
         async fetchRecentBlogPosts() {
             try {
-                // const endpoint = "https://csperando-blog-rest-frdyhdcjh9ddfhb2.eastus-01.azurewebsites.net/blog";
-                const endpoint = "http://localhost:3000/blog";
+                const endpoint = base_path + "/blog";
 
                 return await fetch(endpoint)
                     .then((res) => {
