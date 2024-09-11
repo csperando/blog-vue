@@ -12,11 +12,8 @@
 
     onMounted(async () => {
         // check if user stored auth token is still valid and auto-login
-        const success = await userStore.validateToken();
-        if(success) {
-            route.push({ name: "Home" });
-        }
-    })
+        await userStore.validateToken();
+    });
 
 </script>
 

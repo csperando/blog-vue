@@ -9,7 +9,6 @@ export const validateToken = async (token) => {
             .then((res) => {
                 return res.json();
             }).then((res) => {
-                console.log(res);
                 return res;
             }).catch((err) => {
                 console.error(err);
@@ -17,7 +16,7 @@ export const validateToken = async (token) => {
 
         return res;
     } catch(err) {
-        console.log(err);
+        // console.log(err);
     }
 }
 
@@ -38,6 +37,6 @@ export const login = async (username, password) => {
 
         return res;
     } catch(err) {
-        console.log(err);
+        // console.log(err);
     }
 }
