@@ -1,20 +1,10 @@
 <script setup>
-    import { base_path } from '../../config';
-    const endpoint = base_path + "/blog";
+    import { initBlogStore } from '../../stores/blog.store';
+    import { storeToRefs } from 'pinia';
+    
+    const blogStore = initBlogStore();
+    const { recentBlogPosts } = storeToRefs(blogStore);
 
-    const blogRes = await fetch(endpoint)
-        .then((res) => {
-            return res.json();
-        })
-        .then((res) => {
-            if(res.status != 200) {
-                throw new Error("Failed to get blog data");
-            }
-
-            return res.data;
-        }).catch((err) => {
-            console.error(err);
-        });
 </script>
 
 <template>
@@ -24,7 +14,7 @@
         <br/>
 
         <ul>
-            <li v-for="blog in blogRes">
+            <li v-for="blog in recentBlogPosts">
                 <div v-if="blog.html">
                     <p>
                         <router-link :to="{

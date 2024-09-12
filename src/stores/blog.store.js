@@ -23,7 +23,7 @@ export const initBlogStore = defineStore("blogStore", {
             try {
                 const endpoint = base_path + "/blog";
 
-                return await fetch(endpoint)
+                const blogs = await fetch(endpoint)
                     .then((res) => {
                         return res.json();
                     })
@@ -36,7 +36,8 @@ export const initBlogStore = defineStore("blogStore", {
                     }).catch((err) => {
                         console.error(err);
                     });
-
+                
+                this.recentBlogPosts = blogs;
             } catch(err) {
                 console.error(err);
             }
