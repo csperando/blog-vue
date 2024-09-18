@@ -1,27 +1,35 @@
-<script>
+
+<script setup>
+    import postTile from '../components/postTile.vue';
+    import postTileSmall from '../components/postTileSmall.vue';
+
 </script>
 
 <template>
     <main>
         <section id="featured" class="two-col">
 
-            <!-- TODO make it's own component-->
-            <div class="post-wrapper">
-                <img src="../assets/logo.svg" width="250" height="250" alt="test"/>
-                <div>
-                    <p>Title</p>
-                </div>
-            </div>
+            <postTile title="test title" timestamp="12 Sept 2024" description="An example blog post" thumbnail="logo.svg"/>
 
             <div class="post-container">
                 <!-- smaller blog post components -->
 
-                <div class="post-wrapper-sm" v-for="i in [1, 2, 3, 4]">
-                    <img src="../assets/logo.svg" width="50" height="50" alt="test"/>
-                    <div>
-                        <p>Title - {{ i }}</p>
+                <!--
+                    <div class="post-wrapper-sm" v-for="i in [1, 2, 3, 4]">
+                        <img src="../assets/logo.svg" width="50" height="50" alt="test"/>
+                        <div>
+                            <p>Title - {{ i }}</p>
+                        </div>
                     </div>
-                </div>
+                -->
+                
+                <postTileSmall v-for="i in [1, 2, 3, 4]" 
+                    :title="'Another Test - ' + i" 
+                    timestamp="12 Sept 2024" 
+                    description="An example blog post" 
+                    thumbnail="logo.svg"
+                    class="post-wrapper-sm"
+                    />
                 
                 <div class="post-wrapper-sm">
                     <p>More...</p>
@@ -34,23 +42,17 @@
             <p>DevOps</p>
 
             <div class="two-col">
-                <!-- TODO make it's own component-->
-                <div class="post-wrapper">
-                    <img src="../assets/logo.svg" width="250" height="250" alt="test"/>
-                    <div>
-                        <p>Title</p>
-                    </div>
-                </div>
+                
+                <postTile title="I love DevOps!" timestamp="14 Sept 2024" description="A love story" thumbnail="logo.svg"/>
                 
                 <div class="post-container">
-                    <!-- smaller blog post components -->
-                    
-                    <div class="post-wrapper-sm" v-for="i in [1, 2, 3, 4]">
-                        <img src="../assets/logo.svg" width="50" height="50" alt="test"/>
-                        <div>
-                            <p>Title - {{ i }}</p>
-                        </div>
-                    </div>
+                    <postTileSmall v-for="i in [1, 2, 3, 4]" 
+                        :title="'DevOps Test - ' + i" 
+                        timestamp="12 Sept 2024" 
+                        description="An example blog post" 
+                        thumbnail="logo.svg"
+                        class="post-wrapper-sm"
+                        />
                 </div>
             </div>
         </section>
@@ -70,17 +72,6 @@
         margin-bottom: 50px;
     }
 
-    .post-wrapper, .post-wrapper-sm {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-color: hsla(160, 100%, 37%, 0.2);
-        padding: 10px;
-        box-sizing: border-box;
-        border-radius: 5px;
-    }
-
     .post-wrapper-sm {
         flex-basis: 33%;
     }
@@ -91,12 +82,6 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: 20px;
-    }
-
-    .post-container > p {
-        position: absolute;
-        bottom: 0;
-        right: 0;
     }
 
     /* TODO - add media breakpoints */

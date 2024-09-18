@@ -15,13 +15,11 @@ const img = "src/assets/" + props.thumbnail;
 </script>
 
 <template>
-    <div class="wrapper">
-        <img :src="img" width="250px" height="250px" alt="todo - add alt text"/>
+    <div class="wrapper" :title="description + ' - ' + time">
+        <img :src="img" width="50px" height="50px" alt="todo - add alt text"/>
 
         <div class="metas">
-            <span class="time">{{ timestamp }}</span>
             <p><b>{{ title.toUpperCase() }}</b></p>
-            <p class="description"><em>{{ description }}</em></p>
         </div>
     </div>
 </template>
@@ -40,23 +38,16 @@ const img = "src/assets/" + props.thumbnail;
         justify-content: center;
         align-items: center;
         background-color: hsla(160, 100%, 37%, 0.2);
-        padding: 10px;
+        padding: 5px;
         box-sizing: border-box;
         border-radius: 5px;
-        box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
-        filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.3));
-    }
-
-    .time {
-        font-size: 12px;
-    }
-
-    .description {
-        font-size: 14px;
+        box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+        filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
     }
 
     .metas {
         width: 100%;
-        text-align: left;
+        text-align: center;
+        font-size: 12px;
     }
 </style>
