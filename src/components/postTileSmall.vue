@@ -10,7 +10,7 @@ const props = defineProps({
     "thumbnail": String
 });
 
-const img = "src/assets/" + props.thumbnail;
+const img = "assets/" + props.thumbnail;
 
 </script>
 
