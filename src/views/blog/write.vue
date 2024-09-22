@@ -2,16 +2,26 @@
     import { base_path } from "../../config";
     import { ref, computed } from "vue";
     import { useRouter } from 'vue-router';
+    import postTile from "../../components/postTile.vue";
 
     const route = useRouter();
 
     const title = ref("");
-    const author = ref("");
+    const author = ref("Coleman Sperando");
     const markdown = ref("");
+    const description = ref("");
 
     const newPostData = computed(() => {
         return { title: title.value, author: author.value, markdown: markdown.value, html: "<p>test</p>" };
     });
+
+    const readFile = async (event) => {
+        console.log(event);
+    }
+
+    const preview = () => {
+        console.log("preview");
+    }
 
     const submit = async () => {
 
@@ -56,29 +66,77 @@
 
 <template>
     <section>
-        <p>Write markdown here</p>
+        <p>&nbsp;</p>
 
         <br/>
 
         <form>
 
-            <label for="title">Title:</label><br/>
-            <input type="text" name="title" v-model="title"/>
-            
-            <br/><br/>
-            
-            <label for="author">Author:</label><br/>
-            <input type="text" name="author" v-model="author"/>
-            
-            <br/><br/>
+            <div class="two-col">
+                <div>
+                    <label for="title">Title:</label><br/>
+                    <input type="text" name="title" v-model="title"/>
+                    
+                    <br/><br/>
+                    
+                    <label for="author">Author:</label><br/>
+                    <input type="text" name="author" v-model="author" readonly/>
+                    
+                    <br/><br/>
+                    
+                    <label for="description">Description:</label><br/>
+                    <input type="text" name="description" v-model="description"/>
+                    
+                    <br/><br/>
 
-            <label for="markdown">Markdown:</label><br/>
-            <textarea name="markdown" rows="20" cols="120" v-model="markdown"></textarea>
+                    <label for="thumbnail">Thumbnail:</label><br/>
+                    <input type="file" name="thumbnail" @change="readFile"/>
+                    
+                    <br/><br/>
+                </div>
+            
+                <postTile class="preview"
+                    :title="title"
+                    :timestamp="`${new Date()}`"
+                    :description="description"
+                    :thumbnail="''"
+                    />
+            </div>
 
-            <br/><br/>
-
-            <input type="button" name="submit" value="submit" @click="submit"/>
+            <div>
+                <br/><br/>
+                
+                <label for="markdown">Markdown:</label><br/>
+                <textarea name="markdown" rows="20" cols="120" v-model="markdown"></textarea>
+                
+                <br/><br/>
+                
+                <div class="two-col">
+                    <input type="button" name="submit" value="submit" @click="submit"/>
+                    <input type="button" name="preview" value="preview" @click="preview"/>
+                </div>
+            </div>
 
         </form>
     </section>
 </template>
+
+<style scoped>
+    .two-col {
+        display: flex;
+        flex-direction: row;
+        position: relative;
+        width: 100%;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .preview {
+        width: 300px;
+    }
+
+    textarea {
+        width: 100%;
+    }
+</style>

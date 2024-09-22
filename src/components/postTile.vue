@@ -1,7 +1,7 @@
 
 <script setup>
 
-import { defineProps } from 'vue';
+// import { defineProps } from 'vue'; // Compiler Macro, no longer needs to be imported
 
 const props = defineProps({
     "title": String,
