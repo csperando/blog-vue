@@ -11,12 +11,17 @@
     const markdown = ref("");
     const description = ref("");
 
+    // file inputs cannot use v-model
+    const thumbnail = ref("");
+
     const newPostData = computed(() => {
         return { title: title.value, author: author.value, markdown: markdown.value, html: "<p>test</p>" };
     });
 
     const readFile = async (event) => {
-        console.log(event);
+        // Todo - add image file to request body from file upload
+        const imageData = document.getElementById("input-thumbnail").files[0] || null;
+        console.log(imageData);
     }
 
     const preview = () => {
@@ -90,7 +95,7 @@
                     <br/><br/>
 
                     <label for="thumbnail">Thumbnail:</label><br/>
-                    <input type="file" name="thumbnail" @change="readFile"/>
+                    <input type="file" name="thumbnail" @change="readFile" id="input-thumbnail"/>
                     
                     <br/><br/>
                 </div>
