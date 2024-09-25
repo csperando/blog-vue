@@ -10,7 +10,8 @@ export const blogListRoute = {
 };
 
 export const blogPostRoute = {
-    path: "/blog/:title/:html/:author",
+    // todo - replace all props with _id
+    path: "/blog/:title/:html/:author/:description/:created",
     name: "BlogPost",
     component: BlogPost,
     props: (route) => { route.params }

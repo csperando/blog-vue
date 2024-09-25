@@ -9,31 +9,37 @@
 
 <template>
     <div>
-        <p>Most Recent:</p>
-
-        <br/>
-
-        <ul>
-            <li v-for="blog in recentBlogPosts">
-                <div v-if="blog.html">
-                    <p>
-                        <router-link :to="{
-                            name: 'BlogPost',
-                            // params: { html: blog.html || 'error', title: blog.title } 
-                            params: blog
-                        }">{{ blog.title.toUpperCase() }}</router-link>
-                        
+        <div v-if="recentBlogPosts.length">
+            <p>Most Recent:</p>
+    
+            <br/>
+    
+            <ul>
+                <li v-for="blog in recentBlogPosts">
+                    <div v-if="blog.html">
+                        <p>
+                            <router-link :to="{
+                                name: 'BlogPost',
+                                // params: { html: blog.html || 'error', title: blog.title } 
+                                params: blog
+                            }">{{ blog.title.toUpperCase() }}</router-link>
+                            
+                            <br/>
+                            
+                            <em>{{ blog.author }}</em>
+                        </p>
                         <br/>
-                        
-                        <em>{{ blog.author }}</em>
-                    </p>
-                    <br/>
-                </div>
+                    </div>
+    
+                    <div v-else>
+                        <p>Error :(</p>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
-                <div v-else>
-                    <p>Error :(</p>
-                </div>
-            </li>
-        </ul>
+        <div v-else>
+            <p >No blog posts yet</p>
+        </div>
     </div>
 </template>
