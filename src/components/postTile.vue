@@ -1,22 +1,39 @@
 
 <script setup>
+    import { computed } from "vue";
 
-// import { defineProps } from 'vue'; // Compiler Macro, no longer needs to be imported
+    const props = defineProps({
+        "title": String,
+        "timestamp": String,
+        "description": String,
+        "thumbnail": String,
 
-const props = defineProps({
-    "title": String,
-    "timestamp": String,
-    "description": String,
-    "thumbnail": String
-});
+        // These props are for previewing the post tile while writing a new blog post
+        "preview": {
+            type: Boolean,
+            default: false,
+        },
+        "thumbnailBase64": {
+            type: String,
+            default: "",
+        },
+        "thumbnailMimeType": {
+            type: String,
+            default: "Image/jpeg",
+        },
+    });
 
-const img = "assets/" + props.thumbnail;
+    const img = "assets/" + props.thumbnail;
+
+    const previewImg = computed(() => 'data:' + props.thumbnailMimeType + ';base64, ' + props.thumbnailBase64);
 
 </script>
 
 <template>
     <div class="wrapper">
-        <img :src="img" width="250px" height="250px" alt="todo - add alt text"/>
+
+        <img v-if="!preview" :src="img" width="250px" height="250px" alt="todo - add alt text"/>
+        <img v-else :src="previewImg" width="250px" height="250px" alt="New Post Thumbnail Preview"/>
 
         <div class="metas">
             <span class="time">{{ timestamp }}</span>

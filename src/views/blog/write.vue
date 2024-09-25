@@ -12,16 +12,32 @@
     const description = ref("");
 
     // file inputs cannot use v-model
-    const thumbnail = ref("");
+    const thumbnailBase64 = ref("");
+    const thumbnailMimeType = ref("");
 
     const newPostData = computed(() => {
-        return { title: title.value, author: author.value, markdown: markdown.value, html: "<p>test</p>" };
+        return { title: title.value, author: author.value, markdown: markdown.value, html: "<p>error</p>", description: description.value };
     });
 
     const readFile = async (event) => {
-        // Todo - add image file to request body from file upload
-        const imageData = document.getElementById("input-thumbnail").files[0] || null;
-        console.log(imageData);
+        try {
+            // Preview image file on upload
+            const imageData = document.getElementById("input-thumbnail").files[0] || null;
+            thumbnailMimeType.value = imageData.type;
+            const b = await imageData.arrayBuffer();
+
+            let base64String = "";
+            let bytes = new Uint8Array(b);
+            let l = bytes.byteLength;
+            for(let i = 0; i < l; i++) {
+                base64String += String.fromCharCode(bytes[i]);
+            }
+            base64String = btoa(base64String);
+            
+            thumbnailBase64.value = base64String;
+        } catch(err) {
+            console.error(err);
+        }
     }
 
     const preview = () => {
@@ -38,7 +54,12 @@
         data.append("author", newPostData.value.author);
         data.append("html", newPostData.value.html);
         data.append("title", newPostData.value.title);
+        data.append("description", newPostData.value.description);
         data.append("markdown", markdownFile);
+
+        // thumbnail
+        const imageData = document.getElementById("input-thumbnail").files[0] || null;
+        data.append("thumbnail", imageData);
 
         // Generate http request data
         // POST form data to create a new post
@@ -79,22 +100,22 @@
 
             <div class="two-col">
                 <div>
-                    <label for="title">Title:</label><br/>
-                    <input type="text" name="title" v-model="title"/>
+                    <label for="post-title">Title:</label><br/>
+                    <input type="text" name="title" v-model="title" id="post-title"/>
                     
                     <br/><br/>
                     
-                    <label for="author">Author:</label><br/>
-                    <input type="text" name="author" v-model="author" readonly/>
+                    <label for="post-author">Author:</label><br/>
+                    <input type="text" name="author" v-model="author" readonly id="post-author"/>
                     
                     <br/><br/>
                     
-                    <label for="description">Description:</label><br/>
-                    <input type="text" name="description" v-model="description"/>
+                    <label for="post-description">Description:</label><br/>
+                    <input type="text" name="description" v-model="description" id="post-description"/>
                     
                     <br/><br/>
 
-                    <label for="thumbnail">Thumbnail:</label><br/>
+                    <label for="input-thumbnail">Thumbnail:</label><br/>
                     <input type="file" name="thumbnail" @change="readFile" id="input-thumbnail"/>
                     
                     <br/><br/>
@@ -104,15 +125,18 @@
                     :title="title"
                     :timestamp="`${new Date()}`"
                     :description="description"
-                    :thumbnail="''"
+
+                    :preview="true"
+                    :thumbnailBase64="thumbnailBase64"
+                    :thumbnailMimeType="thumbnailMimeType"
                     />
             </div>
 
             <div>
                 <br/><br/>
                 
-                <label for="markdown">Markdown:</label><br/>
-                <textarea name="markdown" rows="20" cols="120" v-model="markdown"></textarea>
+                <label for="post-markdown">Markdown:</label><br/>
+                <textarea name="markdown" rows="20" cols="120" v-model="markdown" id="post-markdown"></textarea>
                 
                 <br/><br/>
                 
