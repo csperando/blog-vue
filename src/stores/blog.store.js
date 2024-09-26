@@ -2,6 +2,8 @@
 import { defineStore } from "pinia";
 import { base_path } from "../config";
 
+import { fetchRecentBlogPosts, uploadNewBlogPost } from "../services/blog.service";
+
 export const initBlogStore = defineStore("blogStore", {
     // state
     state: () => {
@@ -21,25 +23,29 @@ export const initBlogStore = defineStore("blogStore", {
     actions: {
         async fetchRecentBlogPosts() {
             try {
-                const endpoint = base_path + "/blog";
-
-                const blogs = await fetch(endpoint)
-                    .then((res) => {
-                        return res.json();
-                    })
-                    .then((res) => {
-                        if(res.status != 200) {
-                            throw new Error("Failed to get blog data");
-                        }
-
-                        return res.data;
-                    }).catch((err) => {
-                        console.error(err);
-                    });
-                
+                const blogs = await fetchRecentBlogPosts();
                 this.recentBlogPosts = blogs;
+
             } catch(err) {
                 console.error(err);
+                throw(err);
+            }
+        },
+
+        async uploadNewBlogPost(newPostData) {
+            try {
+                // try to upload new post data
+                const newPost = await uploadNewBlogPost(newPostData);
+
+                // if successfull, update recent blog posts
+                this.recentBlogPosts.push(newPost);
+
+                // finally return the new post data
+                return newPost;
+
+            } catch(err) {
+                console.error(err);
+                throw(err);
             }
         }
     }

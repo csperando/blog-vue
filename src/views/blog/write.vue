@@ -2,30 +2,49 @@
     import { base_path } from "../../config";
     import { ref, computed } from "vue";
     import { useRouter } from 'vue-router';
+    import { initBlogStore } from "../../stores/blog.store";
     import postTile from "../../components/postTile.vue";
 
     const route = useRouter();
+    const blogStore = initBlogStore();
 
+    // new post data
     const title = ref("");
     const author = ref("Coleman Sperando");
     const markdown = ref("");
     const description = ref("");
+    const thumbnail = ref("");
+    const mime = ref("");
 
-    // file inputs cannot use v-model
+    // for tile preview
     const thumbnailBase64 = ref("");
     const thumbnailMimeType = ref("");
 
     const newPostData = computed(() => {
-        return { title: title.value, author: author.value, markdown: markdown.value, html: "<p>error</p>", description: description.value };
+        return {
+            title: title.value,
+            author: author.value,
+            markdown: markdown.value,
+            html: "<p>error</p>",
+            description: description.value,
+            thumbnail: thumbnail.value,
+            mime: mime.value,
+        };
     });
 
     const readFile = async (event) => {
         try {
-            // Preview image file on upload
+            // get image data by input id
             const imageData = document.getElementById("input-thumbnail").files[0] || null;
-            thumbnailMimeType.value = imageData.type;
+            
+            // validators
+            if(imageData.size > 51200) {
+                // console.log(imageData.size);
+                throw(new Error("Image too large. Must be below 50KB."));
+            }
+            
+            // convert to array buffer and parse bytes, then convert to base64
             const b = await imageData.arrayBuffer();
-
             let base64String = "";
             let bytes = new Uint8Array(b);
             let l = bytes.byteLength;
@@ -34,7 +53,14 @@
             }
             base64String = btoa(base64String);
             
+            // update preview tile
             thumbnailBase64.value = base64String;
+            thumbnailMimeType.value = imageData.type;
+
+            // update new post data object
+            thumbnail.value = base64String;
+            mime.value = imageData.type;
+
         } catch(err) {
             console.error(err);
         }
@@ -45,47 +71,8 @@
     }
 
     const submit = async () => {
-
-        // Generate a .md markup file from the ser input
-        // Store markup and other meta data in form data object
-        const blob = new Blob([newPostData.value.markdown], { type: "text/plain;charset=utf-8" });
-        const markdownFile = new File([blob], 'test.md', { type: "text/plain" });
-        const data = new FormData();
-        data.append("author", newPostData.value.author);
-        data.append("html", newPostData.value.html);
-        data.append("title", newPostData.value.title);
-        data.append("description", newPostData.value.description);
-        data.append("markdown", markdownFile);
-
-        // thumbnail
-        const imageData = document.getElementById("input-thumbnail").files[0] || null;
-        data.append("thumbnail", imageData);
-
-        // Generate http request data
-        // POST form data to create a new post
-        // TODO - Handle any errors
-        const endpoint = base_path + "/blog/new";
-        const options = {
-            method: "POST",
-            // headers: { "content-type": "multipart/form-data" }, // DO NOT INCLUDE
-            headers: { "x-auth-token": localStorage.getItem("token") },
-            body: data
-        };
-
-        // submit request for new blog post
-        const res = await fetch(endpoint, options)
-            .then((res) => {
-                return res.json();
-            }).then((res) => {
-                return res;
-            }).catch((err) => {
-                console.error(err);
-            });
-            
-        // redirect to new blog psot page if successfull
-        if(res.status == 200) {
-            route.push({ name: "BlogPost", params: res.data });
-        }
+        const newPost = await blogStore.uploadNewBlogPost(newPostData);
+        route.push({ name: "BlogPost", params: newPost });
     }
 
 </script>
