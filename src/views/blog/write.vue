@@ -4,6 +4,7 @@
     import { useRouter } from 'vue-router';
     import { initBlogStore } from "../../stores/blog.store";
     import postTile from "../../components/postTile.vue";
+    import { convertMarkdownToHTML } from "../../services/blog.service";
 
     const route = useRouter();
     const blogStore = initBlogStore();
@@ -19,6 +20,10 @@
     // for tile preview
     const thumbnailBase64 = ref("");
     const thumbnailMimeType = ref("");
+
+    // for markdown preview
+    const htmlPreview = ref("");
+    const toggleHtmlPreview = ref(false);
 
     const newPostData = computed(() => {
         return {
@@ -66,8 +71,14 @@
         }
     }
 
-    const preview = () => {
-        console.log("preview");
+    const previewMarkdown = async () => {
+        if(!toggleHtmlPreview.value) {
+            const getHtmlRes = await convertMarkdownToHTML(markdown.value);
+            htmlPreview.value = getHtmlRes.html;
+            route.push({ name: "BlogPreview", params: { html: htmlPreview.value} });
+        } 
+
+        toggleHtmlPreview.value = !(toggleHtmlPreview.value);
     }
 
     const submit = async () => {
@@ -92,10 +103,9 @@
                     
                     <br/><br/>
                     
-                    <label for="post-author">Author:</label><br/>
-                    <input type="text" name="author" v-model="author" readonly id="post-author"/>
-                    
-                    <br/><br/>
+                    <!-- <label for="post-author">Author:</label><br/> --->
+                    <input type="hidden" name="author" v-model="author" readonly id="post-author"/>
+                    <!-- <br/><br/> -->
                     
                     <label for="post-description">Description:</label><br/>
                     <input type="text" name="description" v-model="description" id="post-description"/>
@@ -122,14 +132,24 @@
             <div>
                 <br/><br/>
                 
-                <label for="post-markdown">Markdown:</label><br/>
-                <textarea name="markdown" rows="20" cols="120" v-model="markdown" id="post-markdown"></textarea>
+                <label v-if="!toggleHtmlPreview" for="post-markdown">Markdown:</label>
+                <span v-else>HTML:</span>
+                
+                <br/>
+                
+                <textarea v-if="!toggleHtmlPreview" name="markdown" rows="20" cols="120" v-model="markdown" id="post-markdown"></textarea>
+                <router-view v-else/>
                 
                 <br/><br/>
                 
                 <div class="two-col">
                     <input type="button" name="submit" value="submit" @click="submit"/>
-                    <input type="button" name="preview" value="preview" @click="preview"/>
+
+                    <input type="button" 
+                        name="preview" 
+                        :value="(toggleHtmlPreview) ? 'back' : 'preview'" 
+                        @click="previewMarkdown" 
+                        />
                 </div>
             </div>
 

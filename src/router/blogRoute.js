@@ -1,6 +1,7 @@
 import BlogList from "../views/blog/list.vue";
 import BlogPost from "../views/blog/post.vue";
 import BlogWrite from "../views/blog/write.vue";
+import BlogPreview from "../views/blog/preview.vue";
 
 export const blogListRoute = {
     path: "/blog", 
@@ -21,5 +22,13 @@ export const blogWriteRoute = {
     path: "/blog/edit",
     name: "BlogWrite",
     component: BlogWrite,
-    props: false
+    props: false,
+    children: [
+        {
+            path: "/blog/edit/preview/:html?",
+            name: "BlogPreview",
+            component: BlogPreview,
+            props: (route) => { route.params },
+        }
+    ]
 };

@@ -15,24 +15,30 @@
 
 <template>
     <section>
-        <p>
-            <b>{{ params.title.toUpperCase() }}</b>
-            <br/>
-            {{ params.description }}
-            <br/><br/>
-            <em>{{ params.author }}</em>
-            <br/>
-            <em>{{ displayDate }}</em>
-            <br/>
-        </p>
+        <div>
+            <img v-if="params.thumbnail != ''" :src="previewImg" width="250px" height="250px"/>
+
+            <p>
+                <b>{{ params.title.toUpperCase() }}</b>
+                <br/>
+                
+                {{ params.description }}
+                <br/><br/>
+                
+                <em>{{ params.author }}</em>
+                <br/>
+                
+                <em>{{ displayDate }}</em>
+                <br/>
+            </p>
+        </div>
         
         <br/>
         <hr/>
         <br/>
 
-        <img :src="previewImg" width="250px" height="250px"/>
 
-        <div v-html="params.html"></div>
+        <article v-html="params.html"></article>
     </section>
 </template>
 
@@ -42,7 +48,14 @@
         flex-direction: column;
     }
 
-    section > div {
+    div {
+        display: flex;
+        flex-direction: row;
+        gap: 50px;
+        align-items: center;
+    }
+
+    article {
         display: flex;
         flex-direction: column;
         position: relative;
