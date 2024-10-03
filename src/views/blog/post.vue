@@ -24,7 +24,7 @@
 <template>
     <section>
         <div>
-            <img v-if="currentBlogPost?.thumbnail != ''" :src="previewImg" width="250px" height="250px"/>
+            <img v-if="currentBlogPost?.thumbnail" :src="previewImg" width="250px" height="250px"/>
 
             <p>
                 <b>{{ currentBlogPost?.title.toUpperCase() }}</b>
