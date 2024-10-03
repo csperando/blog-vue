@@ -20,8 +20,7 @@
                         <p>
                             <router-link :to="{
                                 name: 'BlogPost',
-                                // params: { html: blog.html || 'error', title: blog.title } 
-                                params: blog
+                                params: { id: blog._id || 'error' }
                             }">{{ blog.title.toUpperCase() }}</router-link>
                             
                             <br/>

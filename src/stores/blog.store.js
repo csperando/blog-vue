@@ -2,7 +2,7 @@
 import { defineStore } from "pinia";
 import { base_path } from "../config";
 
-import { fetchRecentBlogPosts, uploadNewBlogPost } from "../services/blog.service";
+import { fetchRecentBlogPosts, fetchBlogByID, uploadNewBlogPost } from "../services/blog.service";
 
 export const initBlogStore = defineStore("blogStore", {
     // state
@@ -42,6 +42,18 @@ export const initBlogStore = defineStore("blogStore", {
 
                 // finally return the new post data
                 return newPost;
+
+            } catch(err) {
+                console.error(err);
+                throw(err);
+            }
+        },
+
+        async fetchBlogByID(id) {
+            try {
+                const p = await fetchBlogByID(id);
+                this.currentBlogPost = p;
+                return p;
 
             } catch(err) {
                 console.error(err);

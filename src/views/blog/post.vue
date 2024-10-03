@@ -1,31 +1,39 @@
 <script setup>
     import { useRoute } from 'vue-router';
-    import { computed } from 'vue';
+    import { computed, onBeforeMount, ref } from 'vue';
+    import { initBlogStore } from "../../stores/blog.store";
+    import { storeToRefs } from 'pinia';
 
     const route = useRoute();
     const params = route.params;
+
+    const blogStore = initBlogStore();
+    let { currentBlogPost } = storeToRefs(blogStore);
     
-    const displayDate = computed(() => {
-        const d = new Date(Date.parse(params.created));
-        return d.toDateString();
+    const previewImg = ref("");
+    const displayDate = ref("");
+    
+    onBeforeMount(async () => {
+        currentBlogPost = await blogStore.fetchBlogByID(params.id);
+        previewImg.value = 'data:' + currentBlogPost?.mime + ';base64, ' + currentBlogPost?.thumbnail;
+        displayDate.value = (new Date(Date.parse(currentBlogPost.created))).toDateString();
     });
 
-    const previewImg = computed(() => 'data:' + params.mime + ';base64, ' + params.thumbnail);
 </script>
 
 <template>
     <section>
         <div>
-            <img v-if="params.thumbnail != ''" :src="previewImg" width="250px" height="250px"/>
+            <img v-if="currentBlogPost?.thumbnail != ''" :src="previewImg" width="250px" height="250px"/>
 
             <p>
-                <b>{{ params.title.toUpperCase() }}</b>
+                <b>{{ currentBlogPost?.title.toUpperCase() }}</b>
                 <br/>
                 
-                {{ params.description }}
+                {{ currentBlogPost?.description }}
                 <br/><br/>
                 
-                <em>{{ params.author }}</em>
+                <em>{{ currentBlogPost?.author }}</em>
                 <br/>
                 
                 <em>{{ displayDate }}</em>
@@ -38,7 +46,7 @@
         <br/>
 
 
-        <article v-html="params.html"></article>
+        <article v-html="currentBlogPost?.html"></article>
     </section>
 </template>
 

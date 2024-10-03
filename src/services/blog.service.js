@@ -28,6 +28,27 @@ export const fetchRecentBlogPosts = async () => {
     }
 }
 
+export const fetchBlogByID = async (id) => {
+    try {
+        const endpoint = base_path + "/blog/find/" + id;
+        
+        return await fetch(endpoint)
+            .then((res) => {
+                return res.json();
+            })
+            .then((res) => {
+                if(res.status != 200) {
+                    throw new Error("Failed to get blog data");
+                }
+
+                return res.data;
+            });
+
+    } catch(err) {
+        throw(err);
+    }
+}
+
 export const uploadNewBlogPost = async (newPostData) => {
     try {
         console.log(newPostData);
