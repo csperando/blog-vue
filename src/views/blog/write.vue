@@ -83,7 +83,7 @@
 
     const submit = async () => {
         const newPost = await blogStore.uploadNewBlogPost(newPostData);
-        route.push({ name: "BlogPost", params: newPost });
+        route.push({ name: "BlogPost", params: { id: newPost._id } });
     }
 
 </script>
