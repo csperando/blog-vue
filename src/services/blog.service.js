@@ -51,8 +51,6 @@ export const fetchBlogByID = async (id) => {
 
 export const uploadNewBlogPost = async (newPostData) => {
     try {
-        console.log(newPostData);
-        
         // Generate a .md markup file from the ser input
         const markdownFile = generateMarkdownFile(newPostData.value.markdown);
         
