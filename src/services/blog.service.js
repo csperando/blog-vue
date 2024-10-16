@@ -63,6 +63,11 @@ export const uploadNewBlogPost = async (newPostData) => {
         data.append("thumbnail", newPostData.value.thumbnail);
         data.append("mime", newPostData.value.mime);
         data.append("markdown", markdownFile);
+        
+        // add keywords string if truthy, parsed as an array on the API side
+        if(newPostData.value.keywords) {
+            data.append("keywords", newPostData.value.keywords);
+        }
 
         // Generate http request data
         // POST form data to create a new post

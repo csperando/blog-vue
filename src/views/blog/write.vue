@@ -35,7 +35,7 @@
             description: description.value,
             thumbnail: thumbnail.value,
             mime: mime.value,
-            keywords: keywords.value.split(",").map((el) => el.trim()),
+            keywords: keywords.value.trim(),
         };
     });
 
