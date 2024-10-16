@@ -16,6 +16,7 @@
     const description = ref("");
     const thumbnail = ref("");
     const mime = ref("");
+    const keywords = ref("");
 
     // for tile preview
     const thumbnailBase64 = ref("");
@@ -34,6 +35,7 @@
             description: description.value,
             thumbnail: thumbnail.value,
             mime: mime.value,
+            keywords: keywords.value.split(",").map((el) => el.trim()),
         };
     });
 
@@ -114,6 +116,11 @@
 
                     <label for="input-thumbnail">Thumbnail:</label><br/>
                     <input type="file" name="thumbnail" @change="readFile" id="input-thumbnail"/>
+                    
+                    <br/><br/>
+
+                    <label for="post-keywords">Keywords:</label><br/>
+                    <input type="text" name="keywords" v-model="keywords" id="post-keywords"/>
                     
                     <br/><br/>
                 </div>

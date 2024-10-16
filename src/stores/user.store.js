@@ -29,6 +29,11 @@ export const initUserStore = defineStore("userStore", {
 
         async validateToken() {
             const token = localStorage.getItem("token");
+
+            if(!token) {
+                return false;
+            }
+            
             const res = await validateToken(token);
             
             if(res.status == 200) {
