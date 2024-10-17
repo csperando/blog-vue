@@ -7,6 +7,10 @@ const props = defineProps({
     "timestamp": String,
     "description": String,
     "thumbnail": String,
+    "preview": {
+        type: Boolean,
+        default: true,
+    },
     "thumbnailBase64": {
         type: String,
         default: "",
