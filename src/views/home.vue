@@ -2,6 +2,11 @@
 <script setup>
     import postTile from '../components/postTile.vue';
     import postTileSmall from '../components/postTileSmall.vue';
+    import { initBlogStore } from '../stores/blog.store';
+    import { storeToRefs } from 'pinia';
+    
+    const blogStore = initBlogStore();
+    const { recentBlogPosts } = storeToRefs(blogStore);
 
 </script>
 
@@ -9,26 +14,27 @@
     <main>
         <section id="featured" class="two-col">
 
-            <postTile title="test title" timestamp="12 Sept 2024" description="An example blog post" thumbnail="logo.svg"/>
+            <p v-if="!recentBlogPosts">Loading...</p>
 
-            <div class="post-container">
+            <postTile v-if="recentBlogPosts" 
+                :title="recentBlogPosts[0].title" 
+                :timestamp="recentBlogPosts[0].created" 
+                :description="recentBlogPosts[0].description" 
+                :preview="true"
+                :thumbnailMimeType="recentBlogPosts[0].mime"
+                :thumbnailBase64="recentBlogPosts[0].thumbnail"/>
+
+            <div v-if="recentBlogPosts" class="post-container">
                 <!-- smaller blog post components -->
-
-                <!--
-                    <div class="post-wrapper-sm" v-for="i in [1, 2, 3, 4]">
-                        <img src="../assets/logo.svg" width="50" height="50" alt="test"/>
-                        <div>
-                            <p>Title - {{ i }}</p>
-                        </div>
-                    </div>
-                -->
-                
-                <postTileSmall v-for="i in [1, 2, 3, 4]" 
-                    :title="'Another Test - ' + i" 
-                    timestamp="12 Sept 2024" 
-                    description="An example blog post" 
-                    thumbnail="logo.svg"
+                <postTileSmall v-for="(post, index) in recentBlogPosts"
+                    :title="post.title" 
+                    :timestamp="post.created" 
+                    :description="post.description"
+                    :thumbnailMimeType="post.mime"
+                    :thumbnailBase64="post.thumbnail"
                     class="post-wrapper-sm"
+                    
+                    v-show="index"
                     />
                 
                 <div class="post-wrapper-sm">

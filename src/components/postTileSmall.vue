@@ -1,20 +1,32 @@
 
 <script setup>
+import { computed } from "vue";
 
 const props = defineProps({
     "title": String,
     "timestamp": String,
     "description": String,
-    "thumbnail": String
+    "thumbnail": String,
+    "thumbnailBase64": {
+        type: String,
+        default: "",
+    },
+    "thumbnailMimeType": {
+        type: String,
+        default: "Image/jpeg",
+    },
 });
 
 const img = "assets/" + props.thumbnail;
+
+const previewImg = computed(() => 'data:' + props.thumbnailMimeType + ';base64, ' + props.thumbnailBase64);
 
 </script>
 
 <template>
     <div class="wrapper" :title="description + ' - ' + timestamp">
-        <img :src="img" width="50px" height="50px" alt="todo - add alt text"/>
+        <img v-if="!preview" :src="img" width="50px" height="50px" alt="todo - add alt text"/>
+        <img v-else :src="previewImg" width="50px" height="50px" alt="todo - add alt text"/>
 
         <div class="metas">
             <p><b>{{ title.toUpperCase() }}</b></p>
