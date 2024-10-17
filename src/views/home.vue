@@ -4,9 +4,16 @@
     import postTileSmall from '../components/postTileSmall.vue';
     import { initBlogStore } from '../stores/blog.store';
     import { storeToRefs } from 'pinia';
+    import { useRouter } from 'vue-router';
     
+    const route = useRouter();
+
     const blogStore = initBlogStore();
     const { recentBlogPosts } = storeToRefs(blogStore);
+
+    const link = function(id) {
+        route.push({ name: "BlogPost", params: { id: id } });
+    }
 
 </script>
 
@@ -22,7 +29,10 @@
                 :description="recentBlogPosts[0].description" 
                 :preview="true"
                 :thumbnailMimeType="recentBlogPosts[0].mime"
-                :thumbnailBase64="recentBlogPosts[0].thumbnail"/>
+                :thumbnailBase64="recentBlogPosts[0].thumbnail"
+                @click="link(recentBlogPosts[0]._id)"
+                class="link"
+                />
 
             <div v-if="recentBlogPosts" class="post-container">
                 <!-- smaller blog post components -->
@@ -32,9 +42,10 @@
                     :description="post.description"
                     :thumbnailMimeType="post.mime"
                     :thumbnailBase64="post.thumbnail"
-                    class="post-wrapper-sm"
+                    class="post-wrapper-sm link"
                     
                     v-show="index"
+                    @click="link(post._id)"
                     />
                 
                 <div class="post-wrapper-sm">
@@ -88,6 +99,11 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: 20px;
+    }
+
+    .link:hover {
+        cursor: pointer;
+        filter: brightness(0.5);
     }
 
     /* TODO - add media breakpoints */
