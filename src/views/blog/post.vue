@@ -1,4 +1,6 @@
 <script setup>
+    import '../../assets/gh.css';
+
     import { useRoute } from 'vue-router';
     import { computed, onBeforeMount, ref } from 'vue';
     import { initBlogStore } from "../../stores/blog.store";
@@ -46,7 +48,7 @@
         <br/>
 
 
-        <article v-html="currentBlogPost?.html"></article>
+        <article v-html="currentBlogPost?.html" class="markdown-body"></article>
     </section>
 </template>
 
