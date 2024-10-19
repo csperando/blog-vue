@@ -2,7 +2,8 @@
 import { defineStore } from "pinia";
 import { base_path } from "../config";
 
-import { fetchRecentBlogPosts, fetchBlogByID, uploadNewBlogPost } from "../services/blog.service";
+// import * from "../services/blog.service";
+import { fetchRecentBlogPosts, fetchBlogByID, uploadNewBlogPost, fetchTopKeywords, fetchBlogsByKeyword } from "../services/blog.service";
 
 export const initBlogStore = defineStore("blogStore", {
     // state
@@ -10,6 +11,8 @@ export const initBlogStore = defineStore("blogStore", {
         return {
             currentBlogPost: null,
             recentBlogPosts: null,
+            topKeywords: null,
+            blogsByTopKeyword: null,
         }
     },
 
@@ -17,6 +20,8 @@ export const initBlogStore = defineStore("blogStore", {
     getters: {
         getCurrentBlogPost: (state) => (state.currentBlogPost),
         getRecentBlogPosts: (state) => (state.recentBlogPosts),
+        getTopKeywords: (state) => (state.topKeywords),
+        getBlogsByTopKeyword: (state) => (state.blogsByTopKeyword),
     },
 
     // actions
@@ -59,6 +64,35 @@ export const initBlogStore = defineStore("blogStore", {
                 console.error(err);
                 throw(err);
             }
-        }
+        },
+        
+        async fetchTopKeywords() {
+            try {
+                const keys = await fetchTopKeywords();
+                this.topKeywords = keys;
+                
+                if(keys.length) {
+                    await this.fetchBlogsByKeyword(keys[0]._id);
+                }
+
+                return keys;
+
+            } catch(err) {
+                console.error(err);
+                throw(err);
+            }
+        },
+
+        async fetchBlogsByKeyword(keyword) {
+            try {
+                const p = await fetchBlogsByKeyword(keyword);
+                this.blogsByTopKeyword = p;
+                return p;
+
+            } catch(err) {
+                console.error(err);
+                throw(err);
+            }
+        },
     }
 });

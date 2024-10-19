@@ -1,8 +1,12 @@
 
 <script setup>
     import { computed } from "vue";
+    import { useRouter } from 'vue-router';
+    
+    const route = useRouter();
 
     const props = defineProps({
+        "postId": String,
         "title": String,
         "timestamp": String,
         "description": String,
@@ -24,13 +28,16 @@
     });
 
     const img = "assets/" + props.thumbnail;
-
     const previewImg = computed(() => 'data:' + props.thumbnailMimeType + ';base64, ' + props.thumbnailBase64);
+
+    const link = function() {
+        route.push({ name: "BlogPost", params: { id: props.postId } });
+    }
 
 </script>
 
 <template>
-    <div class="wrapper">
+    <div class="wrapper" @click="link">
 
         <img v-if="!preview" :src="img" width="250px" height="250px" alt="todo - add alt text"/>
         <img v-else :src="previewImg" width="250px" height="250px" alt="New Post Thumbnail Preview"/>

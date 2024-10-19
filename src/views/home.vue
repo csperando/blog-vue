@@ -9,11 +9,7 @@
     const route = useRouter();
 
     const blogStore = initBlogStore();
-    const { recentBlogPosts } = storeToRefs(blogStore);
-
-    const link = function(id) {
-        route.push({ name: "BlogPost", params: { id: id } });
-    }
+    const { recentBlogPosts, topKeywords, blogsByTopKeyword } = storeToRefs(blogStore);
 
 </script>
 
@@ -24,28 +20,27 @@
             <p v-if="!recentBlogPosts">Loading...</p>
 
             <postTile v-if="recentBlogPosts" 
+                :postId="recentBlogPosts[0]._id"
                 :title="recentBlogPosts[0].title" 
                 :timestamp="recentBlogPosts[0].created" 
                 :description="recentBlogPosts[0].description" 
                 :preview="true"
                 :thumbnailMimeType="recentBlogPosts[0].mime"
                 :thumbnailBase64="recentBlogPosts[0].thumbnail"
-                @click="link(recentBlogPosts[0]._id)"
                 class="link"
                 />
 
             <div v-if="recentBlogPosts" class="post-container">
                 <!-- smaller blog post components -->
                 <postTileSmall v-for="(post, index) in recentBlogPosts"
+                    :postId="post._id"
                     :title="post.title" 
                     :timestamp="post.created" 
                     :description="post.description"
                     :thumbnailMimeType="post.mime"
                     :thumbnailBase64="post.thumbnail"
-                    class="post-wrapper-sm link"
-                    
                     v-show="index"
-                    @click="link(post._id)"
+                    class="post-wrapper-sm link"
                     />
                 
                 <div class="post-wrapper-sm">
@@ -55,20 +50,31 @@
             </div>
         </section>
 
-        <section id="category">
-            <p>DevOps</p>
+        <section id="category" v-if="topKeywords">
+            <p>{{ topKeywords[0]._id }}</p>
 
-            <div class="two-col">
+            <div class="two-col" v-if="blogsByTopKeyword">
                 
-                <postTile title="I love DevOps!" timestamp="14 Sept 2024" description="A love story" thumbnail="logo.svg"/>
+                <postTile :title="blogsByTopKeyword[0].title" 
+                    :postId="blogsByTopKeyword[0]._id"
+                    :timestamp="blogsByTopKeyword[0].created" 
+                    :description="blogsByTopKeyword[0].description" 
+                    :preview="true"
+                    :thumbnailMimeType="blogsByTopKeyword[0].mime"
+                    :thumbnailBase64="blogsByTopKeyword[0].thumbnail"
+                    class="link"
+                    />
                 
                 <div class="post-container">
-                    <postTileSmall v-for="i in [1, 2, 3, 4]" 
-                        :title="'DevOps Test - ' + i" 
-                        timestamp="12 Sept 2024" 
-                        description="An example blog post" 
-                        thumbnail="logo.svg"
-                        class="post-wrapper-sm"
+                    <postTileSmall v-for="(post, index) in blogsByTopKeyword"
+                        :postId="post._id"
+                        :title="post.title" 
+                        :timestamp="post.created" 
+                        :description="post.description"
+                        :thumbnailMimeType="post.mime"
+                        :thumbnailBase64="post.thumbnail"
+                        v-show="index"
+                        class="post-wrapper-sm link"
                         />
                 </div>
             </div>

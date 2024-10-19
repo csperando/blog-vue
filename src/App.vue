@@ -17,6 +17,7 @@
         // check if user stored auth token is still valid and auto-login
         await userStore.validateToken();
         await blogStore.fetchRecentBlogPosts();
+        await blogStore.fetchTopKeywords();
     });
 
 </script>

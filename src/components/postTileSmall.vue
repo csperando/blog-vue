@@ -1,34 +1,41 @@
 
 <script setup>
-import { computed } from "vue";
+    import { computed } from "vue";
+    import { useRouter } from 'vue-router';
+        
+    const route = useRouter();
 
-const props = defineProps({
-    "title": String,
-    "timestamp": String,
-    "description": String,
-    "thumbnail": String,
-    "preview": {
-        type: Boolean,
-        default: true,
-    },
-    "thumbnailBase64": {
-        type: String,
-        default: "",
-    },
-    "thumbnailMimeType": {
-        type: String,
-        default: "Image/jpeg",
-    },
-});
+    const props = defineProps({
+        "postId": String,
+        "title": String,
+        "timestamp": String,
+        "description": String,
+        "thumbnail": String,
+        "preview": {
+            type: Boolean,
+            default: true,
+        },
+        "thumbnailBase64": {
+            type: String,
+            default: "",
+        },
+        "thumbnailMimeType": {
+            type: String,
+            default: "Image/jpeg",
+        },
+    });
 
-const img = "assets/" + props.thumbnail;
+    const img = "assets/" + props.thumbnail;
+    const previewImg = computed(() => 'data:' + props.thumbnailMimeType + ';base64, ' + props.thumbnailBase64);
 
-const previewImg = computed(() => 'data:' + props.thumbnailMimeType + ';base64, ' + props.thumbnailBase64);
+    const link = function() {
+        route.push({ name: "BlogPost", params: { id: props.postId } });
+    }
 
 </script>
 
 <template>
-    <div class="wrapper" :title="description + ' - ' + timestamp">
+    <div class="wrapper" :title="description + ' - ' + timestamp" @click="link">
         <img v-if="!preview" :src="img" width="50px" height="50px" alt="todo - add alt text"/>
         <img v-else :src="previewImg" width="50px" height="50px" alt="todo - add alt text"/>
 
