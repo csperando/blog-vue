@@ -50,7 +50,7 @@
             </div>
         </section>
 
-        <section id="category" v-if="topKeywords">
+        <section id="category" v-if="topKeywords && blogsByTopKeyword">
             <p>{{ topKeywords[0]._id }}</p>
 
             <div class="two-col" v-if="blogsByTopKeyword">
