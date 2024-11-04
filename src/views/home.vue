@@ -17,7 +17,11 @@
     <main>
         <section id="featured" class="two-col">
 
-            <p v-if="!recentBlogPosts">Loading...</p>
+            <p v-if="!recentBlogPosts">
+                Loading...
+                <br/><br/>
+                I'm on the free tier, so this might take a minute...
+            </p>
 
             <postTile v-if="recentBlogPosts" 
                 :postId="recentBlogPosts[0]._id"

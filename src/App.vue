@@ -33,7 +33,11 @@
             <RouterView />
 
             <template #fallback>
-                Loading...
+                <p>
+                    Loading...
+                    <br/>
+                    I'm on the free tier, so this might take a minute...
+                </p>
             </template>
         </Suspense>
     </main>
