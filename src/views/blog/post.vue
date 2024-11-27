@@ -25,7 +25,7 @@
 
 <template>
     <section>
-        <div>
+        <div class="post-head">
             <img v-if="currentBlogPost?.thumbnail" :src="previewImg" width="250px" height="250px"/>
 
             <p>
@@ -53,12 +53,18 @@
 </template>
 
 <style scoped>
+    * {
+        position: relative;
+        margin: 0;
+        padding: 0;
+    }
+
     section {
         display: flex;
         flex-direction: column;
     }
 
-    div {
+    .post-head {
         display: flex;
         flex-direction: row;
         gap: 50px;
@@ -71,5 +77,16 @@
         position: relative;
         width: 70vw;
         left: 15vw;
+    }
+
+    @media only screen and (max-width: 720px) {
+        .post-head {
+            flex-direction: column;
+        }
+
+        article {
+            width: 80vw;
+            left: 5vw;
+        }
     }
 </style>

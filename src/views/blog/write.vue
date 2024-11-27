@@ -182,4 +182,10 @@
     textarea {
         width: 100%;
     }
+
+    @media only screen and (max-width: 720px) {
+        .two-col {
+            flex-direction: column;
+        }
+    }
 </style>

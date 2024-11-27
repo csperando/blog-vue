@@ -69,8 +69,14 @@
                     <router-link :to="{ path: '/about' }">About</router-link>
                 </div>
                 
+
+                <div v-if="!loggedIn" class="float-right" @click="toggleDropdown">
+                    <router-link :to="{ name: 'Login' }">Login</router-link>
+                </div>
+                
+                
                 <div v-if="loggedIn" class="link-wrap float-right" @click="toggleDropdown">
-                    <router-link @click="logout" :to="{ name: 'Login' }">Logout</router-link>
+                    <router-link :to="{ name: 'BlogWrite' }">Create</router-link>
                 </div>
                 
                 <div v-if="loggedIn" class="link-wrap float-right" @click="toggleDropdown">
@@ -78,11 +84,7 @@
                 </div>
                 
                 <div v-if="loggedIn" class="link-wrap float-right" @click="toggleDropdown">
-                    <router-link :to="{ name: 'BlogWrite' }">Create</router-link>
-                </div>
-                
-                <div v-if="!loggedIn" class="float-right" @click="toggleDropdown">
-                    <router-link :to="{ name: 'Login' }">Login</router-link>
+                    <router-link @click="logout" :to="{ name: 'Login' }">Logout</router-link>
                 </div>
             </div>
         </div>
@@ -139,6 +141,7 @@
             left: 0;
             background-color: white;
             gap: 20px;
+            padding-bottom: 20px;
         }
 
         .link-wrap {
