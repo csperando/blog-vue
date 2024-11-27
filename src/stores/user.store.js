@@ -40,6 +40,8 @@ export const initUserStore = defineStore("userStore", {
                 this.loggedIn = true;
                 this.userData = res.data;
                 return true;
+            } else {
+                localStorage.setItem("token", "");
             }
             
             return true;
