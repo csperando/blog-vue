@@ -3,7 +3,7 @@
     import { storeToRefs } from 'pinia';
 
     const userStore = inject('userStore');
-    const { userData } = storeToRefs(userStore);
+    const { userData, userPosts } = storeToRefs(userStore);
 
 </script>
 
@@ -20,8 +20,10 @@
         <br/><br/>
         
         <div>
-            <h2>Your posts: ({{ 0 }})</h2>
-
+            <h2>Your posts: ({{ userPosts.length }})</h2>
+            <ul>
+                <li v-for="post in userPosts">{{ post.title }}</li>
+            </ul>
         </div>
         
         <br/><br/>
@@ -29,7 +31,7 @@
         <div>
             <h2>Top keywords:</h2>
             <ul>
-                <li>test</li>
+                <li>ToDo</li>
             </ul>
         </div>
 

@@ -20,6 +20,46 @@ export const validateToken = async (token) => {
     }
 }
 
+export const fetchUserData = async (userid) => {
+    try {
+        const endpoint = base_path + "/user/" + userid;
+
+        const res = await fetch(endpoint)
+            .then((res) => {
+                return res.json();
+            }).then((res) => {
+                return res;
+            }).catch((err) => {
+                console.error(err);
+            });
+
+        return res;
+
+    } catch(err) {
+
+    }
+}
+
+export const fetchUserPosts = async (userid) => {
+    try {
+        const endpoint = base_path + "/user/posts/" + userid;
+
+        const res = await fetch(endpoint)
+            .then((res) => {
+                return res.json();
+            }).then((res) => {
+                return res;
+            }).catch((err) => {
+                console.error(err);
+            });
+
+        return res;
+
+    } catch(err) {
+
+    }
+}
+
 export const login = async (username, password) => {
     try {
         const endpoint = base_path + "/auth/login";

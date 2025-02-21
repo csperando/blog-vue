@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { validateToken, login } from "../services/user.service";
+import { validateToken, fetchUserData, fetchUserPosts, login } from "../services/user.service";
 
 export const initUserStore = defineStore("userStore", {
     // state
@@ -7,6 +7,7 @@ export const initUserStore = defineStore("userStore", {
         return {
             loggedIn: false,
             userData: null,
+            userPosts: null,
         }
     },
 
@@ -14,13 +15,15 @@ export const initUserStore = defineStore("userStore", {
     getters: {
         getLoggedIn: (state) => (state.loggedIn),
         getUserData: (state) => (state.userData),
+        getUserPosts: (state) => (state.userPosts),
     },
 
     // actions
     actions: {
-        async fetchUserData() {
+        async fetchUserData(userid) {
             try {
-                return {};
+                const userData = await fetchUserData(userid);
+                return userData;
 
             } catch(err) {
                 console.error(err);
@@ -34,14 +37,19 @@ export const initUserStore = defineStore("userStore", {
                 return false;
             }
             
+            // validate token and update user data
             const res = await validateToken(token);
-            
             if(res.status == 200) {
                 this.loggedIn = true;
                 this.userData = res.data;
-                return true;
             } else {
                 localStorage.setItem("token", "");
+            }
+
+            // additional user data
+            const posts = await fetchUserPosts(this.userData._id || "error");
+            if(posts.status == 200) {
+                this.userPosts = posts.data;
             }
             
             return true;
