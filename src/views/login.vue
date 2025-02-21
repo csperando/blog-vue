@@ -6,15 +6,22 @@
     const userStore = initUserStore();
     const username = ref("");
     const password = ref("");
+    const displayError = ref(false);
 
     const route = useRouter();
 
     const login = async (e) => {
         e.preventDefault();
+        displayError.value = false;
 
         const success = await userStore.login(username.value, password.value);
         if(success) {
             route.push({ name: "Home" });
+        } else {
+            displayError.value = true;
+            setTimeout(() => {
+                displayError.value = false;
+            }, 3000);
         }
     }
 
@@ -41,6 +48,10 @@
             <div>
                 <input type="button" name="submit" value="submit" @click="login"/>
             </div>
+
+            <div v-if="displayError" class="error">
+                <p>Invalid credentials. Please try again.</p>
+            </div>
         </form>
     </section>
 
@@ -55,4 +66,10 @@
         gap: 15px;
         margin-bottom: 30px;
     }
+
+    .error {
+        color: red;
+        font-weight: bold;
+    }
+
 </style>
