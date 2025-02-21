@@ -5,23 +5,37 @@
     import { initBlogStore } from '../stores/blog.store';
     import { storeToRefs } from 'pinia';
     import { useRouter } from 'vue-router';
+    import { onMounted, ref, watch } from 'vue';
     
     const route = useRouter();
 
     const blogStore = initBlogStore();
     const { recentBlogPosts, topKeywords, blogsByTopKeyword } = storeToRefs(blogStore);
 
+    // create a simple loading animation for the elipses after the text "loading"
+    const dots = ref("...");
+    onMounted(async () => {
+        const loadingInterval = setInterval(() => {
+            let l = dots.value.length;
+            l = (l + 1) % 4;
+            dots.value = ".".repeat(l);
+        }, 500);
+        
+        watch(recentBlogPosts, async() => {
+            clearInterval(loadingInterval);
+        });
+    });
 </script>
 
 <template>
     <main>
         <p v-if="!recentBlogPosts">
-            Loading...
+            Loading<span>{{dots}}</span>
             <br/><br/>
-            I'm on the free tier, so this might take a minute...
+            I'm on the free tier, so this might take a minute.
         </p>
 
-        <section id="featured">
+        <section v-if="recentBlogPosts" id="featured">
             <p class="section-header">Most Recent:</p>
 
             <div class="two-col desktop">
@@ -74,7 +88,7 @@
             </div>
         </section>
 
-        <section id="category" v-if="topKeywords && blogsByTopKeyword">
+        <section v-if="recentBlogPosts && topKeywords && blogsByTopKeyword" id="category" >
             <p class="section-header">{{ topKeywords[0]._id }}</p>
 
             <div class="two-col desktop" v-if="blogsByTopKeyword">
