@@ -1,14 +1,14 @@
 <script setup>
-    import { ref } from 'vue';
-    import { initUserStore } from '../stores/user.store';
+    import { ref, inject } from 'vue';
     import { useRouter } from 'vue-router';
 
-    const userStore = initUserStore();
+    const route = useRouter();
+
+    const userStore = inject('userStore');
+
     const username = ref("");
     const password = ref("");
     const displayError = ref(false);
-
-    const route = useRouter();
 
     const login = async (e) => {
         e.preventDefault();

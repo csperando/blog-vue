@@ -14,7 +14,6 @@
     // top level template components
     import navbar from './components/navbar.vue';
 
-
     onMounted(async () => {
         // check if user stored auth token is still valid and auto-login
         await userStore.validateToken();

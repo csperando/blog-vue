@@ -1,15 +1,13 @@
 
 <script setup>
+    import { inject, onMounted, ref, watch } from 'vue';
+    import { useRouter } from 'vue-router';
+    import { storeToRefs } from 'pinia';
+
     import postTile from '../components/postTile.vue';
     import postTileSmall from '../components/postTileSmall.vue';
-    import { initBlogStore } from '../stores/blog.store';
-    import { storeToRefs } from 'pinia';
-    import { useRouter } from 'vue-router';
-    import { onMounted, ref, watch } from 'vue';
-    
-    const route = useRouter();
 
-    const blogStore = initBlogStore();
+    const blogStore = inject('blogStore');
     const { recentBlogPosts, topKeywords, blogsByTopKeyword } = storeToRefs(blogStore);
 
     // create a simple loading animation for the elipses after the text "loading"

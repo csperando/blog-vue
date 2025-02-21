@@ -1,8 +1,8 @@
 <script setup>
-    import { initBlogStore } from '../../stores/blog.store';
+    import { inject } from 'vue';
     import { storeToRefs } from 'pinia';
     
-    const blogStore = initBlogStore();
+    const blogStore = inject('blogStore');
     const { recentBlogPosts } = storeToRefs(blogStore);
 
 </script>

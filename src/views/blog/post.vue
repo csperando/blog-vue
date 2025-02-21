@@ -2,14 +2,13 @@
     import '../../assets/gh.css';
 
     import { useRoute } from 'vue-router';
-    import { computed, onBeforeMount, ref } from 'vue';
-    import { initBlogStore } from "../../stores/blog.store";
+    import { inject, onBeforeMount, ref } from 'vue';
     import { storeToRefs } from 'pinia';
 
     const route = useRoute();
     const params = route.params;
 
-    const blogStore = initBlogStore();
+    const blogStore = inject('blogStore');
     let { currentBlogPost } = storeToRefs(blogStore);
     
     const previewImg = ref("");
