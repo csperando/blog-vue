@@ -1,17 +1,20 @@
 <script setup>
     import { base_path } from "../../config";
-    import { ref, computed } from "vue";
+    import { ref, computed, inject } from "vue";
+    import { storeToRefs } from 'pinia';
+
     import { useRouter } from 'vue-router';
-    import { initBlogStore } from "../../stores/blog.store";
+    
     import postTile from "../../components/postTile.vue";
     import { convertMarkdownToHTML } from "../../services/blog.service";
 
     const route = useRouter();
-    const blogStore = initBlogStore();
+    const blogStore = inject('blogStore');
+    const userStore = inject('userStore');
+    let { userData } = storeToRefs(userStore);
 
     // new post data
     const title = ref("");
-    const author = ref("Coleman Sperando");
     const markdown = ref("");
     const description = ref("");
     const thumbnail = ref("");
@@ -29,7 +32,8 @@
     const newPostData = computed(() => {
         return {
             title: title.value,
-            author: author.value,
+            author: (userData.value.firstName + " " + userData.value.lastName),
+            username: userData.value.username,
             markdown: markdown.value,
             html: "<p>error</p>",
             description: description.value,
@@ -84,8 +88,15 @@
     }
 
     const submit = async () => {
-        const newPost = await blogStore.uploadNewBlogPost(newPostData);
-        route.push({ name: "BlogPost", params: { id: newPost._id } });
+        const newPost = await blogStore.uploadNewBlogPost(newPostData)
+            .catch((err) => {
+                alert(err);
+            });
+
+        if(newPost) {
+            route.push({ name: "BlogPost", params: { id: newPost._id } });
+        }
+
     }
 
 </script>
@@ -97,17 +108,12 @@
         <br/>
 
         <form>
-
             <div class="two-col">
                 <div>
                     <label for="post-title">Title:</label><br/>
                     <input type="text" name="title" v-model="title" id="post-title"/>
                     
                     <br/><br/>
-                    
-                    <!-- <label for="post-author">Author:</label><br/> --->
-                    <input type="hidden" name="author" v-model="author" readonly id="post-author"/>
-                    <!-- <br/><br/> -->
                     
                     <label for="post-description">Description:</label><br/>
                     <input type="text" name="description" v-model="description" id="post-description"/>

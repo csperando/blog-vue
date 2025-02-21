@@ -1,13 +1,15 @@
 <script setup>
     // event methods
-    import { onMounted } from 'vue';
+    import { onMounted, provide } from 'vue';
 
     // state management
     import { initUserStore } from './stores/user.store';
     const userStore = initUserStore();
+    provide('userStore', userStore);
     
     import { initBlogStore } from './stores/blog.store';
     const blogStore = initBlogStore();
+    provide('blogStore', blogStore);
     
     // top level template components
     import navbar from './components/navbar.vue';

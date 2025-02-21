@@ -93,12 +93,15 @@ export const fetchBlogsByKeyword = async (keyword) => {
 
 export const uploadNewBlogPost = async (newPostData) => {
     try {
+        // console.log(newPostData);
+
         // Generate a .md markup file from the ser input
         const markdownFile = generateMarkdownFile(newPostData.value.markdown);
-        
+
         // Store markup and other meta data in form data object
         const data = new FormData();
         data.append("author", newPostData.value.author);
+        data.append("username", newPostData.value.username);
         data.append("html", newPostData.value.html);
         data.append("title", newPostData.value.title);
         data.append("description", newPostData.value.description);
@@ -128,7 +131,7 @@ export const uploadNewBlogPost = async (newPostData) => {
                 return res.json();
             }).then((res) => {
                 if(res.status != 200) {
-                    throw new Error("Failed to get blog data");
+                    throw new Error(res.message);
                 }
                 
                 return res.data;
