@@ -9,26 +9,12 @@
 
     const blogStore = inject('blogStore');
     const { recentBlogPosts, topKeywords, blogsByTopKeyword } = storeToRefs(blogStore);
-
-    // create a simple loading animation for the elipses after the text "loading"
-    const dots = ref("...");
-    onMounted(async () => {
-        const loadingInterval = setInterval(() => {
-            let l = dots.value.length;
-            l = (l + 1) % 4;
-            dots.value = ".".repeat(l);
-        }, 500);
-        
-        watch(recentBlogPosts, async() => {
-            clearInterval(loadingInterval);
-        });
-    });
 </script>
 
 <template>
     <main>
         <p v-if="!recentBlogPosts">
-            Loading<span>{{dots}}</span>
+            Loading<span class="dots"></span>
             <br/><br/>
             I'm on the free tier, so this might take a minute.
         </p>
@@ -174,6 +160,18 @@
 
     .mobile {
         display: none;
+    }
+
+    @keyframes loading-dots {
+        0% { content: ""; }
+        33% { content: "."; }
+        66% { content: ".."; }
+        99% { content: "..."; }
+    }
+
+    .dots::after {
+        content: "";
+        animation: loading-dots 1.5s infinite steps(3);
     }
 
     @media only screen and (max-width: 720px) {
