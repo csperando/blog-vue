@@ -22,7 +22,11 @@
         <div>
             <h2>Your posts: ({{ userPosts.length }})</h2>
             <ul>
-                <li v-for="post in userPosts">{{ post.title }}</li>
+                <li v-for="post in userPosts">
+                    <router-link :to="{ name: 'BlogEdit', params: { id: post._id } }">
+                        {{ post.title }}
+                    </router-link>
+                </li>
             </ul>
         </div>
         

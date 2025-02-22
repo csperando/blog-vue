@@ -2,7 +2,7 @@ import { createMemoryHistory, createRouter } from "vue-router";
 
 import { homeRoute } from "./homeRoute.js";
 import { aboutRoute } from "./aboutRoute.js";
-import { blogPostRoute, blogListRoute, blogWriteRoute } from "./blogRoute.js";
+import { blogPostRoute, blogListRoute, blogWriteRoute, blogEditRoute } from "./blogRoute.js";
 import { profileRoute, loginRoute } from "./userRoute.js";
 
 const routes = [
@@ -15,6 +15,7 @@ const routes = [
     blogListRoute,
     blogPostRoute,
     blogWriteRoute,
+    blogEditRoute,
 ];
 
 export const router = createRouter({

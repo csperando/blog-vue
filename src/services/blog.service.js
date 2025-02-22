@@ -142,6 +142,57 @@ export const uploadNewBlogPost = async (newPostData) => {
     }
 }
 
+export const uploadEditedBlogPost = async (newPostData, id) => {
+    try {
+        // console.log(newPostData);
+
+        // Generate a .md markup file from the ser input
+        const markdownFile = generateMarkdownFile(newPostData.value.markdown);
+
+        // Store markup and other meta data in form data object
+        const data = new FormData();
+        data.append("author", newPostData.value.author);
+        data.append("username", newPostData.value.username);
+        data.append("html", newPostData.value.html);
+        data.append("title", newPostData.value.title);
+        data.append("description", newPostData.value.description);
+        data.append("thumbnail", newPostData.value.thumbnail);
+        data.append("mime", newPostData.value.mime);
+        data.append("markdown", markdownFile);
+        
+        // add keywords string if truthy, parsed as an array on the API side
+        if(newPostData.value.keywords) {
+            data.append("keywords", newPostData.value.keywords);
+        }
+
+        // Generate http request data
+        // POST form data to create a new post
+        // TODO - Handle any errors
+        const endpoint = base_path + "/blog/edit/" + id;
+        const options = {
+            method: "PUT",
+            // headers: { "content-type": "multipart/form-data" }, // DO NOT INCLUDE
+            headers: { "x-auth-token": localStorage.getItem("token") },
+            body: data
+        };
+
+        // submit request for new blog post
+        return await fetch(endpoint, options)
+            .then((res) => {
+                return res.json();
+            }).then((res) => {
+                if(res.status != 200) {
+                    throw new Error(res.message);
+                }
+                
+                return res.data;
+            });
+
+    } catch(err) {
+        throw(err);
+    }
+}
+
 export const convertMarkdownToHTML = async (markdownString) => {
     try {
         const endpoint = base_path + "/blog/markdown";
