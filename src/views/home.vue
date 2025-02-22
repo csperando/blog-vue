@@ -20,7 +20,7 @@
         </p>
 
         <section v-if="recentBlogPosts" id="featured">
-            <p class="section-header">Most Recent:</p>
+            <h1 class="section-header">Most Recent:</h1>
 
             <div class="two-col desktop">
                 <postTile v-if="recentBlogPosts" 
@@ -73,7 +73,7 @@
         </section>
 
         <section v-if="recentBlogPosts && topKeywords && blogsByTopKeyword" id="category" >
-            <p class="section-header">{{ topKeywords[0]._id }}</p>
+            <h2 class="section-header">Popular: <em>{{ topKeywords[0]._id }}</em></h2>
 
             <div class="two-col desktop" v-if="blogsByTopKeyword">
                 
