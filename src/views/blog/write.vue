@@ -81,7 +81,7 @@
         if(!toggleHtmlPreview.value) {
             const getHtmlRes = await convertMarkdownToHTML(markdown.value);
             htmlPreview.value = getHtmlRes.html;
-            route.push({ name: "BlogPreview", params: { html: htmlPreview.value} });
+            route.push({ name: "NewBlogPreview", params: { html: htmlPreview.value} });
         } 
 
         toggleHtmlPreview.value = !(toggleHtmlPreview.value);

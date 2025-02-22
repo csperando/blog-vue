@@ -27,7 +27,7 @@ export const blogWriteRoute = {
     children: [
         {
             path: "/blog/write/preview/:html?",
-            name: "BlogPreview",
+            name: "NewBlogPreview",
             component: BlogPreview,
             props: (route) => { route.params },
         }
@@ -42,7 +42,7 @@ export const blogEditRoute = {
     children: [
         {
             path: "/blog/edit/:id/preview/:html?",
-            name: "BlogPreview",
+            name: "EditedBlogPreview",
             component: BlogPreview,
             props: (route) => { route.params },
         }
