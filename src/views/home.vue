@@ -35,7 +35,7 @@
                     />
     
                 <div v-if="recentBlogPosts" class="post-container">
-                    <postTileSmall v-for="(post, index) in recentBlogPosts"
+                    <postTileSmall v-for="(post, index) in recentBlogPosts.slice(0, 6)"
                         :postId="post._id"
                         :title="post.title" 
                         :timestamp="post.created" 
@@ -55,7 +55,7 @@
 
             <div v-if="recentBlogPosts" class="mobile">  
                 <div class="post-container">    
-                    <postTileSmall v-for="(post, index) in recentBlogPosts"
+                    <postTileSmall v-for="(post, index) in recentBlogPosts.slice(0, 6)"
                         :postId="post._id"
                         :title="post.title" 
                         :timestamp="post.created" 
