@@ -19,7 +19,7 @@
 
         <br/><br/>
         
-        <div>
+        <div v-if="userPosts.length || 0">
             <h2>Your posts: ({{ userPosts.length }})</h2>
             <ul>
                 <li v-for="post in userPosts">
