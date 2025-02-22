@@ -20,7 +20,7 @@
         <br/><br/>
         
         <div v-if="userPosts">
-            <h2>Your posts: ({{ userPosts.length || 0 }})</h2>
+            <h2>Your posts: ({{ userPosts?.length || 0 }})</h2>
             <ul>
                 <li v-for="post in userPosts">
                     <router-link :to="{ name: 'BlogEdit', params: { id: post._id } }">
