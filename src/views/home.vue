@@ -4,6 +4,7 @@
     import { useRouter } from 'vue-router';
     import { storeToRefs } from 'pinia';
 
+    import loading from '@/components/misc/loading.vue';
     import postTile from '../components/postTile.vue';
     import postTileSmall from '../components/postTileSmall.vue';
 
@@ -14,7 +15,7 @@
 <template>
     <main>
         <p v-if="!recentBlogPosts">
-            Loading<span class="dots"></span>
+            <loading :is-loading="true"/>
             <br/><br/>
             I'm on the free tier, so this might take a minute.
         </p>
@@ -151,6 +152,10 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: 20px;
+    }
+
+    .link {
+        margin: 20px;
     }
 
     .link:hover {
