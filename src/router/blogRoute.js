@@ -12,6 +12,7 @@ export const blogListRoute = {
     props: true,
 };
 
+// TODO - https://csperando.github.io/blog-vue/?blog=6710095e31ff794f68ccabc6
 export const blogPostSlugRoute = {
     path: "/blog/:slug",
     component: BlogPost,
