@@ -22,10 +22,21 @@ jobs:
           npm install
           npm run build
 
-      # if gh-pages does not exist: execute `git subtree push --prefix dist/ origin gh-pages`
-      - name: Check branch existence
+      # # if gh-pages does not exist: execute `git subtree push --prefix dist/ origin gh-pages`
+      # - name: Check if gh-pages exists
+      #   run: |
+      #     git ls-remote origin gh-pages
+
+      - name: Test 1
+        id: test
         run: |
-          git ls-remote origin gh-pages
+          echo "COLOR=red" >> $GITHUB_OUTPUT
+
+      - name: Test 2
+        env:
+          COLOR: ${{ steps.test.outputs.COLOR }}
+        run: |
+          echo "The color is $COLOR"
 
       - name: Force commit updated dist
         run: |
