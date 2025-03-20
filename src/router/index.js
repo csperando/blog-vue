@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
+const test = import.meta.url;
 
 // static routes and error pages
 import { homeRoute } from "./homeRoute.js";
@@ -11,6 +12,7 @@ import { profileRoute, loginRoute } from "./userRoute.js";
 
 // for auth
 import { initUserStore } from "../stores/user.store.js";
+
 
 // setup routes
 const routes = [
@@ -38,12 +40,14 @@ const routes = [
 ];
 
 export const router = createRouter({
-    history: createWebHashHistory("/blog-vue/"),
+    history: createWebHashHistory("/blog-vue/#/"),
     routes: routes,
 });
 
 router.beforeEach((to) => {
     const userStore = initUserStore();
+
+    console.log(test);
 
     if(to.meta.requiresAuth && !userStore.getLoggedIn) {
         return { name: "NotAllowed" };
