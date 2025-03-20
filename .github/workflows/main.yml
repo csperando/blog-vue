@@ -30,7 +30,7 @@ jobs:
       - name: Check if gh-pages exists
         id: exists
         run: |
-          echo "EXISTS"=`git ls-remote origin gh-pagest` >> $GITHUB_OUTPUT
+          echo "EXISTS"=`git ls-remote origin gh-pages` >> $GITHUB_OUTPUT
 
       - name: Push to subtree
         if: ${{ steps.exists.outputs.EXISTS }}
