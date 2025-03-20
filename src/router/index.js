@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-const test = import.meta.url;
 
 // static routes and error pages
 import { homeRoute } from "./homeRoute.js";
@@ -46,8 +45,6 @@ export const router = createRouter({
 
 router.beforeEach((to) => {
     const userStore = initUserStore();
-
-    console.log(test);
 
     if(to.meta.requiresAuth && !userStore.getLoggedIn) {
         return { name: "NotAllowed" };

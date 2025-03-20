@@ -22,6 +22,8 @@ jobs:
           npm install
           npm run build
 
+      # if gh-pages does not exist: execute `git subtree push --prefix dist/ origin gh-pages`
+
       - name: Force commit updated dist
         run: |
           git add dist -f

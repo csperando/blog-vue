@@ -50,7 +50,6 @@
             
             // validators
             if(imageData.size > 51200) {
-                // console.log(imageData.size);
                 throw(new Error("Image too large. Must be below 50KB."));
             }
             

@@ -16,7 +16,7 @@ export const validateToken = async (token) => {
 
         return res;
     } catch(err) {
-        // console.log(err);
+        console.error(err);
     }
 }
 
@@ -77,6 +77,6 @@ export const login = async (username, password) => {
 
         return res;
     } catch(err) {
-        // console.log(err);
+        console.error(err);
     }
 }
