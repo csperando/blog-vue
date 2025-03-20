@@ -27,16 +27,17 @@ jobs:
       #   run: |
       #     git ls-remote origin gh-pages
 
-      - name: Test 1
-        id: test
+      - name: Check if gh-pages exists
+        id: exists
         run: |
-          echo "COLOR"=`git ls-remote origin gh-pagest` >> $GITHUB_OUTPUT
+          echo "EXISTS"=`git ls-remote origin gh-pagest` >> $GITHUB_OUTPUT
 
-      - name: Test 2
+      - name: Run if exists
         env:
-          COLOR: ${{ steps.test.outputs.COLOR }}
+          EXISTS: ${{ steps.exists.outputs.EXISTS }}
+        if: ${{ $EXISTS }}
         run: |
-          echo "The color is $COLOR"
+          echo "The branch exists."
 
       - name: Force commit updated dist
         run: |
