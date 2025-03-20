@@ -32,12 +32,10 @@ jobs:
         run: |
           echo "EXISTS"=`git ls-remote origin gh-pagest` >> $GITHUB_OUTPUT
 
-      - name: Run if exists
-        env:
-          EXISTS: ${{ steps.exists.outputs.EXISTS }}
-        if: ${{ steps.exists.outputs.EXISTS }}
+      - name: Create gh-pages branch
+        if: ${{ !steps.exists.outputs.EXISTS }}
         run: |
-          echo "The branch exists."
+          echo "Create branch here."
 
       - name: Force commit updated dist
         run: |
