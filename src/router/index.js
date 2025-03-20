@@ -1,24 +1,27 @@
-import { createMemoryHistory, createRouter } from "vue-router";
+import { createMemoryHistory, createRouter, createWebHistory } from "vue-router";
 
 import { homeRoute } from "./homeRoute.js";
 import { aboutRoute } from "./aboutRoute.js";
-import { blogPostRoute, blogListRoute, blogWriteRoute, blogEditRoute } from "./blogRoute.js";
+
+import * as blogs from "./blogRoute.js"; // { blogPostRoute, blogListRoute, blogWriteRoute, blogEditRoute } from "./blogRoute.js";
 import { profileRoute, loginRoute } from "./userRoute.js";
 
 const routes = [
-    homeRoute,
+    blogs.blogPostSlugRoute,
+    
     aboutRoute,
+    homeRoute,
 
     loginRoute,
     profileRoute,
 
-    blogListRoute,
-    blogPostRoute,
-    blogWriteRoute,
-    blogEditRoute,
+    blogs.blogListRoute,
+    blogs.blogPostRoute,
+    blogs.blogWriteRoute,
+    blogs.blogEditRoute,
 ];
 
 export const router = createRouter({
-    history: createMemoryHistory(),
+    history: createWebHistory("/blog-vue/"),
     routes: routes,
 });

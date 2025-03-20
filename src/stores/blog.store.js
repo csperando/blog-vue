@@ -2,13 +2,13 @@
 import { defineStore } from "pinia";
 import { base_path } from "../config";
 
-// import * from "../services/blog.service";
-import { fetchRecentBlogPosts, fetchBlogByID, uploadNewBlogPost, fetchTopKeywords, fetchBlogsByKeyword, uploadEditedBlogPost } from "../services/blog.service";
+import * as BlogServices from "../services/blog.service";
 
 export const initBlogStore = defineStore("blogStore", {
     // state
     state: () => {
         return {
+            BlogServices: BlogServices,
             currentBlogPost: null,
             recentBlogPosts: null,
             topKeywords: null,
@@ -28,7 +28,7 @@ export const initBlogStore = defineStore("blogStore", {
     actions: {
         async fetchRecentBlogPosts() {
             try {
-                const blogs = await fetchRecentBlogPosts();
+                const blogs = await this.BlogServices.fetchRecentBlogPosts();
                 this.recentBlogPosts = blogs;
 
             } catch(err) {
@@ -40,7 +40,7 @@ export const initBlogStore = defineStore("blogStore", {
         async uploadNewBlogPost(newPostData) {
             try {
                 // try to upload new post data
-                const newPost = await uploadNewBlogPost(newPostData);
+                const newPost = await this.BlogServices.uploadNewBlogPost(newPostData);
 
                 // if successfull, update recent blog posts
                 this.recentBlogPosts.push(newPost);
@@ -57,7 +57,7 @@ export const initBlogStore = defineStore("blogStore", {
         async uploadEditedBlogPost(newPostData, id) {
             try {
                 // try to upload new post data
-                const editedPost = await uploadEditedBlogPost(newPostData, id);
+                const editedPost = await this.BlogServices.uploadEditedBlogPost(newPostData, id);
 
                 // finally return the new post data
                 return editedPost;
@@ -68,9 +68,21 @@ export const initBlogStore = defineStore("blogStore", {
             }
         },
 
+        async fetchBlogBySlug(slug) {
+            try {
+                const p = await this.BlogServices.fetchBlogBySlug(slug);
+                this.currentBlogPost = p;
+                return p;
+
+            } catch(err) {
+                console.error(err);
+                throw(err);
+            }
+        },
+        
         async fetchBlogByID(id) {
             try {
-                const p = await fetchBlogByID(id);
+                const p = await this.BlogServices.fetchBlogByID(id);
                 this.currentBlogPost = p;
                 return p;
 
@@ -82,7 +94,7 @@ export const initBlogStore = defineStore("blogStore", {
         
         async fetchTopKeywords() {
             try {
-                const keys = await fetchTopKeywords();
+                const keys = await this.BlogServices.fetchTopKeywords();
                 this.topKeywords = keys;
                 
                 if(keys.length) {
@@ -99,7 +111,7 @@ export const initBlogStore = defineStore("blogStore", {
 
         async fetchBlogsByKeyword(keyword) {
             try {
-                const p = await fetchBlogsByKeyword(keyword);
+                const p = await this.BlogServices.fetchBlogsByKeyword(keyword);
                 this.blogsByTopKeyword = p;
                 return p;
 

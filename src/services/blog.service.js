@@ -49,6 +49,27 @@ export const fetchTopKeywords = async () => {
     }
 }
 
+export const fetchBlogBySlug = async (slug) => {
+    try {
+        const endpoint = base_path + "/blog/findBySlug/" + slug;
+        
+        return await fetch(endpoint)
+            .then((res) => {
+                return res.json();
+            })
+            .then((res) => {
+                if(res.status != 200) {
+                    throw new Error("Failed to get blog data");
+                }
+
+                return res.data;
+            });
+
+    } catch(err) {
+        throw(err);
+    }
+}
+
 export const fetchBlogByID = async (id) => {
     try {
         const endpoint = base_path + "/blog/find/" + id;

@@ -1,11 +1,12 @@
 <script setup>
     import '../../assets/gh.css';
 
-    import { useRoute } from 'vue-router';
+    import { useRoute, useRouter } from 'vue-router';
     import { inject, onBeforeMount, ref } from 'vue';
     import { storeToRefs } from 'pinia';
 
     const route = useRoute();
+    const router = useRouter();
     const params = route.params;
 
     const blogStore = inject('blogStore');
@@ -15,9 +16,20 @@
     const displayDate = ref("");
     
     onBeforeMount(async () => {
-        currentBlogPost = await blogStore.fetchBlogByID(params.id);
+        if(params.slug) {
+            currentBlogPost = await blogStore.fetchBlogBySlug(params.slug);
+        } else {
+            currentBlogPost = await blogStore.fetchBlogByID(params.id); 
+        }
+
+        // update url if slug exists
+        if(currentBlogPost.slug) {
+            router.replace("/blog/" + currentBlogPost.slug);
+        }
+
         previewImg.value = 'data:' + currentBlogPost?.mime + ';base64, ' + currentBlogPost?.thumbnail;
         displayDate.value = (new Date(Date.parse(currentBlogPost.created))).toDateString();
+
     });
 
 </script>
