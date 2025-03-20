@@ -23,6 +23,9 @@ jobs:
           npm run build
 
       # if gh-pages does not exist: execute `git subtree push --prefix dist/ origin gh-pages`
+      - name: Check branch existence
+        run: |
+          git ls-remote origin gh-pages
 
       - name: Force commit updated dist
         run: |
