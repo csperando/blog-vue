@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 const test = import.meta.url;
 
 // static routes and error pages
@@ -40,7 +40,7 @@ const routes = [
 ];
 
 export const router = createRouter({
-    history: createWebHashHistory("/blog-vue/"),
+    history: createWebHistory("/blog-vue/"),
     routes: routes,
 });
 
