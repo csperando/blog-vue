@@ -4,12 +4,13 @@ import LoginView from "../views/login.vue";
 export const profileRoute = {
     path: "/profile", 
     name: "Profile", 
-    component: ProfileView 
+    component: ProfileView,
+    meta: { requiresAuth: true },
 };
 
 export const loginRoute = {
     path: "/login", 
     name: "Login", 
-    component: LoginView 
+    component: LoginView,
 };
 

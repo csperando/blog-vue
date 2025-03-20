@@ -14,7 +14,6 @@ import { initUserStore } from "../stores/user.store.js";
 
 // setup routes
 const routes = [
-    
     // static
     aboutRoute,
     homeRoute,
@@ -23,14 +22,17 @@ const routes = [
     blogs.blogPostSlugRoute,
     blogs.blogListRoute,
     blogs.blogPostRoute,
-
-    // requires auth
+    
+    // blogs -requires auth
     blogs.blogWriteRoute,
     blogs.blogEditRoute,
+    
+    // user
     loginRoute,
+    // user - requires auth
     profileRoute,
 
-    // not found
+    // errors
     errors.notFound,
     errors.notAllowed,
 ];
