@@ -40,7 +40,7 @@ const routes = [
 ];
 
 export const router = createRouter({
-    history: createWebHashHistory("/blog-vue/#/"),
+    history: createWebHashHistory("/blog-vue/"),
     routes: routes,
 });
 
