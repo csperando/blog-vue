@@ -30,7 +30,7 @@ jobs:
       - name: Test 1
         id: test
         run: |
-          echo "COLOR=red" >> $GITHUB_OUTPUT
+          echo "COLOR"="red" >> $GITHUB_OUTPUT
 
       - name: Test 2
         env:
