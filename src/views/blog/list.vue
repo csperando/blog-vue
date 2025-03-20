@@ -58,7 +58,7 @@
             <br/>
         </div>
         
-        <div v-if="recentBlogPosts.length">
+        <div v-if="recentBlogPosts?.length || false">
             <div v-for="blog in display" class="tile-wrap">
                 <post-tile :postId="blog._id"
                     :title="blog.title" 

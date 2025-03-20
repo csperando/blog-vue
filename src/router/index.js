@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from "vue-router";
+import { createRouter, createWebHistory, createWebHashHistory } from "vue-router";
 
 // static routes and error pages
 import { homeRoute } from "./homeRoute.js";
@@ -38,7 +38,7 @@ const routes = [
 ];
 
 export const router = createRouter({
-    history: createWebHistory("/blog-vue/"),
+    history: createWebHashHistory("/blog-vue/"),
     routes: routes,
 });
 
