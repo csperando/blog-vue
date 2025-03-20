@@ -16,10 +16,15 @@
     const displayDate = ref("");
     
     onBeforeMount(async () => {
-        if(params.slug) {
-            currentBlogPost = await blogStore.fetchBlogBySlug(params.slug);
-        } else {
-            currentBlogPost = await blogStore.fetchBlogByID(params.id); 
+        // gross, fix this, it hurts to look at
+        try {
+            if(params.slug) {
+                currentBlogPost = await blogStore.fetchBlogBySlug(params.slug);
+            } else {
+                currentBlogPost = await blogStore.fetchBlogByID(params.id); 
+            }
+        } catch(err) {
+            currentBlogPost = await blogStore.fetchBlogByID(params.slug); 
         }
 
         // update url if slug exists

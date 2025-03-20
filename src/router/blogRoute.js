@@ -15,14 +15,14 @@ export const blogListRoute = {
 export const blogPostSlugRoute = {
     path: "/blog/:slug",
     component: BlogPost,
-    props: (route) => { route.params }
+    props: (route) => { route.params },
 };
 
 export const blogPostRoute = {
     path: "/blog/:id",
     name: "BlogPost",
     component: BlogPost,
-    props: (route) => { route.params }
+    props: (route) => { route.params },
 };
 
 export const blogWriteRoute = {
@@ -36,8 +36,10 @@ export const blogWriteRoute = {
             name: "NewBlogPreview",
             component: BlogPreview,
             props: (route) => { route.params },
+            meta: { requiresAuth: true },
         }
-    ]
+    ],
+    meta: { requiresAuth: true },
 };
 
 export const blogEditRoute = {
@@ -51,6 +53,8 @@ export const blogEditRoute = {
             name: "EditedBlogPreview",
             component: BlogPreview,
             props: (route) => { route.params },
+            meta: { requiresAuth: true },
         }
-    ]
+    ],
+    meta: { requiresAuth: true },
 };
