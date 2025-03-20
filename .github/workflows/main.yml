@@ -43,5 +43,3 @@ jobs:
         run: |
           echo "The branch gh-pages does not exist. Creating initial subtree from dist/."
           git subtree push --prefix dist/ origin gh-pages
-
-# test
