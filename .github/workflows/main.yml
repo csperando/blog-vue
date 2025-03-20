@@ -30,7 +30,7 @@ jobs:
       - name: Test 1
         id: test
         run: |
-          echo "COLOR"=`git ls-remote origin gh-pages` >> $GITHUB_OUTPUT
+          echo "COLOR"=`git ls-remote origin gh-pagest` >> $GITHUB_OUTPUT
 
       - name: Test 2
         env:
