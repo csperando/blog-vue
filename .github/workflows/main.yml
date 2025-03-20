@@ -35,7 +35,7 @@ jobs:
       - name: Run if exists
         env:
           EXISTS: ${{ steps.exists.outputs.EXISTS }}
-        if: ${{ $EXISTS }}
+        if: ${{ steps.exists.outputs.EXISTS }}
         run: |
           echo "The branch exists."
 
