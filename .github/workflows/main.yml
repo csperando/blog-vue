@@ -22,27 +22,24 @@ jobs:
           npm install
           npm run build
 
-      # # if gh-pages does not exist: execute `git subtree push --prefix dist/ origin gh-pages`
-      # - name: Check if gh-pages exists
-      #   run: |
-      #     git ls-remote origin gh-pages
+      - name: Force commit updated dist
+        run: |
+          git add dist -f
+          git commit -m "actions automated commit build dist/"
 
       - name: Check if gh-pages exists
         id: exists
         run: |
           echo "EXISTS"=`git ls-remote origin gh-pagest` >> $GITHUB_OUTPUT
 
+      - name: Push to subtree
+        if: ${{ steps.exists.outputs.EXISTS }}
+        run: |
+          echo "Pushing changes to existing branch."
+          git push origin `git subtree split --prefix=dist/ main`:gh-pages --force
+
       - name: Create gh-pages branch
         if: ${{ !steps.exists.outputs.EXISTS }}
         run: |
-          echo "Create branch here."
-
-      - name: Force commit updated dist
-        run: |
-          git add dist -f
-          git commit -m "actions automated commit build dist/"
-
-      # Thank you: https://clontz.org/blog/2014/05/08/git-subtree-push-for-deployment/
-      - name: Push to subtree
-        run: |
-          git push origin `git subtree split --prefix=dist/ main`:gh-pages --force
+          echo "The branch gh-pages does not exist. Creating initial subtree from dist/."
+          git subtree push --prefix dist/ origin gh-pages
