@@ -19,21 +19,38 @@
         // gross, fix this, it hurts to look at
         try {
             if(params.slug) {
-                currentBlogPost = await blogStore.fetchBlogBySlug(params.slug);
+                currentBlogPost.value = await blogStore.fetchBlogBySlug(params.slug);
             } else {
-                currentBlogPost = await blogStore.fetchBlogByID(params.id); 
+                currentBlogPost.value = await blogStore.fetchBlogByID(params.id); 
             }
         } catch(err) {
-            currentBlogPost = await blogStore.fetchBlogByID(params.slug); 
+            console.log("Error getting post by slug.");    
+        } 
+
+        try {
+            currentBlogPost.value = await blogStore.fetchBlogByID(params.slug);
+        } catch(err) {
+            console.log("Error getting post again.");
         }
 
-        // update url if slug exists
-        if(currentBlogPost.slug) {
-            router.replace("/blog/" + currentBlogPost.slug);
-        }
+        try {
+            console.log(currentBlogPost.value);
+    
+            if(!currentBlogPost.value) {
+                router.push({ name: "NotFound" });
+            }
+            
+            // update url if slug exists
+            if(currentBlogPost.slug) {
+                router.replace("/blog/" + currentBlogPost.slug);
+            }
+    
+            previewImg.value = 'data:' + currentBlogPost?.mime + ';base64, ' + currentBlogPost?.thumbnail;
+            displayDate.value = (new Date(Date.parse(currentBlogPost.created))).toDateString();
 
-        previewImg.value = 'data:' + currentBlogPost?.mime + ';base64, ' + currentBlogPost?.thumbnail;
-        displayDate.value = (new Date(Date.parse(currentBlogPost.created))).toDateString();
+        } catch(err) {
+            console.log("Something really went wrong.");
+        }
 
     });
 
