@@ -7,7 +7,7 @@ export const homeRoute = {
     props: true,
     beforeEnter: (to) => {
         if(to.query.blog) {
-            return { path: "/blog/" + to.query.blog };
+            return { name: "BlogPostByName", query: to.query };
         }
     }
 };

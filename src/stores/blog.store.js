@@ -76,7 +76,7 @@ export const initBlogStore = defineStore("blogStore", {
 
             } catch(err) {
                 console.error(err);
-                throw(err);
+                // throw(err);
             }
         },
         
@@ -88,7 +88,7 @@ export const initBlogStore = defineStore("blogStore", {
 
             } catch(err) {
                 console.error(err);
-                throw(err);
+                // throw(err);
             }
         },
         

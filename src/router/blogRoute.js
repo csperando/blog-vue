@@ -12,17 +12,18 @@ export const blogListRoute = {
     props: true,
 };
 
-export const blogPostSlugRoute = {
-    path: "/blog/:slug",
-    component: BlogPost,
-    props: (route) => { route.params },
-};
-
 export const blogPostRoute = {
     path: "/blog/:id",
     name: "BlogPost",
     component: BlogPost,
     props: (route) => { route.params },
+};
+
+export const blogPostSlugRoute = {
+    name: "BlogPostByName",
+    path: "/",
+    component: BlogPost,
+    props: (route) => { route.query },
 };
 
 export const blogWriteRoute = {

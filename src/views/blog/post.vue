@@ -7,7 +7,6 @@
 
     const route = useRoute();
     const router = useRouter();
-    const params = route.params;
 
     const blogStore = inject('blogStore');
     let { currentBlogPost } = storeToRefs(blogStore);
@@ -16,40 +15,34 @@
     const displayDate = ref("");
     
     onBeforeMount(async () => {
-        // gross, fix this, it hurts to look at
         try {
-            if(params.slug) {
-                currentBlogPost.value = await blogStore.fetchBlogBySlug(params.slug);
+            // get blog post data - this component is accessed with either a param id or the slug in the query string
+            if(route.params.id) {
+                const p = route.params.id.trim();
+                currentBlogPost = await blogStore.fetchBlogByID(p);
+            } else if(route.query.blog) {
+                const s = route.query.blog.trim().toLowerCase();
+                currentBlogPost = await blogStore.fetchBlogBySlug(s);
             } else {
-                currentBlogPost.value = await blogStore.fetchBlogByID(params.id); 
+                throw(new Error("Something went wrong searching for a blog post."));
             }
-        } catch(err) {
-            console.log("Error getting post by slug.");    
-        } 
 
-        try {
-            currentBlogPost.value = await blogStore.fetchBlogByID(params.slug);
-        } catch(err) {
-            console.log("Error getting post again.");
-        }
-
-        try {
-            console.log(currentBlogPost.value);
-    
-            if(!currentBlogPost.value) {
-                router.push({ name: "NotFound" });
+            // route info
+            if(!currentBlogPost) {
+                throw(new Error("Something went wrong searching for a blog post."));
             }
             
-            // update url if slug exists
-            if(currentBlogPost.slug) {
-                router.replace("/blog/" + currentBlogPost.slug);
+            if(currentBlogPost?.slug) {
+                router.replace("/?blog=" + currentBlogPost.slug);
             }
     
+            // update page data
             previewImg.value = 'data:' + currentBlogPost?.mime + ';base64, ' + currentBlogPost?.thumbnail;
             displayDate.value = (new Date(Date.parse(currentBlogPost.created))).toDateString();
 
         } catch(err) {
-            console.log("Something really went wrong.");
+            console.error(err);
+            router.push({ name: "NotFound" });
         }
 
     });
