@@ -17,6 +17,8 @@ import { initUserStore } from "../stores/user.store.js";
 const routes = [
     // static
     aboutRoute,
+
+    // !!! includes redirect by blog slug
     homeRoute,
     
     // blogs
