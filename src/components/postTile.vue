@@ -32,7 +32,7 @@
 
     // check length of title and description
     const displayTitle = computed(() => {
-        return (props.title.length <= 25) ? props.title : props.title.substring(0, 25) + "...";
+        return (props.title.length <= 30) ? props.title : props.title.substring(0, 30) + "...";
     });
 
     const displayDescription = computed(() => {
@@ -52,7 +52,7 @@
 </script>
 
 <template>
-    <div class="wrapper" @click="link">
+    <div class="wrapper" @click="link" :title="title">
 
         <img v-if="!preview" :src="img" width="250px" height="250px" alt="todo - add alt text"/>
         <img v-else :src="previewImg" width="250px" height="250px" alt="New Post Thumbnail Preview"/>
