@@ -28,6 +28,11 @@
     const img = "assets/" + props.thumbnail;
     const previewImg = computed(() => 'data:' + props.thumbnailMimeType + ';base64, ' + props.thumbnailBase64);
 
+    // check length of title and description
+    const displayTitle = computed(() => {
+        return (props.title.length <= 15) ? props.title : props.title.substring(0, 15) + "...";
+    });
+
     const link = function() {
         route.push({ name: "BlogPost", params: { id: props.postId } });
     }
@@ -40,7 +45,7 @@
         <img v-else :src="previewImg" width="50px" height="50px" alt="todo - add alt text"/>
 
         <div class="metas">
-            <p><b>{{ title.toUpperCase() }}</b></p>
+            <p class="post-title"><b>{{ displayTitle.toUpperCase() }}</b></p>
         </div>
     </div>
 </template>
@@ -70,6 +75,12 @@
     .wrapper:hover {
         cursor: pointer;
         filter: brightness(0.5);
+    }
+
+    .post-title {
+        overflow-y: hidden;
+        line-height: 18px;
+        height: 18px;
     }
 
     .metas {
