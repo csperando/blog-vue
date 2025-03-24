@@ -32,7 +32,6 @@
                     :preview="true"
                     :thumbnailMimeType="recentBlogPosts[0].mime"
                     :thumbnailBase64="recentBlogPosts[0].thumbnail"
-                    class="link"
                     />
     
                 <div v-if="recentBlogPosts" class="post-container">
@@ -44,7 +43,7 @@
                         :thumbnailMimeType="post.mime"
                         :thumbnailBase64="post.thumbnail"
                         v-show="index"
-                        class="post-wrapper-sm link"
+                        class="post-wrapper-sm"
                         />
                     
                     <div class="post-wrapper-sm">
@@ -63,7 +62,7 @@
                         :description="post.description"
                         :thumbnailMimeType="post.mime"
                         :thumbnailBase64="post.thumbnail"
-                        class="post-wrapper-sm link"
+                        class="post-wrapper-sm"
                         />
                     
                     <div class="post-wrapper-sm">
@@ -85,7 +84,6 @@
                     :preview="true"
                     :thumbnailMimeType="blogsByTopKeyword[0].mime"
                     :thumbnailBase64="blogsByTopKeyword[0].thumbnail"
-                    class="link"
                     />
                 
                 <div class="post-container">
@@ -97,7 +95,7 @@
                         :thumbnailMimeType="post.mime"
                         :thumbnailBase64="post.thumbnail"
                         v-show="index"
-                        class="post-wrapper-sm link"
+                        class="post-wrapper-sm"
                         />
                 </div>
             </div>
@@ -111,7 +109,7 @@
                         :description="post.description"
                         :thumbnailMimeType="post.mime"
                         :thumbnailBase64="post.thumbnail"
-                        class="post-wrapper-sm link"
+                        class="post-wrapper-sm"
                         />
                 </div>
             </div>
@@ -152,15 +150,6 @@
         flex-direction: row;
         flex-wrap: wrap;
         gap: 20px;
-    }
-
-    .link {
-        margin: 20px;
-    }
-
-    .link:hover {
-        cursor: pointer;
-        filter: brightness(0.5);
     }
 
     .mobile {

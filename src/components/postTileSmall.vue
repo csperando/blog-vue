@@ -64,6 +64,12 @@
         border-radius: 5px;
         box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
         filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
+        margin: 20px;
+    }
+
+    .wrapper:hover {
+        cursor: pointer;
+        filter: brightness(0.5);
     }
 
     .metas {

@@ -84,6 +84,12 @@
         border-radius: 5px;
         box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
         filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.3));
+        margin: 20px;
+    }
+
+    .wrapper:hover {
+        cursor: pointer;
+        filter: brightness(0.5);
     }
 
     .time {
