@@ -30,6 +30,21 @@
     const img = "assets/" + props.thumbnail;
     const previewImg = computed(() => 'data:' + props.thumbnailMimeType + ';base64, ' + props.thumbnailBase64);
 
+    // check length of title and description
+    const displayTitle = computed(() => {
+        return (props.title.length <= 25) ? props.title : props.title.substring(0, 25) + "...";
+    });
+
+    const displayDescription = computed(() => {
+        if(props.description.length === 0) {
+            return "Click to read more!";
+        } else if(props.description.length <= 40) {
+            return props.description; 
+        } else {
+            return props.description.substring(0, 40) + "...";
+        }
+    });
+
     const link = function() {
         route.push({ name: "BlogPost", params: { id: props.postId } });
     }
@@ -44,8 +59,8 @@
 
         <div class="metas">
             <span class="time">{{ timestamp }}</span>
-            <p><b>{{ title.toUpperCase() }}</b></p>
-            <p class="description"><em>{{ description }}</em></p>
+            <p class="post-title"><b>{{ displayTitle.toUpperCase() }}</b></p>
+            <p class="description"><em>{{ displayDescription }}</em></p>
         </div>
     </div>
 </template>
@@ -77,6 +92,12 @@
 
     .description {
         font-size: 14px;
+    }
+
+    .post-title, .description {
+        overflow-y: hidden;
+        line-height: 24px;
+        height: 24px;
     }
 
     .metas {
