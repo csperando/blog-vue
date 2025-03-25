@@ -9,5 +9,9 @@ export const homeRoute = {
         if(to.query.blog) {
             return { name: "BlogPostByName", query: to.query };
         }
+
+        if(to.query.series) {
+            return { name: "Series", query: to.query };
+        }
     }
 };

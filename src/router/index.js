@@ -7,6 +7,7 @@ import * as errors from "./errorRoute.js";
 
 // dynamic routes
 import * as blogs from "./blogRoute.js";
+import * as series from "./seriesRoute.js";
 import { profileRoute, loginRoute } from "./userRoute.js";
 
 // for auth
@@ -18,7 +19,7 @@ const routes = [
     // static
     aboutRoute,
 
-    // !!! includes redirect by blog slug
+    // !!! includes redirect by blog/series slug
     homeRoute,
     
     // blogs
@@ -29,6 +30,9 @@ const routes = [
     // blogs -requires auth
     blogs.blogWriteRoute,
     blogs.blogEditRoute,
+
+    // series
+    series.seriesListRoute,
     
     // user
     loginRoute,
