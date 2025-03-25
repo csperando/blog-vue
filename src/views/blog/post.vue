@@ -50,7 +50,7 @@
 </script>
 
 <template>
-    <section>
+    <section class="post-wrap">
         <div class="post-head">
             <img v-if="currentBlogPost?.thumbnail" :src="previewImg" width="250px" height="250px"/>
 
@@ -90,7 +90,13 @@
         flex-direction: column;
     }
 
+    .post-wrap {
+        position: relative;
+        width: 100%;
+    }
+
     .post-head {
+        position: relative;
         display: flex;
         flex-direction: row;
         gap: 50px;
@@ -98,11 +104,12 @@
     }
 
     article {
+        position: relative;
         display: flex;
         flex-direction: column;
         position: relative;
-        width: 70vw;
-        left: 15vw;
+        width: 80%;
+        left: 10%;
     }
 
     @media only screen and (max-width: 720px) {
