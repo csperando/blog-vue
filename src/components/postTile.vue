@@ -81,44 +81,4 @@
         padding: 0;
         box-sizing: border-box;
     }
-
-    /* 
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-color: hsla(160, 100%, 37%, 0.2);
-        padding: 10px;
-        box-sizing: border-box;
-        border-radius: 5px;
-        box-shadow: 5px 5px 5px 0px rgba(0,0,0,0.3);
-        filter: drop-shadow(5px 5px 5px rgba(0,0,0,0.3));
-        margin: 20px;
-    }
-
-    .wrapper:hover {
-        cursor: pointer;
-        filter: brightness(0.5);
-    }
-
-    .time {
-        font-size: 12px;
-    }
-
-    .description {
-        font-size: 14px;
-    }
-
-    .post-title, .description {
-        overflow-y: hidden;
-        line-height: 24px;
-        height: 24px;
-    }
-
-    .metas {
-        width: 100%;
-        text-align: left;
-    } 
-     */
 </style>
