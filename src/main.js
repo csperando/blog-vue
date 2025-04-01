@@ -7,6 +7,8 @@ const pinia = createPinia();
 import { createApp } from 'vue';
 import App from './App.vue';
 
+import './index.css';
+
 createApp(App)
     .use(pinia)
     .use(router)
