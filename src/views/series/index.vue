@@ -43,7 +43,7 @@
     <section>
         <h1>{{ seriesDisplayTitle }}</h1>
 
-        <h2>Todo - description</h2>
+        <h2 class="text-color-red">Todo - description</h2>
 
         <br/><br/>
 

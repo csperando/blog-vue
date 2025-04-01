@@ -14,6 +14,8 @@
     // top level template components
     import navbar from './components/navbar.vue';
 
+    import tailwindcss from 'tailwindcss';
+
     onMounted(async () => {
         // check if user stored auth token is still valid and auto-login
         try {
