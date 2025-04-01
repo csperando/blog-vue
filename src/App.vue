@@ -16,9 +16,15 @@
 
     onMounted(async () => {
         // check if user stored auth token is still valid and auto-login
-        await userStore.validateToken();
-        await blogStore.fetchRecentBlogPosts();
-        await blogStore.fetchTopKeywords();
+        try {
+            await blogStore.fetchRecentBlogPosts();
+            await blogStore.fetchTopKeywords();
+            await userStore.validateToken();
+
+        } catch(err) {
+            console.error(err);
+
+        }
     });
 
 </script>
