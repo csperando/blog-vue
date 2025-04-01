@@ -35,6 +35,13 @@
         return (props.title.length <= 30) ? props.title : props.title.substring(0, 30) + "...";
     });
 
+    const displayDate = computed(() => {
+        const timestamp = Date.parse(props.timestamp);
+        const date = new Date(timestamp);
+        const readable = date.toLocaleDateString();
+        return readable;
+    })
+
     const displayDescription = computed(() => {
         if(props.description.length === 0) {
             return "Click to read more!";
@@ -52,15 +59,17 @@
 </script>
 
 <template>
-    <div class="wrapper" @click="link" :title="title">
+    <div class="flex flex-col items-center justify-between bg-[#00bd7e33] py-2 pl-4 pr-4 m-4 border rounded-sm shadow-md drop-shadow-lg w-[275px] hover:cursor-pointer hover:opacity-60" 
+        @click="link" 
+        :title="title">
 
         <img v-if="!preview" :src="img" width="250px" height="250px" alt="todo - add alt text"/>
         <img v-else :src="previewImg" width="250px" height="250px" alt="New Post Thumbnail Preview"/>
 
-        <div class="metas">
-            <span class="time">{{ timestamp }}</span>
-            <p class="post-title"><b>{{ displayTitle.toUpperCase() }}</b></p>
-            <p class="description"><em>{{ displayDescription }}</em></p>
+        <div class="flex flex-col items-start justify-center w-full py-2">
+            <span class="text-xs">{{ displayDate }}</span>
+            <p class="text-md"><b>{{ displayTitle.toUpperCase() }}</b></p>
+            <p class="text-sm"><em>{{ displayDescription }}</em></p>
         </div>
     </div>
 </template>
@@ -73,6 +82,7 @@
         box-sizing: border-box;
     }
 
+    /* 
     .wrapper {
         display: flex;
         flex-direction: column;
@@ -109,5 +119,6 @@
     .metas {
         width: 100%;
         text-align: left;
-    }
+    } 
+     */
 </style>

@@ -50,7 +50,7 @@
 </script>
 
 <template>
-    <div>
+    <div class="flex flex-col items-center">
         <!-- Search input -->
         <div>
             <search-input :placeholder="'Search blogs by title'" :loading @update-search-input="update"/>
@@ -58,17 +58,17 @@
             <br/>
         </div>
         
-        <div v-if="recentBlogPosts?.length || false">
-            <div v-for="blog in display" class="tile-wrap">
-                <post-tile :postId="blog._id"
-                    :title="blog.title" 
-                    :timestamp="blog.created" 
-                    :description="blog.description" 
-                    :preview="true"
-                    :thumbnailMimeType="blog.mime"
-                    :thumbnailBase64="blog.thumbnail"
-                    class="link"/>
-            </div>
+        <div v-if="recentBlogPosts?.length || false" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-stretch justify-items-stretch">
+            <post-tile 
+                v-for="blog in display"    
+                :postId="blog._id"
+                :title="blog.title" 
+                :timestamp="blog.created" 
+                :description="blog.description" 
+                :preview="true"
+                :thumbnailMimeType="blog.mime"
+                :thumbnailBase64="blog.thumbnail"
+                class="link"/>
         </div>
 
         <div v-else>
@@ -78,14 +78,6 @@
 </template>
 
 <style scoped>
-    .tile-wrap {
-        display: flex;
-        float: left;
-        width: 250px;
-        padding: 10px;
-        margin: 20px;
-    }
-
     .loading-animation {
         position: relative;
         top: 10px;
