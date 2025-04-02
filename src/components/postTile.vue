@@ -25,6 +25,12 @@
             type: String,
             default: "Image/jpeg",
         },
+
+        // style props
+        "width": {
+            type: String,
+            default: "w-[275px]",
+        },
     });
 
     const img = "assets/" + props.thumbnail;
@@ -40,7 +46,7 @@
         const date = new Date(timestamp);
         const readable = date.toLocaleDateString();
         return readable;
-    })
+    });
 
     const displayDescription = computed(() => {
         if(props.description.length === 0) {
@@ -59,7 +65,8 @@
 </script>
 
 <template>
-    <div class="flex flex-col items-center justify-between bg-[#00bd7e33] py-2 pl-4 pr-4 m-4 border rounded-sm shadow-md drop-shadow-lg w-[275px] hover:cursor-pointer hover:opacity-60" 
+    <div class="flex flex-col items-center justify-between bg-[#00bd7e33] border rounded-sm shadow-md drop-shadow-lg w-[275px] hover:cursor-pointer hover:opacity-60 py-1 pl-2 pr-2 m-2 lg:py-2 lg:pl-4 lg:pr-4 lg:m-4"
+        :class="width"
         @click="link" 
         :title="title">
 

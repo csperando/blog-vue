@@ -23,6 +23,12 @@
             type: String,
             default: "Image/jpeg",
         },
+
+        // style props
+        "width": {
+            type: String,
+            default: "w-[275px]",
+        },
     });
 
     const img = "assets/" + props.thumbnail;
@@ -33,6 +39,13 @@
         return (props.title.length <= 15) ? props.title : props.title.substring(0, 15) + "...";
     });
 
+    const displayDate = computed(() => {
+        const timestamp = Date.parse(props.timestamp);
+        const date = new Date(timestamp);
+        const readable = date.toLocaleDateString();
+        return readable;
+    });
+
     const link = function() {
         route.push({ name: "BlogPost", params: { id: props.postId } });
     }
@@ -40,12 +53,17 @@
 </script>
 
 <template>
-    <div class="wrapper" :title="description + ' - ' + timestamp" @click="link">
+    <div class="flex flex-col items-center justify-between bg-[#00bd7e33] py-2 pl-4 pr-4 m-4 border rounded-sm shadow-md drop-shadow-lg hover:cursor-pointer hover:opacity-60"
+        :class="width"
+        :title="description + ' - ' + timestamp" 
+        @click="link">
+
         <img v-if="!preview" :src="img" width="50px" height="50px" alt="todo - add alt text"/>
         <img v-else :src="previewImg" width="50px" height="50px" alt="todo - add alt text"/>
 
-        <div class="metas">
-            <p class="post-title"><b>{{ displayTitle.toUpperCase() }}</b></p>
+        <div class="flex flex-col items-center justify-center w-full py-2">
+            <p class="text-md"><b>{{ displayTitle.toUpperCase() }}</b></p>
+            <span class="text-xs">{{ displayDate }}</span>
         </div>
     </div>
 </template>
@@ -56,36 +74,5 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-    }
-
-    .wrapper {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        background-color: hsla(160, 100%, 37%, 0.2);
-        padding: 5px;
-        box-sizing: border-box;
-        border-radius: 5px;
-        box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
-        filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3));
-        margin: 20px;
-    }
-
-    .wrapper:hover {
-        cursor: pointer;
-        filter: brightness(0.5);
-    }
-
-    .post-title {
-        overflow-y: hidden;
-        line-height: 18px;
-        height: 18px;
-    }
-
-    .metas {
-        width: 100%;
-        text-align: center;
-        font-size: 12px;
     }
 </style>

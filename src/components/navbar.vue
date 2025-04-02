@@ -25,7 +25,7 @@
             </div>
             
             <div class="link-wrap float-left">
-                <router-link :to="{ name: 'Blog' }">Blog</router-link>
+                <router-link :to="{ name: 'Blog' }">Archive</router-link>
             </div>
             
             <div class="link-wrap float-left">
@@ -62,7 +62,7 @@
                 </div>
                 
                 <div class="link-wrap float-left" @click="toggleDropdown">
-                    <router-link :to="{ name: 'Blog' }">Blog</router-link>
+                    <router-link :to="{ name: 'Blog' }">Archive</router-link>
                 </div>
                 
                 <div class="link-wrap float-left" @click="toggleDropdown">

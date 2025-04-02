@@ -1,11 +1,19 @@
 <script setup>
     import { useRoute, useRouter } from 'vue-router';
     import { inject, onBeforeMount, ref } from 'vue';
+    import { storeToRefs } from 'pinia';
 
     const route = useRoute();
     const router = useRouter();
 
     const seriesDisplayTitle = ref("");
+
+    // for testing carosel
+    import tileSlide from "../../components/tileSlide.vue";
+
+    const blogStore = inject('blogStore');
+    const { recentBlogPosts, topKeywords, blogsByTopKeyword } = storeToRefs(blogStore);
+    //
     
     onBeforeMount(async () => {
         try {
@@ -54,5 +62,8 @@
                 <li>Todo - series posts here</li>
             </ul>
         </div>
+
+        <tile-slide :posts="recentBlogPosts" :start="2"/>
+
     </section>
 </template>
