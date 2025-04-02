@@ -18,54 +18,52 @@
 </script>
 
 <template>
-    <nav>
-        <div class="desktop">
-            <div class="link-wrap float-left">
+    <nav class="relative">
+        <div class="relative hidden lg:block">
+            <div class="my-10px mx-2 float-left">
                 <router-link :to="{ name: 'Home' }">Home</router-link>
             </div>
             
-            <div class="link-wrap float-left">
+            <div class="my-10px mx-2 float-left">
                 <router-link :to="{ name: 'Blog' }">Archive</router-link>
             </div>
             
-            <div class="link-wrap float-left">
+            <div class="my-10px mx-2 float-left">
                 <router-link :to="{ path: '/about' }">About</router-link>
             </div>
             
-            <div v-if="loggedIn" class="link-wrap float-right">
+            <div v-if="loggedIn" class="my-10px mx-2 float-right">
                 <router-link @click="logout" :to="{ name: 'Login' }">Logout</router-link>
             </div>
             
-            <div v-if="loggedIn" class="link-wrap float-right">
+            <div v-if="loggedIn" class="my-10px mx-2 float-right">
                 <router-link :to="{ name: 'Profile' }">Profile</router-link>
             </div>
             
-            <div v-if="loggedIn" class="link-wrap float-right">
+            <div v-if="loggedIn" class="my-10px mx-2 float-right">
                 <router-link :to="{ name: 'BlogWrite' }">Create</router-link>
             </div>
             
-            <div v-if="!loggedIn" class="float-right">
+            <div v-if="!loggedIn" class="my-10px mx-2 float-right">
                 <router-link :to="{ name: 'Login' }">Login</router-link>
             </div>
         </div>
         
-        <div class="mobile">
-            <div class="menu-button" @click="toggleDropdown">
-                <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="hsla(160, 100%, 37%, 1)" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
-                </svg>
-            </div>
-
-            <div class="dropdown" v-if="dd">
-                <div class="link-wrap float-left" @click="toggleDropdown">
+        <div class="relative lg:hidden bg-white z-1">
+            <div class="absolute w-full flex flex-col items-center justify-start gap-[20px] p-4 rounded-lg
+                bg-gray-100 border rounded-sm shadow-md drop-shadow-lg dark:bg-gray-700" 
+                
+                v-if="dd">
+                
+                <div class="my-10px mx-2 float-left" @click="toggleDropdown">
                     <router-link :to="{ name: 'Home' }">Home</router-link>
                 </div>
                 
-                <div class="link-wrap float-left" @click="toggleDropdown">
+                <div class="my-10px mx-2 float-left" @click="toggleDropdown">
                     <router-link :to="{ name: 'Blog' }">Archive</router-link>
                 </div>
                 
-                <div class="link-wrap float-left" @click="toggleDropdown">
+                <div class="my-10px mx-2 float-left" @click="toggleDropdown">
                     <router-link :to="{ path: '/about' }">About</router-link>
                 </div>
                 
@@ -75,80 +73,28 @@
                 </div>
                 
                 
-                <div v-if="loggedIn" class="link-wrap float-right" @click="toggleDropdown">
+                <div v-if="loggedIn" class="my-10px mx-2 float-right" @click="toggleDropdown">
                     <router-link :to="{ name: 'BlogWrite' }">Create</router-link>
                 </div>
                 
-                <div v-if="loggedIn" class="link-wrap float-right" @click="toggleDropdown">
+                <div v-if="loggedIn" class="my-10px mx-2 float-right" @click="toggleDropdown">
                     <router-link :to="{ name: 'Profile' }">Profile</router-link>
                 </div>
                 
-                <div v-if="loggedIn" class="link-wrap float-right" @click="toggleDropdown">
+                <div v-if="loggedIn" class="my-10px mx-2 float-right" @click="toggleDropdown">
                     <router-link @click="logout" :to="{ name: 'Login' }">Logout</router-link>
                 </div>
+            </div>
+
+            <div class="absolute right-0 w-[50px]" @click="toggleDropdown">
+                <svg v-if="!dd" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" class="fill-[#00bd7e]" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+                </svg>
+
+                <svg v-else xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" class="fill-[#00bd7e]" viewBox="0 0 16 16">
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"/>
+                </svg>
             </div>
         </div>
     </nav>
 </template>
-
-<style scoped>
-    .float-left {
-        float: left;
-    }
-
-    .float-right {
-        float: right;
-    }
-
-    .link-wrap {
-        margin: 0 10px;
-    }
-
-    .mobile, .dropdown {
-        display: none;
-    }
-
-    @media only screen and (max-width: 720px) {
-        .mobile {
-            display: flex;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            z-index: 1;
-        }
-
-        .desktop {
-            display: none;
-        }
-
-        .menu-button {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            width: 50px;
-            height: 50px;
-        }
-
-        .dropdown {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            align-items: center;
-            justify-content: center;
-            position: absolute;
-            top: 60px;
-            left: 0;
-            background-color: white;
-            gap: 20px;
-            padding-bottom: 20px;
-        }
-
-        .link-wrap {
-            float: none;
-            width: 100%;
-            text-align: center;
-        }
-    }
-
-</style>

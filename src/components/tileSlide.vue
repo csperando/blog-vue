@@ -36,10 +36,10 @@ function setActive(index) {
             <!-- Content -->
             <div class="relative flex flex-row items-center justify-center rounded-lg">
                 <button type="button" class="relative flex items-center justify-center px-4 focus:outline-none">
-                    <span @click="previous" class="inline-flex items-center justify-center rounded-full bg-[#00bd7e33] dark:bg-gray-800/30 hover:ring-white hover:bg-gray-500 hover:cursor-pointer 
+                    <span @click="previous" class="inline-flex items-center justify-center rounded-full bg-[#00bd7e33] hover:ring-white hover:bg-gray-500 hover:cursor-pointer 
                         w-5 h-5 lg:w-10 lg:h-10">
 
-                        <svg class="w-2 h-2 lg:w-4 lg:h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                        <svg class="w-2 h-2 lg:w-4 lg:h-4 text-white dark:text-white rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
                         </svg>
                         <span class="sr-only">Previous</span>
@@ -60,10 +60,10 @@ function setActive(index) {
                 />
                 
                 <button type="button" class="relative flex items-center justify-center px-4 focus:outline-none">
-                    <span @click="next" class="inline-flex items-center justify-center rounded-full bg-[#00bd7e33] dark:bg-gray-800/30 hover:ring-white hover:bg-gray-500 hover:cursor-pointer 
+                    <span @click="next" class="inline-flex items-center justify-center rounded-full bg-[#00bd7e33] hover:ring-white hover:bg-gray-500 hover:cursor-pointer 
                         w-5 h-5 lg:w-10 lg:h-10">
 
-                        <svg class="w-2 h-2 lg:w-4 lg:h-4 text-white dark:text-gray-800 rtl:rotate-180" 
+                        <svg class="w-2 h-2 lg:w-4 lg:h-4 text-white dark:text-white rtl:rotate-180" 
                             aria-hidden="true" 
                             xmlns="http://www.w3.org/2000/svg" 
                             fill="none" 
@@ -77,7 +77,7 @@ function setActive(index) {
             </div>
 
             <!-- Slider indicators -->
-            <div class="absolute z-30 flex flex-row items-center gap-3 -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
+            <div class="absolute z-30 flex flex-row items-center gap-3 -translate-x-1/2 bottom-0 left-1/2 space-x-3 rtl:space-x-reverse">
                 <button 
                     v-for="(post, index) in posts"
                     type="button" 
