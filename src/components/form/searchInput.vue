@@ -14,12 +14,12 @@
 </script>
 
 <template>
-    <div>
-        <label for="{{ name }}">{{ label }}</label>
+    <div class="relative">
+        <label class="font-bold" for="{{ name }}">{{ label }}</label>
         
-        <div class="input-wrap">
+        <div class="relative w-[250px] h-[50px] lg:w-[350px]">
             <input type="text" 
-                class="input-text"
+                class="relative w-full h-full pl-[50px] rounded-md outline outline-(--app-color-text) focus:outline-2"
                 :name
                 :placeholder
                 autocomplete="off"
@@ -29,40 +29,9 @@
                 @input="emitUpdate"
                 /> 
 
-            <div class="icon-wrap">    
-                <searchIcon class="icon"/>
+            <div class="absolute top-[17px] left-[17px] h-[16px] w-16px]">    
+                <searchIcon />
             </div>
         </div>
     </div>
 </template>
-
-<style scoped>
-    label {
-        font-weight: bold;
-    }
-
-    .input-wrap {
-        margin: 0;
-        padding: 0;
-        position: relative;
-        height: 50px;
-        width: 350px;
-    }
-
-    .input-text {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        padding-left: 50px;
-    }
-
-    .icon-wrap {
-        position: absolute;
-        left: 16px;
-        top: 17px;
-        height: 16px;
-        width: 16px;
-    }
-
-
-</style>
