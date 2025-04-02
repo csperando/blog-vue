@@ -28,9 +28,11 @@
                 <router-link :to="{ name: 'Blog' }">Archive</router-link>
             </div>
             
-            <div class="my-10px mx-2 float-left">
-                <router-link :to="{ path: '/about' }">About</router-link>
-            </div>
+            <!--
+                <div class="my-10px mx-2 float-left">
+                    <router-link :to="{ path: '/about' }">About</router-link>
+                </div>
+            -->
             
             <div v-if="loggedIn" class="my-10px mx-2 float-right">
                 <router-link @click="logout" :to="{ name: 'Login' }">Logout</router-link>
@@ -63,10 +65,11 @@
                     <router-link :to="{ name: 'Blog' }">Archive</router-link>
                 </div>
                 
-                <div class="my-10px mx-2 float-left" @click="toggleDropdown">
-                    <router-link :to="{ path: '/about' }">About</router-link>
-                </div>
-                
+                <!--
+                    <div class="my-10px mx-2 float-left" @click="toggleDropdown">
+                        <router-link :to="{ path: '/about' }">About</router-link>
+                    </div>
+                -->
 
                 <div v-if="!loggedIn" class="float-right" @click="toggleDropdown">
                     <router-link :to="{ name: 'Login' }">Login</router-link>
