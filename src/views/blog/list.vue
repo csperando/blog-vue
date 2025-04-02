@@ -76,11 +76,3 @@
         </div>
     </div>
 </template>
-
-<style scoped>
-    .loading-animation {
-        position: relative;
-        top: 10px;
-        line-height: 30px;
-    }
-</style>

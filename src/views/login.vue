@@ -34,19 +34,19 @@
 
         <br/>
 
-        <form @submit.prevent="">
-            <div>
+        <form class="relative w-full flex flex-col items-center justify-center gap-[50px]" @submit.prevent="">
+            <div class="flex flex-col items-center justify-center">
                 <label for="username">Username:</label>
-                <input type="text" name="username" id="u-input" v-model="username"/>
+                <input type="text" name="username" id="u-input" v-model="username" class="outline"/>
             </div>
             
-            <div>
+            <div class="flex flex-col items-center justify-center">
                 <label for="password">Password:</label>
-                <input type="password" name="password" id="pw-input" v-model="password"/>
+                <input type="password" name="password" id="pw-input" v-model="password" class="outline"/>
             </div>
 
-            <div>
-                <input type="button" name="submit" value="submit" @click="login"/>
+            <div class="flex flex-col items-center justify-center">
+                <input type="button" name="submit" value="submit" @click="login" class="bg-blue-500 hover:bg-blue-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-blue-700 rounded"/>
             </div>
 
             <div v-if="displayError" class="error">
@@ -58,18 +58,8 @@
 </template>
 
 <style scoped>
-    div {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 30px;
-    }
-
     .error {
         color: red;
         font-weight: bold;
     }
-
 </style>

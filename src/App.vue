@@ -49,7 +49,3 @@
         </Suspense>
     </main>
 </template>
-
-<style scoped>
-
-</style>

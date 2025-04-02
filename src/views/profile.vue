@@ -9,7 +9,7 @@
 
 <template>
     <div>
-        <h1 class="title">{{ userData.username }}</h1>
+        <h1 class="text-center">{{ userData.username }}</h1>
         
         <div>
             <h2>Info</h2>
@@ -41,9 +41,3 @@
 
     </div>
 </template>
-
-<style scoped>
-    .title {
-        text-align: center;
-    }
-</style>

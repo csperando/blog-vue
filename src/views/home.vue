@@ -6,7 +6,6 @@
 
     import loading from '@/components/misc/loading.vue';
     import postTile from '../components/postTile.vue';
-    import postTileSmall from '../components/postTileSmall.vue';
     import tileSlide from "../components/tileSlide.vue";
 
     const blogStore = inject('blogStore');
@@ -55,32 +54,3 @@
         </section>
     </main>
 </template>
-
-<style scoped>
-    * {
-        position: relative;
-        padding: 0;
-        margin: 0;
-    }
-
-    section {
-        margin-bottom: 30px;
-    }
-
-    .section-header {
-        margin-bottom: 10px;
-    }
-
-    @keyframes loading-dots {
-        0% { content: ""; }
-        33% { content: "."; }
-        66% { content: ".."; }
-        99% { content: "..."; }
-    }
-
-    .dots::after {
-        content: "";
-        animation: loading-dots 1.5s infinite steps(3);
-    }
-    
-</style>
