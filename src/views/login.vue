@@ -12,6 +12,7 @@
 
     const login = async (e) => {
         e.preventDefault();
+
         displayError.value = false;
 
         const success = await userStore.login(username.value, password.value);
@@ -46,7 +47,7 @@
             </div>
 
             <div class="flex flex-col items-center justify-center">
-                <input type="button" name="submit" value="submit" @click="login" class="bg-blue-500 hover:bg-blue-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-blue-700 rounded"/>
+                <input type="submit" name="submit" value="submit" @click="login" class="bg-blue-500 hover:bg-blue-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-blue-700 rounded"/>
             </div>
 
             <div v-if="displayError" class="error">
