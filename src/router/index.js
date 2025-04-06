@@ -13,6 +13,9 @@ import { profileRoute, loginRoute } from "./userRoute.js";
 // for auth
 import { initUserStore } from "../stores/user.store.js";
 
+// for dev/testing
+const isDev = import.meta.env.DEV;
+import TestView from "../views/test.vue";
 
 // setup routes
 const routes = [
@@ -43,6 +46,14 @@ const routes = [
     errors.notFound,
     errors.notAllowed,
 ];
+
+// for testing
+if(isDev) {
+    routes.push({
+        path: "/test",
+        component: TestView,
+    });
+}
 
 export const router = createRouter({
     history: createWebHistory("/blog-vue/"),

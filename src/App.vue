@@ -32,12 +32,9 @@
 <template>
     <main>
         <navbar />
-
-        <br/>
-        <br/>
         
         <Suspense>
-            <RouterView />
+            <RouterView class="p-4"/>
 
             <template #fallback>
                 <p>

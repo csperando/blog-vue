@@ -19,36 +19,38 @@
 
 <template>
     <nav class="relative">
-        <div class="relative hidden lg:block">
-            <div class="my-10px mx-2 float-left">
+        <div class="relative w-full h-[100px] hidden lg:block">
+            <div class="relative flex flex-row items-center h-[100px] my-10px mx-2 float-left"><span>&nbsp;</span></div>
+
+            <div class="relative flex flex-row items-center h-[100px] my-10px mx-2 float-left">
                 <router-link :to="{ name: 'Home' }">Home</router-link>
             </div>
             
-            <div class="my-10px mx-2 float-left">
+            <div class="relative flex flex-row items-center h-[100px] my-10px mx-2 float-left">
                 <router-link :to="{ name: 'Blog' }">Archive</router-link>
             </div>
             
-            <!--
-                <div class="my-10px mx-2 float-left">
-                    <router-link :to="{ path: '/about' }">About</router-link>
-                </div>
-            -->
-            
-            <div v-if="loggedIn" class="my-10px mx-2 float-right">
+            <div class="relative flex flex-row items-center h-[100px] my-10px mx-2 float-right"><span>&nbsp;</span></div>
+
+            <div v-if="loggedIn" class="relative flex flex-row items-center h-[100px] my-10px mx-2 float-right">
                 <router-link @click="logout" :to="{ name: 'Login' }">Logout</router-link>
             </div>
             
-            <div v-if="loggedIn" class="my-10px mx-2 float-right">
+            <div v-if="loggedIn" class="relative flex flex-row items-center h-[100px] my-10px mx-2 float-right">
                 <router-link :to="{ name: 'Profile' }">Profile</router-link>
             </div>
             
-            <div v-if="loggedIn" class="my-10px mx-2 float-right">
+            <div v-if="loggedIn" class="relative flex flex-row items-center h-[100px] my-10px mx-2 float-right">
                 <router-link :to="{ name: 'BlogWrite' }">Create</router-link>
             </div>
             
-            <div v-if="!loggedIn" class="my-10px mx-2 float-right">
+            <div v-if="!loggedIn" class="relative flex flex-row items-center h-[100px] my-10px mx-2 float-right">
                 <router-link :to="{ name: 'Login' }">Login</router-link>
             </div>
+
+
+            <!-- todo - lower border effect -->
+            <!-- <div class="absolute w-full h-[50px] -bottom-0 left-0 overflow-hidden"></div> -->
         </div>
         
         <div class="relative lg:hidden bg-white z-1">
