@@ -51,17 +51,7 @@
     <section>
         <h1>{{ seriesDisplayTitle }}</h1>
 
-        <h2 class="text-red-300">Todo - description</h2>
-
-        <br/><br/>
-
-        <div>
-            <ul>
-                <li>Todo - series posts here</li>
-                <li>Todo - series posts here</li>
-                <li>Todo - series posts here</li>
-            </ul>
-        </div>
+        <h2>Todo - description</h2>
 
         <tile-slide :posts="recentBlogPosts" :start="2"/>
 

@@ -128,9 +128,10 @@ export const uploadNewBlogPost = async (newPostData) => {
         data.append("mime", newPostData.value.mime);
         data.append("markdown", markdownFile);
         
-        // add keywords string if truthy, parsed as an array on the API side
+        // add keywords string if truthy
         if(newPostData.value.keywords) {
-            data.append("keywords", newPostData.value.keywords);
+            const keywordsArray = newPostData.value.keywords.split(",").map((k) => k.trim());
+            data.append("keywords", keywordsArray);
         }
 
         // Generate http request data
@@ -177,9 +178,10 @@ export const uploadEditedBlogPost = async (newPostData, id) => {
         data.append("mime", newPostData.value.mime);
         data.append("markdown", markdownFile);
         
-        // add keywords string if truthy, parsed as an array on the API side
+        // add keywords string if truthy
         if(newPostData.value.keywords) {
-            data.append("keywords", newPostData.value.keywords);
+            const keywordsArray = newPostData.value.keywords.split(",").map((k) => k.trim());
+            data.append("keywords", keywordsArray);
         }
 
         // Generate http request data
