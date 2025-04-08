@@ -1,7 +1,7 @@
 <script setup>
     import { storeToRefs } from 'pinia';
     import { initUserStore } from '../stores/user.store';
-    import { ref } from 'vue';
+    import { ref, computed, onMounted } from 'vue';
 
     const userStore = initUserStore();
     const { loggedIn } = storeToRefs(userStore);
@@ -15,11 +15,51 @@
     const toggleDropdown = () => {
         dd.value = !dd.value;
     }
+
+    const w = ref(window.innerWidth);
+    const path = ref(regenPath());
+
+    onMounted(() => {
+        window.addEventListener("resize", function() {
+            path.value = regenPath();
+        });
+    });
+
+    function regenPath() {
+        const width = w.value;
+        const height = 100;
+        const steps = 10;
+
+        let path = "M0,0 ";
+        path += " L 0," + height + " ";
+
+        let x1=-50, y1 = height;
+        let x2, y2;
+        for(let x = 0; x <= width; x += width/steps) {
+            let y = height + (Math.random() * height);
+            x2 = x-50;
+            y2 = y;
+
+            path += "C " + x1 + "," + y1 + " " + x2 + "," + y2 + " " + x + "," + y + " ";
+            x1 = x2 + 100;
+            y1 = y2;
+        }
+
+        path += "L" + width + ",0 ";
+        path += "L0,0 ";
+        path += "Z";
+
+        return path;
+    }
+
 </script>
 
 <template>
-    <nav class="relative">
+    <nav class="relative pb-[100px]">
         <div class="relative w-full h-[100px] hidden lg:block">
+            <div id="nav-background" class="absolute w-full h-[200px] left-0 top-0 bg-(--app-color-bg)"></div>
+            <svg id="mask" class="absolute w-full h-[200px] left-0 top-0"><clipPath id="nav-clip-path"><path :d="path"/></clipPath></svg>
+
             <div class="relative flex flex-row items-center h-[100px] my-10px mx-2 float-left"><span>&nbsp;</span></div>
 
             <div class="relative flex flex-row items-center h-[100px] my-10px mx-2 float-left">
@@ -103,3 +143,9 @@
         </div>
     </nav>
 </template>
+
+<style scoped>
+    #nav-background {
+        clip-path: url(#nav-clip-path);
+    }
+</style>
