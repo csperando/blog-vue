@@ -32,11 +32,16 @@
 
         <br/>
 
-        <ul v-if="{ recentSeries }">
-            <li v-for="(s, index) in recentSeries ">
-                <router-link :to="{ path: '/', query: {'series': s.slug} }">{{ s.title }}</router-link>
-            </li>
-        </ul>
+        <div v-if="recentSeries">
+            <ul>
+                <li v-for="(s, index) in recentSeries ">
+                    <router-link :to="{ path: '/', query: {'series': s.slug} }">{{ s.title }}</router-link>
+                </li>
+            </ul>
+        </div>
+        <div v-else>
+            <p>None yet :(</p>
+        </div>
 
     </section>
 </template>
