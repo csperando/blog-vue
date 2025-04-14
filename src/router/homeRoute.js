@@ -11,7 +11,7 @@ export const homeRoute = {
         }
 
         if(to.query.series) {
-            return { name: "Series", query: to.query };
+            return { name: "SeriesByName", query: to.query };
         }
     }
 };

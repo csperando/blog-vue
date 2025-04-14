@@ -19,6 +19,9 @@
         try {
             await blogStore.fetchRecentBlogPosts();
             await blogStore.fetchTopKeywords();
+            
+            await blogStore.fetchAllSeries();
+            
             await userStore.validateToken();
 
         } catch(err) {

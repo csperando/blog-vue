@@ -1,8 +1,16 @@
-import SeriesView from "@/views/series/index.vue";
+import SeriesList from "../views/series/index.vue";
+import SeriesDetails from "../views/series/series.vue";
 
 export const seriesListRoute = {
-    path: "/", 
+    path: "/series", 
     name: "Series", 
-    component: SeriesView,
+    component: SeriesList,
+    props: (route) => { route.query },
+};
+
+export const seriesByNameRoute = {
+    path: "/", 
+    name: "SeriesByName", 
+    component: SeriesDetails,
     props: (route) => { route.query },
 };

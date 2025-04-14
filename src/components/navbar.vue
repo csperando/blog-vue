@@ -1,7 +1,7 @@
 <script setup>
     import { storeToRefs } from 'pinia';
     import { initUserStore } from '../stores/user.store';
-    import { ref, computed, onMounted } from 'vue';
+    import { ref, computed, onMounted, watch } from 'vue';
 
     const userStore = initUserStore();
     const { loggedIn } = storeToRefs(userStore);
@@ -21,6 +21,7 @@
 
     onMounted(() => {
         window.addEventListener("resize", function() {
+            w.value = window.innerWidth;
             path.value = regenPath();
         });
     });

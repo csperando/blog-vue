@@ -36,6 +36,7 @@ const routes = [
 
     // series
     series.seriesListRoute,
+    series.seriesByNameRoute,
     
     // user
     loginRoute,

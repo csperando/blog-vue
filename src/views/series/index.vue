@@ -8,39 +8,16 @@
 
     const seriesDisplayTitle = ref("");
 
-    // for testing carosel
-    import tileSlide from "../../components/tileSlide.vue";
-
     const blogStore = inject('blogStore');
-    const { recentBlogPosts, topKeywords, blogsByTopKeyword } = storeToRefs(blogStore);
-    //
-    
+    let { recentSeries } = storeToRefs(blogStore);
+
     onBeforeMount(async () => {
         try {
-
-            // console.log(route.query);
-
-            if(route.query.series) {
-                // TODO - get info by series slug
-            } else {
-                throw(new Error("Something went wrong searching for a blog post."));
-            }
-
-            // route info
-            if(!true) {
-                throw(new Error("Something went wrong searching for a blog post."));
-            }
-            
-            if(route.query.series) {
-                router.replace("/?series=" + route.query.series);
-                seriesDisplayTitle.value = route.query.series;
-            }
-    
-            // TODO - update page data
+            if(!recentSeries) await blogStore.fetchAllSeries();
 
         } catch(err) {
             console.error(err);
-            router.push({ name: "NotFound" });
+            // router.push({ name: "NotFound" });
         }
 
     });
@@ -49,11 +26,17 @@
 
 <template>
     <section>
-        <h1>{{ seriesDisplayTitle }}</h1>
+        <h1>Recent Series</h1>
 
-        <h2>Todo - description</h2>
+        <h2>These are collections of blog posts grouped together for some reason.</h2>
 
-        <tile-slide :posts="recentBlogPosts" :start="2"/>
+        <br/>
+
+        <ul v-if="{ recentSeries }">
+            <li v-for="(s, index) in recentSeries ">
+                <router-link :to="{ path: '/', query: {'series': s.slug} }">{{ s.title }}</router-link>
+            </li>
+        </ul>
 
     </section>
 </template>

@@ -3,16 +3,22 @@ import { defineStore } from "pinia";
 import { base_path } from "../config";
 
 import * as BlogServices from "../services/blog.service";
+import * as SeriesServices from "../services/series.service";
 
 export const initBlogStore = defineStore("blogStore", {
     // state
     state: () => {
         return {
             BlogServices: BlogServices,
+            SeriesServices: SeriesServices,
+
             currentBlogPost: null,
             recentBlogPosts: null,
             topKeywords: null,
             blogsByTopKeyword: null,
+
+            currentSeries: null,
+            recentSeries: null,
         }
     },
 
@@ -22,6 +28,8 @@ export const initBlogStore = defineStore("blogStore", {
         getRecentBlogPosts: (state) => (state.recentBlogPosts),
         getTopKeywords: (state) => (state.topKeywords),
         getBlogsByTopKeyword: (state) => (state.blogsByTopKeyword),
+        getCurrentSeries: (state) => (state.currentSeries),
+        getRecentSeries: (state) => (state.recentSeries),
     },
 
     // actions
@@ -114,6 +122,30 @@ export const initBlogStore = defineStore("blogStore", {
                 const p = await this.BlogServices.fetchBlogsByKeyword(keyword);
                 this.blogsByTopKeyword = p;
                 return p;
+
+            } catch(err) {
+                console.error(err);
+                throw(err);
+            }
+        },
+
+        async fetchAllSeries() {
+            try {
+                const s = await this.SeriesServices.fetchAllSeries();
+                this.recentSeries = s;
+                return s;
+
+            } catch(err) {
+                console.error(err);
+                throw(err);
+            }
+        },
+
+        async fetchSeriesBySlug(slug) {
+            try {
+                const s = await this.SeriesServices.fetchSeriesBySlug(slug);
+                this.currentSeries = s;
+                return s;
 
             } catch(err) {
                 console.error(err);
