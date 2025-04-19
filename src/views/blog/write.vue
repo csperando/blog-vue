@@ -6,6 +6,9 @@
     import { useRouter } from 'vue-router';
     
     import postTile from "../../components/postTile.vue";
+    import textInput from "../../components/form/textInput.vue";
+    import fileInput from "../../components/form/fileInput.vue";
+
     import { convertMarkdownToHTML } from "../../services/blog.service";
 
     const route = useRouter();
@@ -98,47 +101,50 @@
 
     }
 
+    const updateTitle = (input) => {
+        title.value = input.value;
+    }
+    
+    const updateDescription = (input) => {
+        description.value = input.value;
+    }
+    
+    const updateKeywords = (input) => {
+        keywords.value = input.value;
+    }
+
 </script>
 
 <template>
     <section>
-        <p>&nbsp;</p>
+        <h1 class="p-8">Create a new blog post</h1>
 
-        <br/>
-
-        <form>
-            <div class="two-col">
+        <form class="p-8 flex flex-col">
+            <div class="relative flex w-full justify-center items-center gap-[50px] sm:flex-col lg:flex-row">
                 <div>
-                    <label for="post-title">Title:</label><br/>
-                    <input type="text" name="title" v-model="title" id="post-title"/>
-                    
-                    <br/><br/>
-                    
-                    <label for="post-description">Description:</label><br/>
-                    <input type="text" name="description" v-model="description" id="post-description"/>
-                    
-                    <br/><br/>
-
-                    <label for="input-thumbnail">Thumbnail:</label><br/>
-                    <input type="file" name="thumbnail" @change="readFile" id="input-thumbnail"/>
-                    
-                    <br/><br/>
-
-                    <label for="post-keywords">Keywords:</label><br/>
-                    <input type="text" name="keywords" v-model="keywords" id="post-keywords"/>
-                    
-                    <br/><br/>
+                    <text-input name="title" label="Title:" id="post-title" @update-text-input="updateTitle"/>
+                    <br/>
+                    <text-input name="description" label="Description:" id="post-description" @update-text-input="updateDescription"/>
+                    <br/>
+                    <file-input name="thumbnail" label="Thumbnail:" id="input-thumbnail" @update-file-input="readFile"/>
+                    <br/>
+                    <text-input name="keywords" label="Keywords:" id="post-keywords" @update-text-input="updateKeywords"/>
+                    <br/>      
                 </div>
             
-                <postTile class="preview"
-                    :title="title"
-                    :timestamp="`${new Date()}`"
-                    :description="description"
-
-                    :preview="true"
-                    :thumbnailBase64="thumbnailBase64"
-                    :thumbnailMimeType="thumbnailMimeType"
-                    />
+                <div class="relative flex flex-row justify-center items-center">
+                    <postTile
+                        :title="title"
+                        :timestamp="`${new Date()}`"
+                        :description="description"
+    
+                        :preview="true"
+                        :thumbnailBase64="thumbnailBase64"
+                        :thumbnailMimeType="thumbnailMimeType"
+    
+                        :isLink="false"
+                        />
+                </div>
             </div>
 
             <div>
@@ -149,7 +155,7 @@
                 
                 <br/>
                 
-                <textarea v-if="!toggleHtmlPreview" name="markdown" rows="20" cols="120" v-model="markdown" id="post-markdown"></textarea>
+                <textarea v-if="!toggleHtmlPreview" class="outline m-4 p-4" name="markdown" rows="20" cols="120" v-model="markdown" id="post-markdown"></textarea>
                 <router-view v-else/>
                 
                 <br/><br/>
@@ -164,7 +170,6 @@
                         />
                 </div>
             </div>
-
         </form>
     </section>
 </template>
