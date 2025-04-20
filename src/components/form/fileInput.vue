@@ -1,13 +1,13 @@
 <script setup>
     import { ref } from 'vue';
 
-    const emit = defineEmits('update-text-input');
+    const emit = defineEmits({ "update-file-input": "update-file-input" });
 
     const props = defineProps(["name", "label", "required", "id"]);
     const query = ref('');
 
     const emitUpdate = function(e) {
-        emit('update-file-input', e);
+        emit("update-file-input", e);
     }
 </script>
 

@@ -15,7 +15,7 @@
         emitSectionUpdate(active.value);
     }
 
-    const emit = defineEmits("update");
+    const emit = defineEmits({ update: "update" });
     const emitSectionUpdate = function(sectionNumber) {
         emit("update", sectionNumber);
     }
@@ -25,7 +25,7 @@
 <template>
     <section>
         <div class="relative w-full bg-white dark:bg-gray-500 flex flex-row items-center h-[50px] outline outline-[2px] outline-(--app-color-text) overflow-hidden rounded-xl">
-            <progressTabSection v-for="(section, index) in data" :active="active" :sectionNumber="(index + 1)" @update-active="setActive((index + 1))" :isFirst="(index == 0)">{{ section }}</progressTabSection>
+            <progressTabSection v-for="(section, index) in data" :active="active" :sectionNumber="(index + 1)" @updateActive="setActive((index + 1))" :isFirst="(index == 0)">{{ section }}</progressTabSection>
         </div>
     </section>
 </template>

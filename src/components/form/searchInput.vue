@@ -3,13 +3,13 @@
     
     import searchIcon from "../icons/search.vue";
 
-    const emit = defineEmits('update-search-input');
+    const emit = defineEmits({ "update-search-input": "update-search-input" });
 
     const props = defineProps(["name", "label", "placeholder", "value", "required", "query", "loading"]);
     const query = ref('');
 
     const emitUpdate = function(e) {
-        emit('update-search-input', query);
+        emit("update-search-input", query);
     }
 </script>
 

@@ -8,10 +8,10 @@ const isActive = computed(() => {
     return (props.sectionNumber == props.active);
 });
 
-const emit = defineEmits('update-active');
+const emit = defineEmits({ updateActive: "updateActive"});
 
 const updateActive = function(sectionNumber) {
-    emit("update-active", sectionNumber);
+    emit("updateActive", sectionNumber);
 }
 
 const styles = {
