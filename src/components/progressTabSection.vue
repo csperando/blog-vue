@@ -1,6 +1,18 @@
 <script setup>
 
-const props = defineProps(["sectionNumber", "active"]);
+import { computed } from "vue";
+
+const props = defineProps(["sectionNumber", "active", "isFirst"]);
+
+const isActive = computed(() => {
+    return (props.sectionNumber == props.active);
+});
+
+const emit = defineEmits('update-active');
+
+const updateActive = function(sectionNumber) {
+    emit("update-active", sectionNumber);
+}
 
 const styles = {
     activeBackground: "bg-(--app-color-green)",
@@ -9,27 +21,25 @@ const styles = {
     nonActiveText: "text-(--color-text) dark:text-white"
 }
 
-const setActive = function(sectionNumber) {
-    props.active = sectionNumber;
-}
-
 </script>
 
 <template>
     <div class="relative w-full h-full flex flex-row items-center justify-start gap-2 hover:opacity-60 hover:cursor-pointer" 
-        data-section="2"
-        @click="setActive(2)">
+        data-section="{{ sectionNumber }}"
+        @click="updateActive(sectionNumber)">
         
-        <div class="relative triangle-left">
+        <div v-if="!isFirst" class="relative triangle-left">
             <div class="inner-triangle"></div>
         </div>
+
         <div class="ml-4 relative w-[30px] h-[30px] rounded-full flex flex-row items-center justify-center" 
-            :class="(active == 2) ? styles.activeBackground : styles.nonActiveBackground">
+            :class="(isActive) ? styles.activeBackground : styles.nonActiveBackground">
             
-            <p :class="(active == 2) ? styles.activeText : styles.nonActiveText">2</p>
+            <p :class="(isActive) ? styles.activeText : styles.nonActiveText">{{ sectionNumber }}</p>
         </div>
+        
         <div>
-            <p class="text-(--color-text) dark:text-white">{{ slot }}</p>
+            <p class="text-(--color-text) dark:text-white"><slot></slot></p>
         </div>
     </div>
 </template>
