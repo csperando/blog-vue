@@ -5,6 +5,7 @@
 
     import { useRouter } from 'vue-router';
     
+    import progressTabs from "../../components/progressTabs.vue";
     import postTile from "../../components/postTile.vue";
     import textInput from "../../components/form/textInput.vue";
     import fileInput from "../../components/form/fileInput.vue";
@@ -15,6 +16,9 @@
     const blogStore = inject('blogStore');
     const userStore = inject('userStore');
     let { userData } = storeToRefs(userStore);
+
+    // form ui
+    const activeSection = ref(1);
 
     // new post data
     const title = ref("");
@@ -113,14 +117,24 @@
         keywords.value = input.value;
     }
 
+    const updateTab = function(sectionNumber) {
+        activeSection.value = sectionNumber;
+    }
+
+    const progress = function(direction) {
+        updateTab(activeSection.value + direction);
+    }
+
 </script>
 
 <template>
     <section>
         <h1 class="p-8">Create a new blog post</h1>
 
+        <progress-tabs :active="activeSection" :data="['Metas', 'Series', 'Content']" @update="updateTab"/>
+
         <form class="p-8 flex flex-col">
-            <div class="relative flex w-full justify-center items-center gap-[50px] sm:flex-col lg:flex-row">
+            <div v-show="activeSection == 1" class="relative flex w-full justify-center items-center gap-[50px] sm:flex-col lg:flex-row">
                 <div>
                     <text-input name="title" label="Title:" id="post-title" @update-text-input="updateTitle"/>
                     <br/>
@@ -147,7 +161,11 @@
                 </div>
             </div>
 
-            <div>
+            <div v-show="activeSection == 2">
+                <p>Todo</p>
+            </div>
+
+            <div v-show="activeSection == 3">
                 <br/><br/>
                 
                 <label v-if="!toggleHtmlPreview" for="post-markdown">Markdown:</label>
@@ -160,30 +178,56 @@
                 
                 <br/><br/>
                 
-                <div class="two-col">
-                    <input type="button" name="submit" value="submit" @click="submit"/>
+            </div>
+            
+            <div v-if="activeSection == 3" class="mt-8 relative flex flex-row w-full justify-center items-start gap-[20px]">
+                <div v-if="activeSection > 1" class="flex flex-col items-center justify-center">
+                    <input type="button" 
+                        name="back" 
+                        value="back" 
+                        @click="progress(-1)" 
+                        class="bg-indigo-500 hover:bg-indigo-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-indigo-700 rounded"/>
+                </div>
 
+                <div class="flex flex-col items-center justify-center">
+                    <input type="submit" 
+                        name="submit" 
+                        value="submit" 
+                        @click="submit" 
+                        class="bg-blue-500 hover:bg-blue-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-blue-700 rounded"/>
+                </div>
+
+                <div class="flex flex-col items-center justify-center">
                     <input type="button" 
                         name="preview" 
                         :value="(toggleHtmlPreview) ? 'back' : 'preview'" 
                         @click="previewMarkdown" 
-                        />
+                        class="bg-indigo-500 hover:bg-indigo-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-indigo-700 rounded"/>
                 </div>
             </div>
+            <div v-else class="mt-8 relative flex flex-row w-full justify-center items-start gap-[20px]">
+                <div v-if="activeSection > 1" class="flex flex-col items-center justify-center">
+                    <input type="button" 
+                        name="back" 
+                        value="back" 
+                        @click="progress(-1)" 
+                        class="bg-indigo-500 hover:bg-indigo-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-indigo-700 rounded"/>
+                </div>
+
+                <div class="flex flex-col items-center justify-center">
+                    <input type="button" 
+                        name="continue" 
+                        value="continue" 
+                        @click="progress(1)" 
+                        class="bg-indigo-500 hover:bg-indigo-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-indigo-700 rounded"/>
+                </div>
+            </div>
+
         </form>
     </section>
 </template>
 
 <style scoped>
-    .two-col {
-        display: flex;
-        flex-direction: row;
-        position: relative;
-        width: 100%;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 20px;
-    }
 
     .preview {
         width: 300px;

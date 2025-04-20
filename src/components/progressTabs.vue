@@ -1,18 +1,20 @@
 <script setup>
-    import { ref } from "vue";
+    import { ref, watch } from "vue";
     import progressTabSection from "./progressTabSection.vue";
 
     const props = defineProps({
         "data": {
             type: Array,
             required: true,
+        },
+        "active": {
+            type: Number,
+            default: 1,
         }
     });
 
-    const active = ref(1);
     const setActive = function(sectionNumber) {
-        active.value = sectionNumber;
-        emitSectionUpdate(active.value);
+        emitSectionUpdate(sectionNumber);
     }
 
     const emit = defineEmits({ update: "update" });
