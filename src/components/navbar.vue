@@ -36,7 +36,7 @@
 
         let x1=-50, y1 = height;
         let x2, y2;
-        for(let x = 0; x <= width; x += width/steps) {
+        for(let x = 0; x <= (width + (width/steps)); x += width/steps) {
             let y = height + (Math.random() * height);
             x2 = x-50;
             y2 = y;

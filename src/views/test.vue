@@ -1,3 +1,7 @@
+<script setup>
+import progressTabs from "../components/progressTabs.vue";
+</script>
+
 <template>
-    <p>This is a test page.</p>
+    <progressTabs></progressTabs>
 </template>
