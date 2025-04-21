@@ -2,22 +2,24 @@
     import { base_path } from "../../config";
     import { ref, computed, inject, watch } from "vue";
     import { storeToRefs } from 'pinia';
-
     import { useRoute, useRouter } from 'vue-router';
     
+    import progressTabs from "../../components/progressTabs.vue";
     import postTile from "../../components/postTile.vue";
+    import textInput from "../../components/form/textInput.vue";
+    import fileInput from "../../components/form/fileInput.vue";
     import { convertMarkdownToHTML } from "../../services/blog.service";
 
     const blogStore = inject('blogStore');
     const userStore = inject('userStore');
     let { userData } = storeToRefs(userStore);
-
     const route = useRoute();
     const id = route.params.id || "error";
-
     const router = useRouter();
-    
     const oldData = await blogStore.fetchBlogByID(id);
+
+    // form ui
+    const activeSection = ref(1);
 
     // new post data
     const title = ref(oldData.title);
@@ -117,52 +119,68 @@
         alert("This feature is still under development.");
     }
 
+
+    const updateTitle = (input) => {
+        title.value = input.value;
+    }
+    
+    const updateDescription = (input) => {
+        description.value = input.value;
+    }
+    
+    const updateKeywords = (input) => {
+        keywords.value = input.value;
+    }
+
+    const updateTab = function(sectionNumber) {
+        activeSection.value = sectionNumber;
+    }
+
+    const progress = function(direction) {
+        updateTab(activeSection.value + direction);
+    }
+
 </script>
 
 <template>
     <section>
-        <p>&nbsp;</p>
+        <h1 class="p-8">Edit your post</h1>
 
-        <h1>Edit your post</h1>
+        <progress-tabs :active="activeSection" :data="['Metas', 'Series', 'Content']" @update="updateTab"/>
 
-        <br/>
-
-        <form>
-            <div class="two-col">
+        <form class="p-8 flex flex-col">
+            <div v-show="activeSection == 1" class="relative flex w-full justify-center items-center gap-[50px] sm:flex-col lg:flex-row">
                 <div>
-                    <label for="post-title">Title:</label><br/>
-                    <input type="text" name="title" v-model="title" id="post-title"/>
-                    
-                    <br/><br/>
-                    
-                    <label for="post-description">Description:</label><br/>
-                    <input type="text" name="description" v-model="description" id="post-description"/>
-                    
-                    <br/><br/>
-
-                    <label for="input-thumbnail">Thumbnail:</label><br/>
-                    <input type="file" name="thumbnail" @change="readFile" id="input-thumbnail"/>
-                    
-                    <br/><br/>
-
-                    <label for="post-keywords">Keywords:</label><br/>
-                    <input type="text" name="keywords" v-model="keywords" id="post-keywords"/>
-                    
-                    <br/><br/>
+                    <text-input name="title" :value="title" label="Title:" id="post-title" @update-text-input="updateTitle"/>
+                    <br/>
+                    <text-input name="description" :value="description" label="Description:" id="post-description" @update-text-input="updateDescription"/>
+                    <br/>
+                    <file-input name="thumbnail" :value="thumbnail" label="Thumbnail:" id="input-thumbnail" @update-file-input="readFile"/>
+                    <br/>
+                    <text-input name="keywords" :value="keywords" label="Keywords:" id="post-keywords" @update-text-input="updateKeywords"/>
+                    <br/>      
                 </div>
             
-                <postTile class="preview"
-                    :title="title"
-                    :timestamp="`${new Date()}`"
-                    :description="description"
-
-                    :preview="true"
-                    :thumbnailBase64="thumbnailBase64"
-                    :thumbnailMimeType="thumbnailMimeType"
-                    />
+                <div class="relative flex flex-row justify-center items-center">
+                    <postTile
+                        :title="title"
+                        :timestamp="`${new Date()}`"
+                        :description="description"
+    
+                        :preview="true"
+                        :thumbnailBase64="thumbnailBase64"
+                        :thumbnailMimeType="thumbnailMimeType"
+    
+                        :isLink="false"
+                        />
+                </div>
             </div>
 
-            <div>
+            <div v-show="activeSection == 2">
+                <p>Todo</p>
+            </div>
+
+            <div v-show="activeSection == 3">
                 <br/><br/>
                 
                 <label v-if="!toggleHtmlPreview" for="post-markdown">Markdown:</label>
@@ -170,21 +188,69 @@
                 
                 <br/>
                 
-                <textarea v-if="!toggleHtmlPreview" name="markdown" rows="20" cols="120" v-model="markdown" id="post-markdown"></textarea>
+                <textarea v-if="!toggleHtmlPreview" class="outline m-4 p-4" name="markdown" rows="20" cols="120" v-model="markdown" id="post-markdown"></textarea>
                 <router-view v-else/>
                 
                 <br/><br/>
                 
-                <div class="two-col">
-                    <input type="button" name="submit" value="save" @click="submit"/>
-                    
+            </div>
+            
+            <div v-if="activeSection == 3" class="mt-8 relative flex flex-row w-full justify-center items-start gap-[20px]">
+                <div class="flex flex-col items-center justify-center">
+                    <input type="button" 
+                        name="delete" 
+                        value="delete" 
+                        @click="deletePost" 
+                        class="bg-red-500 hover:bg-red-300 hover:cursor-pointer text-white font-bold py-2 px-4 border border-red-700 rounded"/>
+                </div>
+
+                <div v-if="activeSection > 1" class="flex flex-col items-center justify-center">
+                    <input type="button" 
+                        name="back" 
+                        value="back" 
+                        @click="progress(-1)" 
+                        class="bg-indigo-500 hover:bg-indigo-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-indigo-700 rounded"/>
+                </div>
+
+                <div class="flex flex-col items-center justify-center">
+                    <input type="button" 
+                        name="submit" 
+                        value="submit" 
+                        @click="submit" 
+                        class="bg-blue-500 hover:bg-blue-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-blue-700 rounded"/>
+                </div>
+
+                <div class="flex flex-col items-center justify-center">
                     <input type="button" 
                         name="preview" 
                         :value="(toggleHtmlPreview) ? 'back' : 'preview'" 
                         @click="previewMarkdown" 
-                        />
+                        class="bg-indigo-500 hover:bg-indigo-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-indigo-700 rounded"/>
+                </div>
+            </div>
+            <div v-else class="mt-8 relative flex flex-row w-full justify-center items-start gap-[20px]">
+                <div class="flex flex-col items-center justify-center">
+                    <input type="button" 
+                        name="delete" 
+                        value="delete" 
+                        @click="deletePost" 
+                        class="bg-red-500 hover:bg-red-300 hover:cursor-pointer text-white font-bold py-2 px-4 border border-red-700 rounded"/>
+                </div>
+                
+                <div v-if="activeSection > 1" class="flex flex-col items-center justify-center">
+                    <input type="button" 
+                        name="back" 
+                        value="back" 
+                        @click="progress(-1)" 
+                        class="bg-indigo-500 hover:bg-indigo-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-indigo-700 rounded"/>
+                </div>
 
-                    <input type="button" name="delete" value="delete" @click="deletePost"/>
+                <div class="flex flex-col items-center justify-center">
+                    <input type="button" 
+                        name="continue" 
+                        value="continue" 
+                        @click="progress(1)" 
+                        class="bg-indigo-500 hover:bg-indigo-700 hover:cursor-pointer text-white font-bold py-2 px-4 border border-indigo-700 rounded"/>
                 </div>
             </div>
 

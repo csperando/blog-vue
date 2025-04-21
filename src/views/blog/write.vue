@@ -2,14 +2,12 @@
     import { base_path } from "../../config";
     import { ref, computed, inject } from "vue";
     import { storeToRefs } from 'pinia';
-
     import { useRouter } from 'vue-router';
     
     import progressTabs from "../../components/progressTabs.vue";
     import postTile from "../../components/postTile.vue";
     import textInput from "../../components/form/textInput.vue";
     import fileInput from "../../components/form/fileInput.vue";
-
     import { convertMarkdownToHTML } from "../../services/blog.service";
 
     const route = useRouter();
@@ -93,7 +91,9 @@
         toggleHtmlPreview.value = !(toggleHtmlPreview.value);
     }
 
-    const submit = async () => {
+    const submit = async (e) => {
+        e.preventDefault();
+
         const newPost = await blogStore.uploadNewBlogPost(newPostData)
             .catch((err) => {
                 alert(err);
@@ -190,7 +190,7 @@
                 </div>
 
                 <div class="flex flex-col items-center justify-center">
-                    <input type="submit" 
+                    <input type="button" 
                         name="submit" 
                         value="submit" 
                         @click="submit" 

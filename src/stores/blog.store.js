@@ -1,6 +1,5 @@
 
 import { defineStore } from "pinia";
-import { base_path } from "../config";
 
 import * as BlogServices from "../services/blog.service";
 import * as SeriesServices from "../services/series.service";
