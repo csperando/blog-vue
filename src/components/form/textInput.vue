@@ -4,7 +4,7 @@
     const emit = defineEmits({"update-text-input": "update-text-input"});
 
     const props = defineProps(["name", "label", "placeholder", "value", "required", "id"]);
-    const query = ref('');
+    const query = ref(props.value);
 
     const emitUpdate = function(e) {
         emit("update-text-input", query);
@@ -20,6 +20,7 @@
                 class="relative w-full h-full pl-[5px] rounded-md outline outline-(--app-color-text) focus:outline-2"
                 :name
                 :value
+                :placeholder
                 autocomplete="off"
                 :required
                 :id
