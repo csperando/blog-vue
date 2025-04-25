@@ -107,16 +107,17 @@
     }
 
     const deletePost = async () => {
-        // const deleted = await blogStore.deleteBlogPost(id)
-        //     .catch((err) => {
-        //         alert(err);
-        //     });
-        
-        // if(deleted) {
-        //     router.push({ name: "Home" });
-        // }
-
-        alert("This feature is still under development.");
+        const confirmed = confirm("Are you sure you want to delete this post?");
+        if(confirmed) {
+            const deleted = await blogStore.deletePostByID(id)
+                .catch((err) => {
+                    alert(err);
+                });
+            
+            if(deleted) {
+                router.push({ name: "Home" });
+            }
+        }
     }
 
 

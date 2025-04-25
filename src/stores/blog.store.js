@@ -151,5 +151,17 @@ export const initBlogStore = defineStore("blogStore", {
                 throw(err);
             }
         },
+
+        async deletePostByID(id) {
+            try {
+                const d = await this.BlogServices.deletePostByID(id);
+                await this.fetchRecentBlogPosts();
+                return d;
+
+            } catch(err) {
+                console.error(err);
+                throw(err);
+            }
+        }
     }
 });

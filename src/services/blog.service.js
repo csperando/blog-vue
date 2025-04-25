@@ -212,6 +212,32 @@ export const uploadEditedBlogPost = async (newPostData, id) => {
     }
 }
 
+export const deletePostByID = async (id) => {
+    try {
+        const endpoint = base_path + "/blog/delete/" + id;
+        const options = {
+            method: "DELETE",
+            // headers: { "content-type": "multipart/form-data" }, // DO NOT INCLUDE
+            headers: { "x-auth-token": localStorage.getItem("token") },
+            body: null,
+        };
+
+        // submit request for new blog post
+        return await fetch(endpoint, options)
+            .then((res) => {
+                return res.json();
+            }).then((res) => {
+                if(res.status != 200) {
+                    throw new Error(res.message);
+                }
+                
+                return res.data;
+            });
+    } catch(err) {
+        throw(err);
+    }
+}
+
 export const convertMarkdownToHTML = async (markdownString) => {
     try {
         const endpoint = base_path + "/blog/markdown";
