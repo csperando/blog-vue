@@ -57,7 +57,7 @@ if(isDev) {
 }
 
 export const router = createRouter({
-    history: createWebHistory("/blog-vue/"),
+    history: createWebHistory("/"),
     routes: routes,
 });
 
