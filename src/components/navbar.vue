@@ -56,7 +56,7 @@
 </script>
 
 <template>
-    <nav class="relative pb-[100px]">
+    <nav class="z-100 relative pb-[100px]">
         <div class="relative w-full h-[100px] hidden lg:block">
             <div id="nav-background" class="absolute w-full h-[200px] left-0 top-0 bg-(--app-color-bg)"></div>
             <svg id="mask" class="absolute w-full h-[200px] left-0 top-0"><clipPath id="nav-clip-path"><path :d="path"/></clipPath></svg>
@@ -94,7 +94,7 @@
             <!-- <div class="absolute w-full h-[50px] -bottom-0 left-0 overflow-hidden"></div> -->
         </div>
         
-        <div class="relative lg:hidden bg-white z-1">
+        <div class="relative lg:hidden bg-white z-1000">
             <div class="absolute w-full flex flex-col items-center justify-start gap-[20px] p-4 rounded-lg
                 bg-gray-100 border rounded-sm shadow-md drop-shadow-lg dark:bg-gray-700" 
                 
@@ -143,6 +143,12 @@
             </div>
         </div>
     </nav>
+
+    <div class="absolute z-0 inset-x-0 top-[200px] h-full transform-gpu overflow-hidden px-36 blur-3xl" aria-hidden="true">
+        <div class="mx-auto aspect-1155/678 w-full h-[100vh] bg-linear-to-tr from-[var(--app-color-bg)] to-[var(--app-color-green)] opacity-50" 
+            style="clip-path: polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)">
+        </div>
+    </div>
 </template>
 
 <style scoped>
