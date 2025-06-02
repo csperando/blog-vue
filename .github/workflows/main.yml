@@ -22,9 +22,10 @@ jobs:
           npm install
           npm run build
 
-      - name: Force commit updated dist
+      - name: Force commit updated dist and CNAME
         run: |
           git add dist -f
+          git add CNAME -f
           git commit -m "actions automated commit build dist/"
 
       - name: Check if gh-pages exists
