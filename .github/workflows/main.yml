@@ -22,7 +22,11 @@ jobs:
           npm install
           npm run build
 
-      - name: Force commit updated dist and CNAME
+      - name: Copy CNAME to dist/
+        run: |
+          cp "./CNAME" "./dist/CNAME"
+
+      - name: Force commit updated dist
         run: |
           git add dist -f
           git add CNAME -f
