@@ -136,13 +136,13 @@
         <form class="p-8 flex flex-col">
             <div v-show="activeSection == 1" class="relative flex w-full justify-center items-center gap-[50px] sm:flex-col lg:flex-row">
                 <div>
-                    <text-input name="title" label="Title:" id="post-title" @update-text-input="updateTitle"/>
+                    <text-input name="title" :value="title" label="Title:" id="post-title" @update-text-input="updateTitle"/>
                     <br/>
-                    <text-input name="description" label="Description:" id="post-description" @update-text-input="updateDescription"/>
+                    <text-input name="description" :value="description" label="Description:" id="post-description" @update-text-input="updateDescription"/>
                     <br/>
-                    <file-input name="thumbnail" label="Thumbnail:" id="input-thumbnail" @update-file-input="readFile"/>
+                    <file-input name="thumbnail" :value="thumbnail" label="Thumbnail:" id="input-thumbnail" @update-file-input="readFile"/>
                     <br/>
-                    <text-input name="keywords" label="Keywords:" id="post-keywords" @update-text-input="updateKeywords"/>
+                    <text-input name="keywords" :value="keywords" label="Keywords:" id="post-keywords" @update-text-input="updateKeywords"/>
                     <br/>      
                 </div>
             
