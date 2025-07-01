@@ -45,7 +45,7 @@
             filterTitles(q.value);
             isLoading.value = false;
 
-            TODO // Create embeddings from text input
+            // TODO // Create embeddings from text input
             const extractor = await pipeline(
                 "feature-extraction",
                 "mixedbread-ai/mxbai-embed-xsmall-v1",
