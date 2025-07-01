@@ -17,6 +17,9 @@
     // input text value
     const q = ref("");
 
+    // search promises
+    const waitingFor = ref([]);
+
     // use 'display' as a clone of the store value to prevent altering the original var
     const display = ref(null);
     onMounted(async () => {
@@ -26,39 +29,44 @@
         isLoading.value = false;
     });
 
-    const filterTitles = function(query) {
-        const filterBy = query.toLowerCase();
-        let filtered = [];
-        recentBlogPosts.value.forEach((blog) => {
-            if(blog.title && blog.title.toLowerCase().indexOf(filterBy) != -1) {
-                filtered.push(blog);
-            }
-        });
+    // // old - replaced with vector search below 
+    // const filterTitles = function(query) {
+    //     const filterBy = query.toLowerCase();
+    //     let filtered = [];
+    //     recentBlogPosts.value.forEach((blog) => {
+    //         if(blog.title && blog.title.toLowerCase().indexOf(filterBy) != -1) {
+    //             filtered.push(blog);
+    //         }
+    //     });
 
-        display.value = filtered;
-    }
+    //     display.value = filtered;
+    // }
 
+    let delayTimeout = null;
     const update = async function(updated) {
-        try {
-            isLoading.value = true;
-            q.value = updated.value;
-            filterTitles(q.value);
-            isLoading.value = false;
+        isLoading.value = true;
+        q.value = updated.value;
+        // filterTitles(q.value);
 
-            // TODO // Create embeddings from text input
-            const extractor = await pipeline(
-                "feature-extraction",
-                "mixedbread-ai/mxbai-embed-xsmall-v1",
-                { device: "webgpu", dtype: "fp32" },
-            );
-            const texts = [q.value];
-            const embeddings = await extractor(texts, { pooling: "mean", normalize: true });
-            const test = await blogStore.searchBlogsByVector(embeddings);
-            console.log(test);
-            
-        } catch(err) {
-            isLoading.value = false;
-        }
+        if(delayTimeout) clearTimeout(delayTimeout);
+        delayTimeout = setTimeout(async () => {
+            try {               
+                // Create embeddings from text input
+                const extractor = await pipeline(
+                    "feature-extraction",
+                    "mixedbread-ai/mxbai-embed-xsmall-v1",
+                    { device: "webgpu", dtype: "fp32" },
+                );
+                const embeddings = await extractor([q.value], { pooling: "mean", normalize: true });
+                display.value = await blogStore.searchBlogsByVector(embeddings);
+                isLoading.value = false;
+                
+            } catch(err) {
+                console.error(err);
+            } finally {
+                isLoading.value = false;
+            }
+        }, 400);
     }
 
 </script>
