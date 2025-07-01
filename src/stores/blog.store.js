@@ -162,6 +162,16 @@ export const initBlogStore = defineStore("blogStore", {
                 console.error(err);
                 throw(err);
             }
-        }
+        },
+
+        async searchBlogsByVector(embeddings) {
+            try {
+                const p = await this.BlogServices.searchBlogsByVector(embeddings);
+                return p;
+
+            } catch(err) {
+                console.error(err);
+            }
+        },
     }
 });

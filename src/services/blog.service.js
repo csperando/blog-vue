@@ -261,3 +261,25 @@ export const convertMarkdownToHTML = async (markdownString) => {
         throw(err);
     }
 }
+
+export const searchBlogsByVector = async (embeddings) => {
+    try {
+        const endpoint = base_path + "/blog/search";
+        const data = { "embeddings": Array.from(embeddings.data) };
+        const options = { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) };
+
+        return await fetch(endpoint, options)
+            .then((res) => {
+                return res.json();
+            }).then((res) => {
+                if(res.status != 200) {
+                    throw new Error("Failed to get vector search results");
+                }
+                
+                return res.data;
+            });
+
+    } catch(err) {
+        console.error(err);
+    }
+}

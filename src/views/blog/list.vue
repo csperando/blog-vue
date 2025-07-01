@@ -9,6 +9,8 @@
     const blogStore = inject('blogStore');
     const { recentBlogPosts } = storeToRefs(blogStore);
 
+    import { pipeline } from '@huggingface/transformers';
+
     // toggle loading animation
     const isLoading = ref(false);
 
@@ -17,8 +19,11 @@
 
     // use 'display' as a clone of the store value to prevent altering the original var
     const display = ref(null);
-    onMounted(() => {
+    onMounted(async () => {
+        isLoading.value = true;
+        await blogStore.fetchRecentBlogPosts();
         display.value = recentBlogPosts.value;
+        isLoading.value = false;
     });
 
     const filterTitles = function(query) {
@@ -39,11 +44,20 @@
             q.value = updated.value;
             filterTitles(q.value);
             isLoading.value = false;
+
+            TODO // Create embeddings from text input
+            const extractor = await pipeline(
+                "feature-extraction",
+                "mixedbread-ai/mxbai-embed-xsmall-v1",
+                { device: "webgpu", dtype: "fp32" },
+            );
+            const texts = [q.value];
+            const embeddings = await extractor(texts, { pooling: "mean", normalize: true });
+            const test = await blogStore.searchBlogsByVector(embeddings);
+            console.log(test);
             
         } catch(err) {
             isLoading.value = false;
-            console.error(err);
-
         }
     }
 
@@ -53,7 +67,8 @@
     <div class="flex flex-col items-center">
         <!-- Search input -->
         <div>
-            <search-input :placeholder="'Search blogs by title'" :loading @update-search-input="update"/>
+            <search-input :placeholder="'Search blogs by title'" :value="q" :loading @update-search-input="update"/>
+            <br/><br/>
             <loading :isLoading class="loading-animation"/>
             <br/>
         </div>
@@ -71,7 +86,7 @@
                 class="link"/>
         </div>
 
-        <div v-else>
+        <div v-else-if="!isLoading">
             <p >No blog posts yet</p>
         </div>
     </div>
