@@ -19,7 +19,6 @@
             <input type="text" 
                 class="relative w-full h-full pl-[5px] rounded-md outline outline-(--app-color-text) focus:outline-2"
                 :name
-                :value
                 :placeholder
                 autocomplete="off"
                 :required
