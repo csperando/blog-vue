@@ -10,6 +10,10 @@
     import { initBlogStore } from './stores/blog.store';
     const blogStore = initBlogStore();
     provide('blogStore', blogStore);
+
+    import { initAnalyticsStore } from './stores/analytics.store';
+    const analyticsStore = initAnalyticsStore();
+    // provide('blogStore', blogStore);
     
     // top level template components
     import navbar from './components/navbar.vue';
@@ -17,12 +21,21 @@
     onMounted(async () => {
         // check if user stored auth token is still valid and auto-login
         try {
-            await blogStore.fetchRecentBlogPosts();
-            await blogStore.fetchTopKeywords();
-            
-            await blogStore.fetchAllSeries();
-            
-            await userStore.validateToken();
+            const setupPromises = [
+                blogStore.fetchRecentBlogPosts(),
+                blogStore.fetchTopKeywords(),
+                blogStore.fetchAllSeries(),
+                userStore.validateToken(),
+                analyticsStore.logViewer(),
+            ];
+
+            Promise.allSettled(setupPromises).then((results) => {
+                results.forEach((res) => {
+                    if(res.status === "rejected") {
+                        // console.error(res.reason.message || "error");
+                    }
+                });
+            });
 
         } catch(err) {
             console.error(err);
