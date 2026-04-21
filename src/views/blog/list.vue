@@ -29,44 +29,44 @@
         isLoading.value = false;
     });
 
-    // // old - replaced with vector search below 
-    // const filterTitles = function(query) {
-    //     const filterBy = query.toLowerCase();
-    //     let filtered = [];
-    //     recentBlogPosts.value.forEach((blog) => {
-    //         if(blog.title && blog.title.toLowerCase().indexOf(filterBy) != -1) {
-    //             filtered.push(blog);
-    //         }
-    //     });
+    // todo - replace with vector search below 
+    const filterTitles = function(query) {
+        const filterBy = query.toLowerCase();
+        let filtered = [];
+        recentBlogPosts.value.forEach((blog) => {
+            if(blog.title && blog.title.toLowerCase().indexOf(filterBy) != -1) {
+                filtered.push(blog);
+            }
+        });
 
-    //     display.value = filtered;
-    // }
+        display.value = filtered;
+    }
 
-    let delayTimeout = null;
+    // let delayTimeout = null;
     const update = async function(updated) {
         isLoading.value = true;
         q.value = updated.value;
-        // filterTitles(q.value);
+        filterTitles(q.value);
 
-        if(delayTimeout) clearTimeout(delayTimeout);
-        delayTimeout = setTimeout(async () => {
-            try {               
-                // Create embeddings from text input
-                const extractor = await pipeline(
-                    "feature-extraction",
-                    "mixedbread-ai/mxbai-embed-xsmall-v1",
-                    { device: "webgpu", dtype: "fp32" },
-                );
-                const embeddings = await extractor([q.value], { pooling: "mean", normalize: true });
-                display.value = await blogStore.searchBlogsByVector(embeddings);
-                isLoading.value = false;
+        // if(delayTimeout) clearTimeout(delayTimeout);
+        // delayTimeout = setTimeout(async () => {
+        //     try {               
+        //         // Create embeddings from text input
+        //         const extractor = await pipeline(
+        //             "feature-extraction",
+        //             "mixedbread-ai/mxbai-embed-xsmall-v1",
+        //             { device: "webgpu", dtype: "fp32" },
+        //         );
+        //         const embeddings = await extractor([q.value], { pooling: "mean", normalize: true });
+        //         display.value = await blogStore.searchBlogsByVector(embeddings);
+        //         isLoading.value = false;
                 
-            } catch(err) {
-                console.error(err);
-            } finally {
-                isLoading.value = false;
-            }
-        }, 400);
+        //     } catch(err) {
+        //         console.error(err);
+        //     } finally {
+        //         isLoading.value = false;
+        //     }
+        // }, 400);
     }
 
 </script>
