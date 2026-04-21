@@ -44,7 +44,7 @@
 
     // let delayTimeout = null;
     const update = async function(updated) {
-        isLoading.value = true;
+        // isLoading.value = true;
         q.value = updated.value;
         filterTitles(q.value);
 
